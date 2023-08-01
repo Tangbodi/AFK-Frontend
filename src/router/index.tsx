@@ -20,7 +20,7 @@ const withLoadingComponent = (comp: JSX.Element) => (
 const routes = [
   {
     path: '/',
-    element: <Navigate to='/page1'/>
+    element: <Home/>
   },
   {
     path: '/',
@@ -43,10 +43,6 @@ const routes = [
   {
     path: '/login',
     element: <Login/> 
-  },
-  {
-    path: '/home',
-    element: <Home/> 
   },
   // 访问不存在的路由处理
   {

@@ -2,6 +2,9 @@ import './header.less'
 import logo from '@/assets/images/afk_logo_light.png'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
+import iconBell from '@/assets/images/icon_bell.png'
+import iconDark from '@/assets/images/icon_dark-mode.png'
+import iconUser from '@/assets/images/icon_user.png'
 const Header = () => {
   return (
     <header className="afk-header">
@@ -29,13 +32,13 @@ const Header = () => {
       </div>
       <div className='afk-header-right'>
         <div className="right-item">
-          1
+          <img src={iconDark} width={24} height={24}/>
         </div>
         <div className="right-item">
-            2
+          <img src={iconBell} width={24} height={24}/>
         </div>
         <div className="right-item">
-          3
+          <img src={iconUser} width={22} height={22}/>
         </div>
       </div>
     </header>
