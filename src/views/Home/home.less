@@ -1,0 +1,104 @@
+.afk-home{
+  .afk-main{
+    width: 900px;
+    padding: 40px 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    .hot-games{
+      margin-top: 16px;
+      ul{
+        display: flex;
+        gap:10px;
+        align-content:space-between;
+        li{
+          border-radius: 10px;
+          overflow: hidden;
+          &:nth-child(3n){
+            margin-right: 0!important;
+          }
+        }
+      }
+    }
+    .jump-back{
+      margin-top: 35px;
+      .jump-back-title{
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 46px; 
+      }
+      .jump-back-tabs{
+        margin-top: 20px;
+        .jump-back-tabs-btn{
+          display: inline-block;
+          border-radius: 5px;
+          background: #EEDFC9;
+          width: 104px;
+          height: 40px;
+          line-height: 40px;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          text-align: center;
+          margin-right: 10px;
+          cursor: pointer;
+          &.active, &:hover{
+            background: #745B3F;
+            color: #fff;
+          }
+        }
+      }
+      .jump-back-main{
+        display: flex;
+        flex-direction:row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 10px 10px 0px 10px;
+        margin-top: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 12px 0px rgba(59, 41, 23, 0.10);
+        .jump-back-main-item{
+          display: flex;
+          width: calc((100% - 60px) / 3);
+          margin:0 30px 15px 0;
+          &:nth-child(3n) {
+            margin-right: 0!important
+          }
+          .jump-back-main-item-left{
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            margin-right: 10px;
+          }
+          .jump-back-main-item-right{
+              flex:1;
+              overflow:hidden;
+              .item-right-title{
+                margin-top: 10px;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 20px;
+                color: #3B2917;
+                overflow:hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+              .item-right-desc{
+                font-size: 14px;
+                color: #828282;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 14px;
+                overflow:hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                margin-top: 8px;
+              }
+          }
+        }
+      }
+    }
+  }
+}

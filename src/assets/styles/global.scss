@@ -1,0 +1,14 @@
+$color: #FAF4ED;
+body{
+  font-family: DM Sans;
+  background-color: $color;
+  // user-select: none; // 禁用文字选中
+}
+img {
+  -webkit-user-drag: none; //禁用图片拖动
+}
+.demo-logo-vertical{
+  height: 32px;
+  margin: 15px;
+  background: #ccc;
+}
