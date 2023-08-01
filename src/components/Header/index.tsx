@@ -45,3 +45,23 @@ const Header = () => {
   )
 }
 export default Header
+
+const response = {
+  code: 200,
+  message: '响应成功',
+  data: [
+    {
+      gameId: '122',
+      gameLogo: 'xxxx',
+      gameName: 'World of Warcraft',
+      gameSlogan: 'xxxxxxxxxxxx'
+    },
+    {
+      gameId: '122',
+      gameLogo: 'xxxx',
+      gameName: 'World of Warcraft',
+      gameSlogan: 'xxxxxxxxxxxx'
+    }
+  ],
+  errMessage: ''
+}
