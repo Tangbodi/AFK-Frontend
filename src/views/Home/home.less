@@ -25,14 +25,15 @@
         font-size: 36px;
         font-style: normal;
         font-weight: 700;
-        line-height: 46px; 
+        line-height: 46px;
+        color: var(--fontColor); 
       }
       .jump-back-tabs{
         margin-top: 20px;
         .jump-back-tabs-btn{
           display: inline-block;
           border-radius: 5px;
-          background: #EEDFC9;
+          background: var(--tabBgColor);
           width: 104px;
           height: 40px;
           line-height: 40px;
@@ -41,10 +42,11 @@
           font-weight: 400;
           text-align: center;
           margin-right: 10px;
+          color: var(--tabColor);
           cursor: pointer;
           &.active, &:hover{
-            background: #745B3F;
-            color: #fff;
+            background: var(--tabActiveBgColor);
+            color: var(--tabActiveColor);
           }
         }
       }
@@ -55,7 +57,7 @@
         justify-content: flex-start;
         padding: 10px 10px 0px 10px;
         margin-top: 20px;
-        background: #fff;
+        background: var(--jumpBgColor);
         border-radius: 10px;
         box-shadow: 0px 2px 12px 0px rgba(59, 41, 23, 0.10);
         .jump-back-main-item{
@@ -70,6 +72,7 @@
             height: 64px;
             border-radius: 10px;
             margin-right: 10px;
+            background: #fff;
           }
           .jump-back-main-item-right{
               flex:1;
@@ -80,14 +83,14 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: 20px;
-                color: #3B2917;
+                color: var(--fontColor);
                 overflow:hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
               }
               .item-right-desc{
                 font-size: 14px;
-                color: #828282;
+                color: var(--descColor);
                 font-style: normal;
                 font-weight: 400;
                 line-height: 14px;
@@ -101,7 +104,4 @@
       }
     }
   }
-}
-.xxx{
-  color: blue;
 }

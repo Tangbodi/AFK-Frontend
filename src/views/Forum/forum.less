@@ -1,0 +1,203 @@
+
+.afk-forum{
+  width: 860px;
+  min-height: calc(100vh - 130px);
+  margin: 40px auto 0 auto;
+  .afk-forum-title{
+    color: #947954;
+  }
+  .afk-forum-main{
+    .afk-forum-main-title{
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 46px;
+      color: #3B2917;
+      margin: 5px 0 25px 0;
+    }
+    .afk-forum-main-game{
+      display: flex;
+      .game-logo{
+        width: 138px;
+        height: 138px;
+        border-radius: 5px;
+        background: #fff;
+        margin-right: 30px;
+      }
+      .game-detail{
+        flex: 1;
+        .game-detail-title{
+          color: #3B2917;
+          font-size: 28px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 28px; 
+        }
+        .game-detail-desc{
+          margin-top: 14px;
+          color: #4F4F4F;
+          font-feature-settings: 'clig' off, 'liga' off;
+          text-overflow: ellipsis;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+        }
+      }
+      .game-controls{
+        margin-left: 40px;
+        margin-right: 12px;
+        width: 147px;
+        .game-controls-btn{
+            width: 147px;
+            height: 40px;
+            text-align: center;
+            box-sizing: border-box;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #3B2917;
+            background: #DBB98F;
+            text-transform: none !important;
+            margin-top: 10px;
+        }
+      }
+    }
+    .afk-forum-guides{
+      margin-top: 34px;
+      .afk-forum-guides-tabs{
+        .guides-btn{
+          width: 104px;
+          height: 40px;
+          background: #EEDFC9;
+          color:#3B2917;
+          margin-right: 10px;
+          text-transform: none !important;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          box-shadow: none;
+        }
+      }
+      .afk-forum-guides-list{
+        margin: 10px 0;
+        .afk-forum-guides-list-th{
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+        .afk-forum-guides-list-th,.afk-forum-guides-list-td{
+          display: flex;
+          background: #fff;
+          height: 56px;
+          padding: 8px 14px;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          color: #e9dbc2;
+          border-bottom: 1px #e9dbc2 solid;
+          .list-th-replies, .list-th-topic,.list-th-by,.list-th-last{
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            gap: 5px;
+          }
+          .w70{
+            display: block;
+            width: 70px;
+          }
+          .warn{
+            color: #96351E;
+          }
+          .w416{
+            width: 416px;
+            margin-left: 33px;
+          }
+          .w130{
+            width: 130px;
+            margin-left: 33px;
+          }
+        }
+        .afk-forum-guides-list-td{
+          &.fc{
+            color: #3B2917;
+            font-size: 16px;
+            font-weight: 500;
+          }
+          .list-th-replies{
+            text-align: center;
+          }
+          .list-th-topic{
+            overflow: hidden;
+          }
+          .fw400{
+            font-weight: 400;
+          }
+          .MuiAvatar-circular{
+            margin-top: 5px;
+          }
+        }
+      }
+      .afk-forum-guides-create{
+        display: flex;
+        .guides-pagination{
+          margin-left: auto;
+          display: flex;
+          width: 280px;
+          height: 40px;
+          line-height: 40px;
+          border:#e9dbc2 1px solid;
+          border-radius: 10px;
+          justify-content: center;
+          align-items: center;
+          color: #3B2917;
+          font-weight: 400;
+          font-size: 14px;
+          .current{
+            width: 60px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            border-left: #e9dbc2 1px solid;
+            border-right: #e9dbc2 1px solid;
+          }
+          .page-btn{
+            width: 110px;
+            height: 40px;
+            text-align: center;
+            &.prev-btn{
+              i{
+                display: inline-block;
+                width: 7px;
+                height: 7px;
+                border-top: 2px solid #3B2917;
+                border-left: 2x solid #3B2917;
+                transform: rotate(-45deg);
+                margin-right:8px;
+              }
+            }
+            &.next-btn{
+              i{
+                display: inline-block;
+                width: 7px;
+                height: 7px;
+                border-top: 2px solid #3B2917;
+                border-left: 2px solid #3B2917;
+                transform: rotate(135deg);
+                margin-left: 8px;
+              }
+            }
+            &.disabled{
+              color: #BDBDBD;
+              i{
+                border-top: 2px solid #BDBDBD;
+                border-left: 2px solid #BDBDBD;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

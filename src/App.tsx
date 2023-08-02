@@ -1,6 +1,7 @@
 // import { useEffect } from "react"
 import { useRoutes } from "react-router-dom" // useLocation, useNavigate
 import router from './router'
+import { useState } from "react"
 // import { message } from "antd"
 
 // function ToLogin() {
@@ -52,8 +53,12 @@ import router from './router'
 
 function App() {
   const outlet = useRoutes(router) 
+  const [mode, setMode] = useState('light')
+  const switchTheme = () => {
+    setMode(prev => prev === 'light' ? 'dark': 'light')
+  }
   return (
-    <div className='App'>
+    <div className='App' color-mode={mode} onClick={switchTheme}>
       {/* outlet占位符组件，类似于窗口，用来展示组件，有点类似vue中router-view */}
       { outlet }
       {/* <BeforeRouterEnter/> */}

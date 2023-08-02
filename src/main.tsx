@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import 'reset-css'
-import '@/assets/styles/global.scss'
+import '@/assets/styles/global.less'
 import App from './App.tsx' 
 // import Router from './router' // 引用router/index_old 老的路由写法
 import { BrowserRouter } from 'react-router-dom'

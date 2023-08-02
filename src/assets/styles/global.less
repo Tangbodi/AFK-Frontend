@@ -1,0 +1,83 @@
+@white: #ffffff;
+@theme: #FAF4ED;
+@dark:#3B2917;
+@black: #0E0905;
+@black1: #150F09;
+@theme-dark: #DBB98F;
+@theme-dark1:#828282;
+@theme-dark2:#BDBDBD;
+@theme-dark3: #745B3F;
+@theme-dark4:#4f4f4f;
+@theme-dark5: #EEDFC9;
+@warning-red:#96351E;
+body{
+  font-family: DM Sans;
+  // user-select: none; // 禁用文字选中
+}
+img {
+  -webkit-user-drag: none; //禁用图片拖动
+}
+.demo-logo-vertical{
+  height: 32px;
+  margin: 15px;
+  background: #ccc;
+}
+
+.App[color-mode='light']{
+  --bgColor: @theme; // 背景色
+  --navBgColor:@theme-dark; //导航背景
+  --navColor:@dark; //导航标题颜色
+  --navInputBgColor:@white;
+  --navRightBgColor:@theme;
+  --fontColor: @dark;
+  --descColor: @theme-dark1;
+  --jumpBgColor: @white;
+  --tabBgColor: @theme-dark5;
+  --tabActiveBgColor: @theme-dark3;
+  --tabColor: @dark;
+  --tabActiveColor: @theme;
+  --sidebarColor:@white;
+  --sidebarBgColor:@theme-dark5;
+  --submitBtnColor: @white;
+  --formInputColor:@theme-dark4;
+}
+ 
+.App[color-mode='dark']{
+  --bgColor:@black;
+  --navBgColor:@theme-dark3;
+  --navColor: @white; 
+  --navInputBgColor:@theme-dark3;
+  --navRightBgColor:@theme-dark;
+  --fontColor: @white;
+  --descColor: @theme-dark2;
+  --jumpBgColor: @dark;
+  --tabBgColor: @theme-dark3;
+  --tabActiveBgColor: @theme-dark;
+  --tabColor: @theme;
+  --tabActiveColor: @dark;
+  --sidebarColor:@theme-dark3;
+  --sidebarBgColor:@black1;
+  --submitBtnColor: @dark;
+  --formInputColor:@theme-dark2;
+}  
+
+.App{
+  background: var(--bgColor);
+  transition: 0.3s;
+}
+
+.w240{
+  width: 240px!important;
+}
+.default-btn{
+  width: 221px;
+  height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 20px!important;
+  font-weight: 700!important;
+  cursor: pointer;
+  color: var(--submitBtnColor)!important;
+  background: var(--tabActiveBgColor)!important;
+  text-transform: none !important;
+}
