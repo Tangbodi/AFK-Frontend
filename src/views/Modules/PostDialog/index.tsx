@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button, Modal, Form, Input } from 'antd'
 import './postDialog.less'
 const PostDialog = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { TextArea } = Input
   const showModal = () => {
     setIsModalOpen(true);

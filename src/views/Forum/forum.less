@@ -4,7 +4,7 @@
   min-height: calc(100vh - 130px);
   margin: 40px auto 0 auto;
   .afk-forum-title{
-    color: #947954;
+    color: var(--forumTitleColor);
   }
   .afk-forum-main{
     .afk-forum-main-title{
@@ -12,7 +12,7 @@
       font-style: normal;
       font-weight: 700;
       line-height: 46px;
-      color: #3B2917;
+      color: var(--forumFontColor);
       margin: 5px 0 25px 0;
     }
     .afk-forum-main-game{
@@ -27,7 +27,7 @@
       .game-detail{
         flex: 1;
         .game-detail-title{
-          color: #3B2917;
+          color: var(--forumFontColor);
           font-size: 28px;
           font-style: normal;
           font-weight: 500;
@@ -35,7 +35,7 @@
         }
         .game-detail-desc{
           margin-top: 14px;
-          color: #4F4F4F;
+          color: var(--descColor);
           font-feature-settings: 'clig' off, 'liga' off;
           text-overflow: ellipsis;
           font-size: 16px;
@@ -57,8 +57,8 @@
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
-            color: #3B2917;
-            background: #DBB98F;
+            color: var(--fontColor);
+            background: var(--forumBtnBgColor);
             text-transform: none !important;
             margin-top: 10px;
         }
@@ -70,8 +70,8 @@
         .guides-btn{
           width: 104px;
           height: 40px;
-          background: #EEDFC9;
-          color:#3B2917;
+          background: var(--tabBgColor);
+          color:var(--fontColor);
           margin-right: 10px;
           text-transform: none !important;
           font-size: 16px;
@@ -88,15 +88,15 @@
         }
         .afk-forum-guides-list-th,.afk-forum-guides-list-td{
           display: flex;
-          background: #fff;
+          background: var(--forumGuidesListBgColor);
           height: 56px;
           padding: 8px 14px;
           box-sizing: border-box;
           font-size: 16px;
           font-style: normal;
           font-weight: 700;
-          color: #e9dbc2;
-          border-bottom: 1px #e9dbc2 solid;
+          color: var(--forumGuidesThColor);
+          border-bottom: 1px  var(--forumGuidesThColor) solid;
           .list-th-replies, .list-th-topic,.list-th-by,.list-th-last{
             height: 40px;
             line-height: 40px;
@@ -121,7 +121,7 @@
         }
         .afk-forum-guides-list-td{
           &.fc{
-            color: #3B2917;
+            color: var(--forumFontColor);
             font-size: 16px;
             font-weight: 500;
           }
@@ -130,6 +130,10 @@
           }
           .list-th-topic{
             overflow: hidden;
+          }
+          .list-th-by, .list-th-last{
+            font-size: 14px;
+            color: var(--forumCreatorFontColor);
           }
           .fw400{
             font-weight: 400;
@@ -147,11 +151,11 @@
           width: 280px;
           height: 40px;
           line-height: 40px;
-          border:#e9dbc2 1px solid;
+          border:var(--forumGuidesThColor) 1px solid;
           border-radius: 10px;
           justify-content: center;
           align-items: center;
-          color: #3B2917;
+          color: var(--fontColor);
           font-weight: 400;
           font-size: 14px;
           .current{
@@ -159,8 +163,8 @@
             text-align: center;
             font-size: 16px; 
             font-weight: 700;
-            border-left: #e9dbc2 1px solid;
-            border-right: #e9dbc2 1px solid;
+            border-left: var(--forumGuidesThColor) 1px solid;
+            border-right: var(--forumGuidesThColor) 1px solid;
           }
           .page-btn{
             width: 110px;
@@ -171,8 +175,8 @@
                 display: inline-block;
                 width: 7px;
                 height: 7px;
-                border-top: 2px solid #3B2917;
-                border-left: 2x solid #3B2917;
+                border-top: 2px solid var(--fontColor);
+                border-left: 2x solid var(--fontColor);
                 transform: rotate(-45deg);
                 margin-right:8px;
               }
@@ -182,17 +186,17 @@
                 display: inline-block;
                 width: 7px;
                 height: 7px;
-                border-top: 2px solid #3B2917;
-                border-left: 2px solid #3B2917;
+                border-top: 2px solid var(--fontColor);
+                border-left: 2px solid var(--fontColor);
                 transform: rotate(135deg);
                 margin-left: 8px;
               }
             }
             &.disabled{
-              color: #BDBDBD;
+              color: var(--paginationDisabledFontColor);
               i{
-                border-top: 2px solid #BDBDBD;
-                border-left: 2px solid #BDBDBD;
+                border-top: 2px solid var(--paginationDisabledFontColor);
+                border-left: 2px solid var(--paginationDisabledFontColor);
               }
             }
           }
