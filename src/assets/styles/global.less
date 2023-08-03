@@ -12,6 +12,7 @@
 @warning-red:#96351E;
 body{
   font-family: DM Sans;
+  color: @dark;
   // user-select: none; // 禁用文字选中
 }
 img {
@@ -80,4 +81,26 @@ img {
   color: var(--submitBtnColor)!important;
   background: var(--tabActiveBgColor)!important;
   text-transform: none !important;
+}
+
+.tabs-tags{
+  .tabs-tags-tag{
+    display: inline-block;
+    border-radius: 5px;
+    background: #EEDFC9;
+    width: 104px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    margin-right: 10px;
+    color: var(--tabColor);
+    cursor: pointer;
+    &.active, &:hover{
+      background: #745B3F;
+      color: #fff;
+    }
+  }
 }
