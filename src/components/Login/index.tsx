@@ -3,7 +3,7 @@ import { Modal, Form, Input, Button } from 'antd'
 import logo from '@/assets/images/login-logo.png'
 import './login.less'
 const Login = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const showModal = () => {
     setIsModalOpen(true)
   }

@@ -1,0 +1,84 @@
+.afk-topic{
+  width: 860px;
+  margin: 0 auto;
+  min-height: calc(100vh - 90px);
+  .afk-topic-title{
+    margin-top: 40px;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #947954;
+  }
+  .afk-topic-main{
+    .afk-topic-main-title{
+      margin-top: 10px;
+      display: flex;
+      .main-title-tag{
+        display: inline-block;
+        width: 68px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        border-radius: 5px;
+        background: #745B3F;
+        color: #FFF;
+        margin-right: 16px;
+      }
+      .main-title-text{
+        color: #3B2917;
+        font-feature-settings: 'clig' off, 'liga' off;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 700;
+        line-height:1;
+      }
+    }
+    .afk-top-main-content{
+      margin-top: 30px;
+      .main-content-title{
+        display: flex;
+        background: #EEDFC9;
+        padding:11px 30px;
+        justify-content: center;
+        align-items: center;
+        .content-title-left{
+          display: flex;
+          align-items: center;
+          font-size: 18px;
+          font-weight: 700;
+          color: #3B2917;
+          .MuiAvatar-root{
+            margin-right: 10px;
+          }
+        }
+        .content-title-right{
+          margin-left: auto;
+          color: #745B3F;
+          font-size: 14px;
+          font-weight: 400;
+        }
+      }
+      .main-content-detail{
+        padding: 15px 30px;
+        background: #FFF;
+        .main-content-desc{
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 28px;
+        }
+        .main-content-controls{
+          display: flex;
+          justify-content: left;
+          align-items: center;
+          .controls-right{
+            margin-left: auto;
+          }
+          &.comment-type{
+            margin-top: 7px;
+          }
+        }
+      }
+    }
+  }
+}

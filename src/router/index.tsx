@@ -1,6 +1,7 @@
 import React, { lazy } from 'react' // 路由懒加载函数
 import Home2 from "../views/Home"
 import { Navigate } from 'react-router-dom'
+import Loading from '@/components/Loading'
 import Login from '@/views/Login'
 import Home from '@/views/Home/index'
 import Layout from '@/views/layout'
@@ -9,13 +10,14 @@ const Page1 = lazy(()=> import("../views/Page1"))
 const Page2 = lazy(()=> import("../views/Page2"))
 const User = lazy(()=> import("../views/User"))
 const Forum = lazy(()=> import("../views/Forum"))
+const Topic = lazy(()=> import("../views/Topic"))
 /**
  * 懒加载组件处理
  * @param comp 
  * @returns 
  */
 const withLoadingComponent = (comp: JSX.Element) => (
-  <React.Suspense fallback={<div> Loading... </div>}>
+  <React.Suspense fallback={<Loading/>}>
     { comp }
   </React.Suspense>
 )
@@ -53,6 +55,10 @@ const routes = [
       {
         path: '/forum',
         element: withLoadingComponent(<Forum/>)
+      },
+      {
+        path: '/topic',
+        element: withLoadingComponent(<Topic/>)
       },
     ]
   },
