@@ -1,20 +1,23 @@
 import { useState } from 'react'
 import { Button, Modal, Form, Input } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import Uploader from '@/components/Uploader'
 import './postDialog.less'
 const PostDialog = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(true)
   const { TextArea } = Input
   const showModal = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(true)
   }
 
   const handleOk = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(false)
   }
+
   return (
     <>
       <Modal width={860} wrapClassName="afk-post-dialog" title="Forum: Tears of the Kingdom" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[
@@ -25,14 +28,25 @@ const PostDialog = () => {
           <Form.Item name="title" label="Title">
             <Input className="titleInput" />
           </Form.Item>
-          <Form.Item name="hastag" label="HashTag">
-            <div className="tabs-tags">
-              <span className="tabs-tags-tag active">Guides</span>
-              <span className="tabs-tags-tag">News</span>
-              <span className="tabs-tags-tag">Q&A</span>
-              <span className="tabs-tags-tag">Reviews</span>
-              <span className="tabs-tags-tag">Chat</span>
-            </div>
+          <Form.Item name="hastag" className='postDialog-btns' label="HashTag">
+            <Button type="primary" icon={<PlusOutlined />}>
+              Guides
+            </Button>
+            <Button type="primary" icon={<PlusOutlined />}>
+              News
+            </Button>
+            <Button type="primary" icon={<PlusOutlined />}>
+              Q&A
+            </Button>
+            <Button type="primary" icon={<PlusOutlined />}>
+              Reviews
+            </Button>
+            <Button type="primary" icon={<PlusOutlined />}>
+              Chat
+            </Button>
+          </Form.Item>
+          <Form.Item name="hastag" label="Image & Video">
+            <Uploader/>
           </Form.Item>
           <Form.Item name="postcontent" label="Post Content">
             <TextArea
@@ -40,7 +54,7 @@ const PostDialog = () => {
               maxLength={100}
               rows={5}
               style={{resize: 'none' }}
-              placeholder=""
+              placeholder="What are your thoughts?"
             />
           </Form.Item>
         </Form>

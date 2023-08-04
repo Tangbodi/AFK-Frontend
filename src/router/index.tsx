@@ -11,6 +11,7 @@ const Page2 = lazy(()=> import("../views/Page2"))
 const User = lazy(()=> import("../views/User"))
 const Forum = lazy(()=> import("../views/Forum"))
 const Topic = lazy(()=> import("../views/Topic"))
+const Store = lazy(()=> import("../views/Store"))
 /**
  * 懒加载组件处理
  * @param comp 
@@ -59,6 +60,10 @@ const routes = [
       {
         path: '/topic',
         element: withLoadingComponent(<Topic/>)
+      },
+      {
+        path: '/store',
+        element: withLoadingComponent(<Store/>)
       },
     ]
   },
