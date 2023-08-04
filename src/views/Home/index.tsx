@@ -1,5 +1,6 @@
 import Header from "@/components/Header"
 import Banner from '@/components/Banner'
+import Footer from "@/components/Footer"
 import hot1 from '@/assets/images/hot1.png'
 import hot2 from '@/assets/images/hot2.png'
 import hot3 from '@/assets/images/hot3.png'
@@ -137,6 +138,7 @@ const View = () => {
             </div>
           </div>
         </main>
+        <Footer/>
       </div>
   )
 }
