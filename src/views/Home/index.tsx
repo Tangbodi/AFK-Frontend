@@ -5,19 +5,12 @@ import hot1 from '@/assets/images/hot1.png'
 import hot2 from '@/assets/images/hot2.png'
 import hot3 from '@/assets/images/hot3.png'
 
-/** 
- * Jump back in 
-*/
 
 import warcraft from '@/assets/images/warcraft.png'
 import pokemon from '@/assets/images/pokemon.png'
 import xvi from '@/assets/images/xvi.png'
 import zelda from '@/assets/images/zelda.png'
 import cyberpunk from '@/assets/images/cyberpunk.png'
-
-/**
- * Forum List
- */
 
 import souls from '@/assets/images/souls.png'
 import LoginOrRegister from "@/components/LoginOrRegister"
@@ -26,7 +19,6 @@ import { useRef } from "react"
 const View = () => {
   const AccountRef = useRef(null)
   /**
-   * 
    * @param isLogin 弹出框类型 true = login , false = register
    */
   const handleClick = (isLogin: boolean) => { 
@@ -35,7 +27,7 @@ const View = () => {
   return (
       <div className="afk-home">
         <Header/>
-        <button onClick={()=>{handleClick(true)}}>223</button>
+        {/* <button onClick={()=>{handleClick(true)}}>223</button> */}
         <main className="afk-main">
           <Banner/>
           <div className="hot-games">

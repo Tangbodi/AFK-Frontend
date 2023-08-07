@@ -3,9 +3,11 @@ import reduxThunk from 'redux-thunk' //解决redux异步修改数据问题
 // import reducer from './reducer.ts'
 import handleNum from './NumStatus/reducer'
 import handleArr from './ArrStatus/reducer'
+import gobalStatus from './GlobalStatus/reducer'
 const reducers = combineReducers({
   handleNum,
-  handleArr
+  handleArr,
+  gobalStatus
 })
 
 

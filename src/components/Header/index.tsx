@@ -1,16 +1,34 @@
 import './header.less'
 import logo from '@/assets/images/afk_logo_light.png'
+import logoDark from '@/assets/images/afk_logo_dark.png'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import iconBell from '@/assets/images/icon_bell.png'
 import iconDark from '@/assets/images/icon_dark-mode.png'
 import iconUser from '@/assets/images/icon_user.png'
+import { useDispatch } from 'react-redux'
+import { setTheme, getTheme } from '@/utils/theme'
+import { useState } from 'react'
 const Header = () => {
+  const dispatch = useDispatch()
+  const [currentTheme, setCurrentTheme] = useState(getTheme())
+  const modifyMode = () => {
+    const currentTheme = localStorage.getItem('theme')
+    const theme = currentTheme === 'theme-light' ? 'theme-dark' : 'theme-light'
+    setTheme(theme)
+    setCurrentTheme(theme)
+    dispatch({type:"modifyMode", val: theme})
+  }
   return (
     <header className="afk-header">
       <div className="afk-header-left">
         <span>
+        { currentTheme === 'theme-light' ?
           <img src={logo} width="120" height="90"/>
+          :
+          <img src={logoDark} width="120" height="90"/>
+        }
+          
         </span>
         <div className="menu">
           <span>Home</span>
@@ -31,7 +49,7 @@ const Header = () => {
         </div>
       </div>
       <div className='afk-header-right'>
-        <div className="right-item">
+        <div className="right-item" onClick={modifyMode}>
           <img src={iconDark} width={24} height={24}/>
         </div>
         <div className="right-item">

@@ -27,6 +27,10 @@
 @theme-dark6:#947954;
 @theme-dark7:#E0E0E0;
 @warning-red:#96351E;
+@light: #947954;
+@theme-dark8: #140F0A;
+@font-color:#333333;
+@font-white:#f2f2f2;
 body{
   font-family: DM Sans;
   color: @dark;
@@ -41,7 +45,7 @@ img {
   background: #ccc;
 }
 
-.App[color-mode='light']{
+.theme-light{
   --bgColor: @theme; // 背景色
   --navBgColor:@theme-dark; //导航背景
   --navColor:@dark; //导航标题颜色
@@ -68,9 +72,22 @@ img {
   --paginationDisabledFontColor:@theme-dark2;
   --paginationDisabledFontColor:@theme-dark2;
   --loginBgColor:@theme;
+  --topicTag:@white;
+  --topicTagBgColor:@theme-dark3;
+  --topicTitle: @dark;
+  --topicMainTitle:@light;
+  --topicCommentTopBgColor:@theme-dark5;
+  --topicCommentTopColor:@theme-dark3;
+  --topicCommentBgColor:@white;
+  --topicCommentColor:@font-color;
+  --topicBorderLeft:@theme-dark5;
+  --footBgColor:@theme-dark;
+  --footLFontColor:@theme-dark3;
+  --footMenuFontColor:@dark;
+  --footerShareBgColor: @theme;
 }
  
-.App[color-mode='dark']{
+.theme-dark{
   --bgColor:@black;
   --navBgColor:@theme-dark3;
   --navColor: @white; 
@@ -95,7 +112,21 @@ img {
   --forumGuidesListBgColor:@black;
   --forumCreatorFontColor:@theme-dark5;
   --paginationDisabledFontColor:@theme-dark1;
+  --topicTag:@dark;
+  --topicTagBgColor:@theme-dark;
+  --topicTitle: @white;
+  --topicMainTitle:@theme-dark;
+  --topicCommentTopBgColor:@dark;
+  --topicCommentTopColor:@theme-dark;
+  --topicCommentBgColor:@theme-dark8;
+  --topicCommentColor:@font-white;
+  --topicBorderLeft:@dark;
+  --footBgColor:@dark;
+  --footLFontColor:@theme-dark;
+  --footMenuFontColor:@theme;
+  --footerShareBgColor: @theme-dark;
 }  
+
 
 .App{
   background: var(--bgColor);
