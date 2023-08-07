@@ -2,7 +2,6 @@ import cyberpunk from '@/assets/images/cyberpunk.png'
 import { Button, Avatar } from '@mui/material'
 import './forum.less'
 import PostDialog from '../Modules/PostDialog'
-import Login from '@/components/Login'
 const Forum = () => {
   return (
     <div className="afk-forum">
@@ -73,7 +72,6 @@ const Forum = () => {
         </div>
       </div>
       <PostDialog/>
-      <Login/>
     </div>
   )
 }
