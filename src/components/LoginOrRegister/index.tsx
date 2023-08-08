@@ -1,5 +1,6 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
-import { Modal, Form, Input, Button } from 'antd'
+import { Modal, Form, Input, Button, message } from 'antd'
+import { registrationAPI, loginAPI } from '@/request/api'
 import logo from '@/assets/images/login-logo.png'
 import './register.less'
 
@@ -7,6 +8,7 @@ import './register.less'
 const Register = forwardRef((props, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLoginValue, setIsLoginValue] = useState(false)
+  const [form] = Form.useForm()
   useImperativeHandle(ref, () => ({
     showModal
   }))
@@ -26,6 +28,29 @@ const Register = forwardRef((props, ref) => {
     setIsModalOpen(false)
   }
 
+  const onSignUp = async() => {
+    try {
+      const values = await form.validateFields()
+      if(values.password !== values.confirmPassword) {
+        message.warning("The two entered passwords are inconsistent. Please check!")
+        return
+      }
+      const registrationRes = await registrationAPI(values)
+      console.log('rr', registrationRes)
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  }
+
+  const onLogin = async() => {
+    try {
+      const values = await form.validateFields()
+      const loginRes = await loginAPI(values)
+      console.log('rr', loginRes)
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  }
   return (
     <>
       <Modal width={440} maskClosable={false} wrapClassName="afk-login" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -33,32 +58,35 @@ const Register = forwardRef((props, ref) => {
           <img src={logo} width={200} height={60}/>
         </div>
         {
-          isLoginValue ? <Form  className="afk-post-form" layout="vertical" autoComplete="off">
-          <Form.Item name="username" label="Username">
+          isLoginValue ? <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
+          <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
-          <Form.Item name="password" label="Post Content">
+          <Form.Item name="email" label="Email" rules={[{type: 'email',message: 'The input is not valid E-mail!'},{required: true,message: 'Please input your E-mail!'}]}>
             <Input className="login-input"  />
           </Form.Item>
-          <Form.Item name="confirmPassword" label="Re-enter Password">
-            <Input className="login-input"  />
+          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your password!' }]}>
+            <Input.Password className="login-input"  />
+          </Form.Item>
+          <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' }]}>
+            <Input.Password className="login-input"  />
           </Form.Item>
           <div className="form-login">
-            <Button type="primary" className="form-login-btn">Sign Up</Button>
+            <Button type="primary" className="form-login-btn" onClick={onSignUp}>Sign Up</Button>
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Have an account? Log In</div>
         </Form> 
         : 
-        <Form className="afk-post-form" layout="vertical" autoComplete="off">
-          <Form.Item name="username" label="Username">
+        <Form form={form} className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
+          <Form.Item name="username" label="Username"  rules={[{ required: true, message: 'Please input your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
-          <Form.Item name="password" label="Post Content">
-            <Input className="login-input"  />
+          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your password!' }]}>
+            <Input.Password className="login-input"  />
           </Form.Item>
           <div className="forget-password">Forget password?</div>
           <div className="form-login">
-            <Button type="primary" className="form-login-btn">Log In</Button>
+            <Button type="primary" className="form-login-btn" onClick={onLogin}>Log In</Button>
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Don’t have an account? Sign up</div>
         </Form>

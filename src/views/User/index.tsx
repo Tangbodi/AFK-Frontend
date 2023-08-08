@@ -10,6 +10,9 @@ const User = () => {
           <li>Activities</li>
           <li>Privacy and Security</li>
         </ul>
+        <div className='afk-logout'>
+          <Button className="default-btn w218" variant="contained">Log out</Button>
+        </div>
       </div>
       <div className="afk-user-content">
         <div className="afk-user-content-account">

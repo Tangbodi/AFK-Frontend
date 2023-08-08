@@ -1,8 +1,15 @@
+import type { AxiosInstance } from 'axios'
 import axios from 'axios'
 
-const instance = axios.create({
-  baseURL: "http://xue.cnkdl.cn:23683",
-  timeout: 20000
+
+interface AxiosTokenInstance extends AxiosInstance {}
+const instance: AxiosTokenInstance = axios.create({
+  baseURL: "/",
+  timeout: 5000,
+  responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+    },
 })
 
 instance.interceptors.request.use(config => {

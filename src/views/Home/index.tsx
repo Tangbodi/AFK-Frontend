@@ -11,23 +11,12 @@ import pokemon from '@/assets/images/pokemon.png'
 import xvi from '@/assets/images/xvi.png'
 import zelda from '@/assets/images/zelda.png'
 import cyberpunk from '@/assets/images/cyberpunk.png'
-
 import souls from '@/assets/images/souls.png'
-import LoginOrRegister from "@/components/LoginOrRegister"
 import './home.less'
-import { useRef } from "react"
 const View = () => {
-  const AccountRef = useRef(null)
-  /**
-   * @param isLogin 弹出框类型 true = login , false = register
-   */
-  const handleClick = (isLogin: boolean) => { 
-    AccountRef.current.showModal(isLogin)
-  }
   return (
       <div className="afk-home">
         <Header/>
-        {/* <button onClick={()=>{handleClick(true)}}>223</button> */}
         <main className="afk-main">
           <Banner/>
           <div className="hot-games">
@@ -142,7 +131,6 @@ const View = () => {
           </div>
         </main>
         <Footer/>
-        <LoginOrRegister ref={AccountRef}/>
       </div>
   )
 }

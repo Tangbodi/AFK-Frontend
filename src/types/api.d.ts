@@ -21,3 +21,36 @@ interface LoginAPIRes {
   code: number;
   token: string;
 }
+
+interface APIRes {
+  code: number;
+  message: string;
+  data: any;
+  error?: string;
+  timestamp?: number
+}
+
+interface RegistrationAPIReq {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string
+}
+
+interface LoginAPIReq {
+  username: string;
+  password: string;
+}
+
+interface UpdateEmailAddressReq {
+  email: string;
+}
+
+interface UpdateMailAddressReq {
+  country: string;
+  state: string;
+  address: string;
+  city: string;
+  zip: string;
+  phone: string;
+}

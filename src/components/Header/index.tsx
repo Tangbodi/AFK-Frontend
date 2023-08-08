@@ -8,8 +8,13 @@ import iconDark from '@/assets/images/icon_dark-mode.png'
 import iconUser from '@/assets/images/icon_user.png'
 import { useDispatch } from 'react-redux'
 import { setTheme, getTheme } from '@/utils/theme'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import LoginOrRegister from '../LoginOrRegister'
 const Header = () => {
+  const AccountRef = useRef(null)
+  const handleClick = (isLogin: boolean) => { 
+    AccountRef.current.showModal(isLogin)
+  }
   const dispatch = useDispatch()
   const [currentTheme, setCurrentTheme] = useState(getTheme())
   const modifyMode = () => {
@@ -20,6 +25,7 @@ const Header = () => {
     dispatch({type:"modifyMode", val: theme})
   }
   return (
+    <>
     <header className="afk-header">
       <div className="afk-header-left">
         <span>
@@ -55,11 +61,13 @@ const Header = () => {
         <div className="right-item">
           <img src={iconBell} width={24} height={24}/>
         </div>
-        <div className="right-item">
+        <div className="right-item" onClick={()=>{handleClick(true)}}>
           <img src={iconUser} width={22} height={22}/>
         </div>
       </div>
     </header>
+    <LoginOrRegister ref={AccountRef}/>
+    </>
   )
 }
 export default Header
