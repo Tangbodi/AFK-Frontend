@@ -38,9 +38,9 @@ const Register = forwardRef((props, ref) => {
     if(registrationRes.code === 200) {
       message.success(registrationRes.data)
       setIsModalOpen(false)
-    } else {
-      message.warning(registrationRes.message)
+      return
     }
+    message.warning(registrationRes.message)
   }
 
   const onLogin = async() => {
@@ -49,9 +49,9 @@ const Register = forwardRef((props, ref) => {
     if(loginRes.code === 200) {
       message.success('Login successful')
       setIsModalOpen(false)
-    } else {
-      message.warning(loginRes.message)
+      return
     }
+    message.warning(loginRes.message)
   }
   return (
     <>

@@ -32,7 +32,8 @@
           width: 160px;
           height: 160px;
           border-radius: 100%;
-          background-color: #fff;
+          font-size: 36px;
+          // background-color: #fff;
           margin-right: 36px;
         }
         .afk-user-avatar-right{
@@ -54,30 +55,29 @@
       .afk-user-form{
         width: 100%;
         margin-top: 64px;
-        .afk-user-form-item{
-          margin-bottom: 40px;
-          .form-item-title{
+        .ant-form-item-label{
+          label{
             font-size: 18px;
             font-weight: 400;
             color: var(--fontColor);
           }
-          .form-item-input{
+        }
+        .ant-form-item-control{
+          .info-input{
+            border:0;
+            outline: 0;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            width: 100%;
+            height: 46px;
+            line-height: 46px;
+            color: var(--formInputColor);
             background: var(--navInputBgColor);
-            margin-top: 9px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            input{
-              border:0;
-              outline: 0;
-              font-size: 16px;
-              font-style: normal;
-              font-weight: 400;
-              width: 100%;
-              height: 28px;
-              line-height: 28px;
-              color: var(--formInputColor);
-              background: var(--navInputBgColor);
-            }
+          }
+          .ant-input{
+            color: var(--formInputColor);
+            background: var(--navInputBgColor);
           }
         }
         .afk-user-form-submit{
