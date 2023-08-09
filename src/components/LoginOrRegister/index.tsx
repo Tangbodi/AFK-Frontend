@@ -29,26 +29,28 @@ const Register = forwardRef((props, ref) => {
   }
 
   const onSignUp = async() => {
-    try {
-      const values = await form.validateFields()
-      if(values.password !== values.confirmPassword) {
-        message.warning("The two entered passwords are inconsistent. Please check!")
-        return
-      }
-      const registrationRes = await registrationAPI(values)
-      console.log('rr', registrationRes)
-    } catch (errorInfo) {
-      console.log('Failed:', errorInfo);
+    const values = await form.validateFields()
+    if(values.password !== values.confirmPassword) {
+      message.warning("The two entered passwords are inconsistent. Please check!")
+      return
+    }
+    const registrationRes = await registrationAPI(values)
+    if(registrationRes.code === 200) {
+      message.success(registrationRes.data)
+      setIsModalOpen(false)
+    } else {
+      message.warning(registrationRes.message)
     }
   }
 
   const onLogin = async() => {
-    try {
-      const values = await form.validateFields()
-      const loginRes = await loginAPI(values)
-      console.log('rr', loginRes)
-    } catch (errorInfo) {
-      console.log('Failed:', errorInfo);
+    const values = await form.validateFields()
+    const loginRes = await loginAPI(values)
+    if(loginRes.code === 200) {
+      message.success('Login successful')
+      setIsModalOpen(false)
+    } else {
+      message.warning(loginRes.message)
     }
   }
   return (
@@ -58,7 +60,7 @@ const Register = forwardRef((props, ref) => {
           <img src={logo} width={200} height={60}/>
         </div>
         {
-          isLoginValue ? <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
+          !isLoginValue ? <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
           <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
