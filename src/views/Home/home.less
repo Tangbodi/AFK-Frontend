@@ -1,11 +1,18 @@
 .afk-home{
   .afk-main{
-    width: 900px;
+    width: 1150px;
     padding: 40px 20px;
     margin: 0 auto;
     box-sizing: border-box;
+    .afk-home-title{
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 46px;
+      color: var(--fontColor);
+    }
     .hot-games{
-      margin-top: 16px;
+      margin-top: 30px;
       ul{
         display: flex;
         gap:10px;
@@ -19,15 +26,72 @@
         }
       }
     }
+    .afk-news{
+      .afk-news-list{
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        background: var(--jumpBgColor);
+        box-shadow: 0px 2px 12px 0px rgba(59, 41, 23, 0.10);
+        .afk-news-more{
+          color: var(--homeMore);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 14px;
+        }
+        .afk-news-list-item{
+          display: flex;
+          justify-items: center;
+          margin-bottom: 15px;
+          .list-item-left{
+            width: 70px;
+            height: 70px;
+            margin-right: 12px;
+            img{
+              width: 70px;
+              height: 70px;
+            }
+          }
+          .list-item-right{
+            flex:1;
+            overflow: hidden;
+            .list-item-right-title{
+              color: var(--fontColor);
+              font-size: 18px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: 20px;
+            }
+            .list-item-right-desc{
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 18px;
+              color: var(--descColor);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              margin-top: 2px;
+            }
+            .list-item-right-tag{
+              display: inline-block;
+              padding: 0 10px;
+              height: 28px;
+              line-height: 28px;
+              font-size: 13px;
+              font-weight: normal;
+              background: var(--tabActiveBgColor);
+              color: var(--tabActiveColor);
+              border-radius: 5px;
+              margin-top: 2px;
+            }
+          }
+        }
+      }
+    }
     .jump-back{
       margin-top: 35px;
-      .jump-back-title{
-        font-size: 36px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 46px;
-        color: var(--fontColor); 
-      }
       .jump-back-tabs{
         margin-top: 20px;
         .jump-back-tabs-btn{
@@ -50,58 +114,68 @@
           }
         }
       }
-      .jump-back-main{
-        display: flex;
-        flex-direction:row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        padding: 10px 10px 0px 10px;
+      .jump-back-main-wrap{
+        padding: 10px;
         margin-top: 20px;
         background: var(--jumpBgColor);
         border-radius: 10px;
         box-shadow: 0px 2px 12px 0px rgba(59, 41, 23, 0.10);
-        .jump-back-main-item{
+        .jump-back-main{
           display: flex;
-          width: calc((100% - 60px) / 3);
-          margin:0 30px 15px 0;
-          &:nth-child(3n) {
-            margin-right: 0!important
-          }
-          .jump-back-main-item-left{
-            width: 64px;
-            height: 64px;
-            border-radius: 10px;
-            margin-right: 10px;
-            background: #fff;
-          }
-          .jump-back-main-item-right{
-              flex:1;
-              overflow:hidden;
-              .item-right-title{
-                margin-top: 10px;
-                font-size: 18px;
-                font-style: normal;
-                font-weight: 700;
-                line-height: 20px;
-                color: var(--fontColor);
+          flex-direction:row;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          .jump-back-main-item{
+            display: flex;
+            width: calc((100% - 60px) / 3);
+            margin:0 30px 15px 0;
+            &:nth-child(3n) {
+              margin-right: 0!important
+            }
+            .jump-back-main-item-left{
+              width: 64px;
+              height: 64px;
+              border-radius: 10px;
+              margin-right: 10px;
+              background: #fff;
+            }
+            .jump-back-main-item-right{
+                flex:1;
                 overflow:hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-              }
-              .item-right-desc{
-                font-size: 14px;
-                color: var(--descColor);
-                font-style: normal;
-                font-weight: 400;
-                line-height: 14px;
-                overflow:hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                margin-top: 8px;
-              }
+                .item-right-title{
+                  margin-top: 10px;
+                  font-size: 18px;
+                  font-style: normal;
+                  font-weight: 700;
+                  line-height: 20px;
+                  color: var(--fontColor);
+                  overflow:hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
+                .item-right-desc{
+                  font-size: 14px;
+                  color: var(--descColor);
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 14px;
+                  overflow:hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  margin-top: 8px;
+                }
+            }
           }
         }
+        .jump-back-more{
+          color: var(--homeMore);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 14px;
+        }
       }
+      
     }
   }
 }

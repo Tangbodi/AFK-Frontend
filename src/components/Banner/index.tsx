@@ -25,21 +25,21 @@ class Banner extends Component {
             <img src={banner1} height={300} />
             <div className="banner-desc">
               <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
-              <p className="banner-desc-sub">Tears of the Kingdom1</p>
+              <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom1</p>
             </div>
           </div>
           <div className="afk-banner-item">
             <img src={banner1} height={300} />
             <div className="banner-desc">
               <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
-              <p className="banner-desc-sub">Tears of the Kingdom2</p>
+              <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom2</p>
             </div>
           </div>
           <div className="afk-banner-item">
             <img src={banner1} height={300} />
             <div className="banner-desc">
               <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
-              <p className="banner-desc-sub">Tears of the Kingdom3</p>
+              <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom3</p>
             </div>
           </div>
         </Carousel>

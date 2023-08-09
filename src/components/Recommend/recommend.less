@@ -1,0 +1,48 @@
+.afk-recommend{
+  display: flex;
+  margin-top: 30px;
+  .afk-recommend-left{
+    width: 400px;
+    height: 310px;
+    background: #fff;
+  }
+  .afk-recommend-right{
+    flex:1;
+    background: #fff;
+    padding: 0 20px;
+    .MuiBox-root{
+      border:none;
+      .MuiTab-root{
+        text-transform: none !important;
+      }
+      .Mui-selected{
+        color:#0E0905;
+        font-weight: 700;
+      }
+      .MuiTabs-indicator{
+        background-color: #0E0905;
+      }
+      .MuiTabPanel-root{
+        padding: 8px 0;
+        .tab-panel-item{
+          padding: 8px 0;
+          border-bottom: 1px var(--forumGuidesThColor) solid;
+          span{
+            display: inline-block;
+            padding: 0 10px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: normal;
+            background: var(--tabActiveBgColor);
+            color: var(--tabActiveColor);
+            border-radius: 5px;
+            margin-left:16px;
+          }
+        }
+      }
+    }
+    
+  }
+}
