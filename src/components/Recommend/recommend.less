@@ -1,31 +1,35 @@
 .afk-recommend{
   display: flex;
   margin-top: 30px;
+  border-radius: 10px;
+  overflow: hidden;
   .afk-recommend-left{
     width: 400px;
     height: 310px;
-    background: #fff;
+    background: var(--jumpBgColor);
   }
   .afk-recommend-right{
     flex:1;
-    background: #fff;
+    background: var(--jumpBgColor);
     padding: 0 20px;
     .MuiBox-root{
       border:none;
       .MuiTab-root{
         text-transform: none !important;
+        color: var(--homeTabsColor);
       }
       .Mui-selected{
-        color:#0E0905;
+        color:var(--homeTabsActive);
         font-weight: 700;
       }
       .MuiTabs-indicator{
-        background-color: #0E0905;
+        background-color: var(--homeTabsActive);
       }
       .MuiTabPanel-root{
         padding: 8px 0;
         .tab-panel-item{
           padding: 8px 0;
+          color: var(--fontColor);
           border-bottom: 1px var(--forumGuidesThColor) solid;
           span{
             display: inline-block;
