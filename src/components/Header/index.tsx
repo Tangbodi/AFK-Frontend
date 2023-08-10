@@ -10,13 +10,16 @@ import { useDispatch } from 'react-redux'
 import { setTheme, getTheme } from '@/utils/theme'
 import { useState, useRef } from 'react'
 import LoginOrRegister from '../LoginOrRegister'
+import { useNavigate } from 'react-router-dom'
 const Header = () => {
+  const navigateTo = useNavigate()
   const AccountRef = useRef(null)
   const handleClick = (isLogin: boolean) => { 
     AccountRef.current.showModal(isLogin)
   }
   const dispatch = useDispatch()
   const [currentTheme, setCurrentTheme] = useState(getTheme())
+
   const modifyMode = () => {
     const currentTheme = localStorage.getItem('theme')
     const theme = currentTheme === 'theme-light' ? 'theme-dark' : 'theme-light'
@@ -24,11 +27,15 @@ const Header = () => {
     setCurrentTheme(theme)
     dispatch({type:"modifyMode", val: theme})
   }
+
+  const goToPath = (url: string) => {
+    navigateTo(url)
+  }
   return (
     <>
     <header className="afk-header">
       <div className="afk-header-left">
-        <span>
+        <span onClick={()=>{goToPath('/')}}>
         { currentTheme === 'theme-light' ?
           <img src={logo} width="120" height="90"/>
           :
@@ -37,8 +44,8 @@ const Header = () => {
           
         </span>
         <div className="menu">
-          <span>Home</span>
-          <span>Store</span>
+          <span onClick={()=>{goToPath('/')}}>Home</span>
+          <span onClick={()=>{goToPath('/store')}}>Store</span>
         </div>
       </div>
       <div className="afk-header-center">
