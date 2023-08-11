@@ -19,7 +19,6 @@ const PostDialog = () => {
   }
 
   return (
-    <>
       <Modal width={860} wrapClassName="afk-post-dialog" title="Forum: Tears of the Kingdom" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[
           <Button key={1} type="primary" onClick={handleOk}>Save</Button>,
           <Button key={2} type="primary" onClick={handleOk}>Post</Button>,
@@ -59,7 +58,6 @@ const PostDialog = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
   )
 }
 export default PostDialog

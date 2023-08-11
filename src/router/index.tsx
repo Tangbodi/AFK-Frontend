@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom'
 import Loading from '@/components/Loading'
 import Login from '@/views/Login'
 import Home from '@/views/Home/index'
-import Layout from '@/views/layout'
+import Layout from '@/views/Layout/layout'
+import SettingsLayout from '@/views/Layout/settingsLayout'
 const Page301 = lazy(()=> import("../views/Page3-1"))
 const Page1 = lazy(()=> import("../views/Page1"))
 const Page2 = lazy(()=> import("../views/Page2"))
@@ -12,6 +13,10 @@ const User = lazy(()=> import("../views/User"))
 const Forum = lazy(()=> import("../views/Forum"))
 const Topic = lazy(()=> import("../views/Topic"))
 const Store = lazy(()=> import("../views/Store"))
+const MyInfo = lazy(()=> import("../views/Settings/MyInfo"))
+const Activities = lazy(()=> import("../views/Settings/Activities"))
+const Notifications = lazy(()=> import("../views/Settings/Notifications"))
+const Security = lazy(()=> import("../views/Settings/Security"))
 /**
  * 懒加载组件处理
  * @param comp 
@@ -43,6 +48,28 @@ const routes = [
         path: '/page3/page3-1',
         element: withLoadingComponent(<Page301/>)
       },
+    ]
+  },
+  {
+    path: '/',
+    element: <SettingsLayout/>,
+    children: [
+      {
+        path: '/settings/myinfo',
+        element: withLoadingComponent(<MyInfo/>)
+      },
+      {
+        path: '/settings/activities',
+        element: withLoadingComponent(<Activities/>)
+      },
+      {
+        path: '/settings/notifications',
+        element: withLoadingComponent(<Notifications/>)
+      },
+      {
+        path: '/settings/security',
+        element: withLoadingComponent(<Security/>)
+      }
     ]
   },
   {

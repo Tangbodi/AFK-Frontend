@@ -37,7 +37,7 @@ const User = () => {
   }
 
   useEffect(() => {
-    getUserInfo()
+    // getUserInfo()
   })
   return (
     <>

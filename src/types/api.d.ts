@@ -54,3 +54,10 @@ interface UpdateMailAddressReq {
   zip: string;
   phone: string;
 }
+
+enum Settings {
+  MyInfo = 'My info',
+  Notifications = 'Notifications',
+  Activities = 'Activities',
+  Security = 'Privacy and Security'
+}
