@@ -1,7 +1,9 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
 import { Modal, Form, Input, Button, message } from 'antd'
 import { registrationAPI, loginAPI } from '@/request/api'
+import { getTheme } from '@/utils/theme'
 import logo from '@/assets/images/login-logo.png'
+import logoDark from '@/assets/images/login-logo-dark.png'
 import './register.less'
 
 
@@ -57,7 +59,10 @@ const Register = forwardRef((props, ref) => {
     <>
       <Modal width={440} maskClosable={false} wrapClassName="afk-login" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <div className="afk-login-logo">
-          <img src={logo} width={200} height={60}/>
+          { getTheme() === 'theme-light'? 
+            <img src={logo} width={200} height={60}/>
+            : <img src={logoDark} width={200} height={60}/>
+          }
         </div>
         {
           !isLoginValue ? <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>

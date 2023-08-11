@@ -2,16 +2,24 @@
   .afk-login-logo{
     text-align: center;
   }
+  .ant-form-item-label{
+    label{
+      color: var(--fontColor);
+    }
+  }
+  .ant-modal-close-icon{
+    color: var(--loginCloseBtn);
+  }
   .ant-modal-content{
     padding: 54px 30px 47px 30px;
-    background:#FAF4ED;
+    background:var(--bgColor);
   }
   .login-input{
     height: 50px;
     border: 0;
   }
   .forget-password{
-    color: #947954;
+    color: var(--loginDescColor);
     font-size: 14px;
     font-weight: 500;
     margin-top: -20px;
@@ -21,14 +29,16 @@
     .form-login-btn{
       width: 100%;
       height: 50px;
-      background: #745B3F;
+      color: var(--loginFontColor);
+      background: var(--loginDescColor);
       &:hover{
-        background: #745B3F;
+        color: var(--loginFontColor);
+        background: var(--loginDescColor);
       }
     }
   }
   .sign-up{
-    color: #947954;
+    color: var(--loginDescColor);
     font-size: 14px;
     font-weight: 500;
     margin-top: 5px;
