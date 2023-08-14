@@ -5,11 +5,13 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import { logoutAPI } from '@/request/api'
+import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 
 const LogoutDialog = forwardRef((props, ref) => {
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const naigateTo = useNavigate()
   useImperativeHandle(ref, () => ({
     handleClickOpen
   }))
@@ -24,6 +26,7 @@ const LogoutDialog = forwardRef((props, ref) => {
     const logoutRes = await logoutAPI()
     if(logoutRes.code === 200) {
       setOpen(false)
+      naigateTo('/')
       message.success(logoutRes.data)
     } else {
       message.warning(logoutRes.message)

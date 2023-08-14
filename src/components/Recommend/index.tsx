@@ -5,11 +5,16 @@ import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
-import Banner from '../Banner';
+import Banner from '../Banner'
+import { useNavigate } from 'react-router-dom'
 const Recommend = () => {
   const [value, setValue] =  React.useState('1')
+  const navigateTo = useNavigate()
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+  }
+  const goToRouter = (id) => {
+    navigateTo(`/topic/${id}`)
   }
   return (
     <div className="afk-recommend">
@@ -28,8 +33,8 @@ const Recommend = () => {
               </TabList>
             </Box>
             <TabPanel value="1">
-              <div className='tab-panel-item'>
-                Why does Nintendo keep patching dupe methods?<span>Tears of the Kingdom</span>
+              <div className='tab-panel-item' onClick={()=>{goToRouter(1)}}>
+                <p>Why does Nintendo keep patching dupe methods?</p><span>Tears of the Kingdom</span>
               </div>
               <div className='tab-panel-item'>
                 Why does Nintendo keep patching dupe methods?<span>Tears of the Kingdom</span>

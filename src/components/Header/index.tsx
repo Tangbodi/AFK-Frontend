@@ -27,15 +27,11 @@ const Header = () => {
     setCurrentTheme(theme)
     dispatch({type:"modifyMode", val: theme})
   }
-
-  const goToPath = (url: string) => {
-    navigateTo(url)
-  }
   return (
     <>
     <header className="afk-header">
       <div className="afk-header-left">
-        <span onClick={()=>{goToPath('/')}}>
+        <span onClick={()=>{navigateTo('/')}}>
         { currentTheme === 'theme-light' ?
           <img src={logo} width="120" height="90"/>
           :
@@ -44,8 +40,8 @@ const Header = () => {
           
         </span>
         <div className="menu">
-          <span onClick={()=>{goToPath('/')}}>Home</span>
-          <span onClick={()=>{goToPath('/store')}}>Store</span>
+          <span onClick={()=>{navigateTo('/')}}>Home</span>
+          <span onClick={()=>{navigateTo('/store')}}>Store</span>
         </div>
       </div>
       <div className="afk-header-center">

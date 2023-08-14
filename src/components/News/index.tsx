@@ -1,11 +1,13 @@
 
 import baldur from '@/assets/images/baldur.png'
+import { useNavigate } from 'react-router-dom'
 const News = () => {
+  const navigateTo = useNavigate()
   return (
     <div className="afk-news mt20">
       <div className="afk-home-title">News</div>
       <div className="afk-news-list">
-        <div className="afk-news-list-item">
+        <div className="afk-news-list-item" onClick={()=>{navigateTo(`/news/1`)}}>
           <div className="list-item-left">
             <img src={baldur}/>
           </div>

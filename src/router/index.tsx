@@ -9,7 +9,6 @@ import SettingsLayout from '@/views/Layout/settingsLayout'
 const Page301 = lazy(()=> import("../views/Page3-1"))
 const Page1 = lazy(()=> import("../views/Page1"))
 const Page2 = lazy(()=> import("../views/Page2"))
-const User = lazy(()=> import("../views/User"))
 const Forum = lazy(()=> import("../views/Forum"))
 const Topic = lazy(()=> import("../views/Topic"))
 const Store = lazy(()=> import("../views/Store"))
@@ -17,6 +16,7 @@ const MyInfo = lazy(()=> import("../views/Settings/MyInfo"))
 const Activities = lazy(()=> import("../views/Settings/Activities"))
 const Notifications = lazy(()=> import("../views/Settings/Notifications"))
 const Security = lazy(()=> import("../views/Settings/Security"))
+const News = lazy(()=> import("../views/News"))
 /**
  * 懒加载组件处理
  * @param comp 
@@ -77,20 +77,20 @@ const routes = [
     element: <Layout/>,
     children: [
       {
-        path: '/user',
-        element: withLoadingComponent(<User/>)
-      },
-      {
         path: '/forum',
         element: withLoadingComponent(<Forum/>)
       },
       {
-        path: '/topic',
+        path: '/topic/:id',
         element: withLoadingComponent(<Topic/>)
       },
       {
         path: '/store',
         element: withLoadingComponent(<Store/>)
+      },
+      {
+        path: '/news/:id',
+        element: withLoadingComponent(<News/>)
       },
     ]
   },
@@ -101,7 +101,7 @@ const routes = [
   // 访问不存在的路由处理
   {
     path: '*',
-    element: <Navigate to='/home'/>
+    element: <Navigate to='/'/>
   }
 ]
 
