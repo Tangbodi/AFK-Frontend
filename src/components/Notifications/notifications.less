@@ -1,0 +1,56 @@
+.afk-popup{
+  width: 450px;
+  font-family: DM Sans;
+  margin: -12px;
+  .afk-popup-title{
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid #EEDFC9;
+    .afk-popup-title-left{
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .afk-popup-title-right{
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: auto;
+    }
+  }
+  .afk-popup-ul{
+    padding: 0 30px 15px 30px;
+    .afk-popup-li{
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #EEDFC9;
+      .afk-popup-li-icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        background: #ccc;
+        color: #fff;
+      }
+      .afk-popup-li-right{
+        flex:1;
+        overflow: hidden;
+        margin-left: 10px;
+        .afk-popup-li-right-content{
+          font-size: 14px;
+          color: #828282;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          span{
+            font-weight: 700;
+            color: #745B3F;
+          }
+        }
+        
+      }
+    }
+  }
+}

@@ -6,19 +6,27 @@ import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import iconBell from '@/assets/images/icon_bell.png'
 import iconDark from '@/assets/images/icon_dark-mode.png'
 import iconUser from '@/assets/images/icon_user.png'
-import { useDispatch } from 'react-redux'
-import { setTheme, getTheme } from '@/utils/theme'
-import { useState, useRef } from 'react'
 import LoginOrRegister from '../LoginOrRegister'
+import Saved from '../Saved'
+import { setTheme, getTheme } from '@/utils/theme'
 import { useNavigate } from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { Popover } from 'antd'
+import Notifications from '../Notifications'
 const Header = () => {
   const navigateTo = useNavigate()
   const AccountRef = useRef(null)
+  const [open,setOpen] = useState(false)
   const handleClick = (isLogin: boolean) => { 
     AccountRef.current.showModal(isLogin)
   }
   const dispatch = useDispatch()
   const [currentTheme, setCurrentTheme] = useState(getTheme())
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen)
+  }
 
   const modifyMode = () => {
     const currentTheme = localStorage.getItem('theme')
@@ -62,7 +70,16 @@ const Header = () => {
           <img src={iconDark} width={24} height={24}/>
         </div>
         <div className="right-item">
-          <img src={iconBell} width={24} height={24}/>
+          <Popover
+           rootClassName="custome-popover"
+           trigger="click"
+           placement="bottomRight"
+           content={<Notifications/>}
+           open={open}
+           onOpenChange={handleOpenChange}
+          >
+            <img src={iconBell} width={24} height={24}/>
+          </Popover>
         </div>
         <div className="right-item" onClick={()=>{handleClick(true)}}>
           <img src={iconUser} width={22} height={22}/>
@@ -70,6 +87,7 @@ const Header = () => {
       </div>
     </header>
     <LoginOrRegister ref={AccountRef}/>
+    <Saved/>
     </>
   )
 }

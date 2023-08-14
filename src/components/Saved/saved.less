@@ -1,0 +1,66 @@
+.afk-saved{
+  position: fixed;
+  z-index: 2;
+  right: 0;
+  top: 260px;
+  font-family: DM Sans;
+  .afk-saved-menu{
+    text-align: center;
+    border-radius: 5px;
+    width: 84px;
+    min-height: 106px;
+    padding: 15px 10px;
+    box-sizing: border-box;
+    background: var(--navBgColor);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    color: var(--navColor);
+    .afk-saved-icon{
+      margin-bottom: 3px;
+    }
+    &.hover-menu{
+      height: 300px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+  .afk-saved-list{
+    position: absolute;
+    display: block;
+    width: 252px;
+    min-height: 100px;
+    left: -252px;
+    top: 0;
+    padding: 16px;
+    box-sizing: border-box;
+    background: var(--jumpBgColor);
+    color: var(--navColor);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    z-index: 2;
+    cursor: pointer;
+    .afk-saved-list-item{
+      display: flex;
+      text-align: left;
+      align-items: center;
+      margin-bottom: 10px;
+      .afk-saved-list-item-left{
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .afk-saved-list-item-right{
+        flex:1;
+        font-size: 15px;
+        font-weight: 700;
+      }
+    }
+    .afk-saved-list-more{
+      font-size: 14px;
+      color: var(--homeMore);
+    }
+  }
+}
