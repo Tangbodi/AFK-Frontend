@@ -68,3 +68,26 @@ export const returnAllGamesWithGenreAPI = ():Promise<APIRes> => request.get('/ap
  * returnAllGamesGenres
  */
 export const returnAllGamesGenresAPI = (): Promise<APIRes> => request.get('/api/v1/all-games-genres')
+
+
+/**
+ * /api/v1/get-news
+ */
+export const getNewsAPI = (): Promise<APIRes> => request.get('/api/v1/get-news')
+
+/**
+ * /api/v1/all-games/save-forums
+ * @param genreId
+ * @param gameId
+ */
+export const saveForumsAPI = (): Promise<APIRes> => request.post('/api/v1/all-games/save-forums')
+
+/**
+ * /api/v1/all-games/favorite-games
+ */
+export const getForumsAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/favorite-games')
+
+/**
+ * /api/v1/all-games/home-game-images
+ */
+export const getHomeGameImagesAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/home-game-images')
