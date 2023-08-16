@@ -1,28 +1,40 @@
 import './header.less'
 import logo from '@/assets/images/afk_logo_light.png'
 import logoDark from '@/assets/images/afk_logo_dark.png'
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import iconBell from '@/assets/images/icon_bell.png'
 import iconDark from '@/assets/images/icon_dark-mode.png'
 import iconUser from '@/assets/images/icon_user.png'
 import LoginOrRegister from '../LoginOrRegister'
 import Saved from '../Saved'
+import Notifications from '../Notifications'
 import { setTheme, getTheme } from '@/utils/theme'
 import { useNavigate } from 'react-router-dom'
 import { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { Popover, Select } from 'antd'
-import Notifications from '../Notifications'
+import { Popover, Input } from 'antd'
+import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
+import { searchOptions } from '@/config'
+
 const Header = () => {
   const navigateTo = useNavigate()
   const AccountRef = useRef(null)
+  const [optionVisible, setOptionVisible] = useState(false)
   const [open,setOpen] = useState(false)
+  const [placeholder, setPlaceholder] = useState("Search for forum, topic, games...")
   const handleClick = (isLogin: boolean) => { 
     AccountRef.current.showModal(isLogin)
   }
   const dispatch = useDispatch()
   const [currentTheme, setCurrentTheme] = useState(getTheme())
+
+  const optionVisibleHandle = () => {
+    setOptionVisible(!optionVisible)
+  }
+
+  const selectOptionHandle = () => {
+    setPlaceholder(null)
+    setOptionVisible(false)
+  }
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
@@ -54,20 +66,30 @@ const Header = () => {
       <div className="afk-header-center">
         <div className="afk-header-center_bar">
           <div className="search-icon">
-            <SearchRoundedIcon sx={{ color: '#745B3F', fontSize: '18px' }}/>
+            <SearchOutlined />
           </div>
-          <div className="search-input">
-            {/* <input placeholder="Search for forum, topic, games..." maxLength={100}/> */}
-            <Select
-              defaultValue="lucy"
-              style={{ width: 120 }}
-              options={[{ value: 'lucy', label: 'Lucy' }]}
-            />
-          </div>
-          <div className="search-clear">
-            <ClearRoundedIcon sx={{ color: '#745B3F', fontSize: '18px'}}/>
+          {/* <div className="search-input" onClick={optionVisibleHandle}>
+            { placeholder }
+          </div> */}
+          <div className='search-inputs'>
+            <Input placeholder="Please input ..." allowClear={{clearIcon:<CloseOutlined className='search-inputs-close'/>}}/>
           </div>
         </div>
+        {
+          optionVisible &&
+          <div className='afk-header-center-options'>
+            {
+              searchOptions.map(option => {
+                return (
+                  <div className='options-item' key={option.value} onClick={selectOptionHandle}>
+                    <SearchOutlined /><span className='options-item-label'>{option.label}</span>
+                  </div>
+                )
+              })
+            }
+          </div>
+        }
+        
       </div>
       <div className='afk-header-right'>
         <div className="right-item" onClick={modifyMode}>

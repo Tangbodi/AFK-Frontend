@@ -11,3 +11,8 @@ export const homeTabsList = [
   // { label: 'Featured Posts', value: '3'},
   { label: 'Newest Replies', value: 'newest'}
 ]
+
+export const searchOptions = [
+  { label: "Search in Store", value: 'store'},
+  { label: "Search in Forums", value: 'forums'}
+]
