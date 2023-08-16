@@ -28,6 +28,7 @@ const News = () => {
         setShowMore(true)
         setShowList(getNewsRes.data.slice(0,3))
       } else {
+        setShowMore(false)
         setShowList(getNewsRes.data)
       }
       setNewsList(getNewsRes.data||[])
@@ -39,9 +40,7 @@ const News = () => {
     <div className="afk-news mt20">
       <div className="afk-home-title">News</div>
       <div className="afk-news-list">
-        {
-          isLoading && <Loading/>
-        }
+        { isLoading && <Loading/> }
         {
           showList.map((news, index)=> {
             return (

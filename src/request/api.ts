@@ -91,3 +91,9 @@ export const getForumsAPI = (): Promise<APIRes> => request.get('/api/v1/all-game
  * /api/v1/all-games/home-game-images
  */
 export const getHomeGameImagesAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/home-game-images')
+
+/**
+ * /api/v1/all-games-genres/genre/home-merged
+ * @param type
+ */
+export const homeMergedAPI = (params: HomeMergedReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/home-merged', params)

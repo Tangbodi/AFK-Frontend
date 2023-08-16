@@ -4,3 +4,10 @@ export const settingsList = [
   { name:'Activities', path: '/settings/activities'},
   { name:'Privacy and Security', path: '/settings/security'}
 ]
+
+export const homeTabsList = [
+  { label: 'Latest Posts', value: 'latest'},
+  { label: 'Popular Posts', value: 'popular'},
+  // { label: 'Featured Posts', value: '3'},
+  { label: 'Newest Replies', value: 'newest'}
+]

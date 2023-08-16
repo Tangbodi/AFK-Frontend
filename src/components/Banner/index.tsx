@@ -31,10 +31,10 @@ class Banner extends Component<any,any> {
               return (
                 <div className="afk-banner-item" key={index}>
                   <img src={`//${item.imageUrl}`} height={300} />
-                  <div className="banner-desc">
+                  {/* <div className="banner-desc">
                     <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
                     <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom1</p>
-                  </div>
+                  </div> */}
                 </div>
               )
             })

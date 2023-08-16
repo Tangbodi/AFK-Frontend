@@ -1,5 +1,6 @@
 import './recommend.less'
-import * as React from 'react';
+import { message } from 'antd'
+import { useEffect, useState, SyntheticEvent } from 'react'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
@@ -7,14 +8,36 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Banner from '../Banner'
 import { useNavigate } from 'react-router-dom'
+import { homeMergedAPI } from '@/request/api'
+import { homeTabsList } from '@/config'
+import Loading from '../Loading'
 const Recommend = () => {
-  const [value, setValue] =  React.useState('1')
+  const [currentTabValue, setCurrentTabValue] = useState('latest')
+  const [postsList, setPostsList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const navigateTo = useNavigate()
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+  useEffect(()=>{
+    handleChange(null, currentTabValue) // 默认加载第一个tab
+  },[])
+  // tab切换change触发
+  const handleChange = (event: SyntheticEvent, type = currentTabValue) => {
+    setCurrentTabValue(type)
+    homeMerged(type)
   }
+  // 路由跳转
   const goToRouter = (id) => {
     navigateTo(`/topic/${id}`)
+  }
+  // 首页tabs接口
+  const homeMerged = async(type: string) => {
+    setIsLoading(true)
+    const homeMergedRes = await homeMergedAPI({type})
+    if(homeMergedRes.code === 200) {
+      setIsLoading(false)
+      setPostsList(homeMergedRes.data||[])
+      return
+    }
+    message.warning(homeMergedRes.message)
   }
   return (
     <div className="afk-recommend">
@@ -23,35 +46,35 @@ const Recommend = () => {
       </div>
       <div className="afk-recommend-right">
         <Box sx={{ width: '100%', typography: 'body1' }}>
-          <TabContext value={value}>
+          <TabContext value={currentTabValue}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Latest Posts" value="1" />
-                <Tab label="Popular Posts" value="2" />
-                <Tab label="Featured Posts" value="3" />
-                <Tab label="Newest Replies" value="4" />
+              <TabList onChange={handleChange}>
+                { homeTabsList.map(tab => (<Tab label={tab.label} value={tab.value} key={tab.value} />)) }
               </TabList>
             </Box>
-            <TabPanel value="1">
-              <div className='tab-panel-item' onClick={()=>{goToRouter(1)}}>
-                <p>Why does Nintendo keep patching dupe methods?</p><span>Tears of the Kingdom</span>
-              </div>
-              <div className='tab-panel-item'>
-                Why does Nintendo keep patching dupe methods?<span>Tears of the Kingdom</span>
-              </div>
-              <div className='tab-panel-item'>
-                Why does Nintendo keep patching dupe methods?<span>Tears of the Kingdom</span>
-              </div>
-              <div className='tab-panel-item'>
-                Why does Nintendo keep patching dupe methods?<span>Tears of the Kingdom</span>
-              </div>
-              <div className='tab-panel-item'>
-                Why does Nintendo keep patching dupe methods?<span>Tears of the Kingdom</span>
-              </div>
-            </TabPanel>
-            <TabPanel value="2">Item Two</TabPanel>
-            <TabPanel value="3">Item Three</TabPanel>
-            <TabPanel value="4">Newest Replies</TabPanel>
+            {
+              homeTabsList.map(tab =>(
+                <TabPanel value={tab.value} key={tab.value}>
+                  {
+                    isLoading &&
+                    <div className='tab-loading'>
+                      <Loading/>
+                    </div>
+                  }
+                  {
+                    !isLoading &&
+                    postsList.map(postsItem => {
+                      return (
+                        <div className='tab-panel-item' key={postsItem.postId} onClick={()=>{goToRouter(postsItem.postId)}}>
+                          <p>{postsItem.title || postsItem.content}</p>
+                          <span>{postsItem.gameName}</span>
+                        </div>
+                      )
+                    })
+                  }
+                </TabPanel>
+              ))
+            }
           </TabContext>
         </Box>
       </div>

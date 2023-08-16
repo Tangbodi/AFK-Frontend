@@ -12,7 +12,7 @@ import { setTheme, getTheme } from '@/utils/theme'
 import { useNavigate } from 'react-router-dom'
 import { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { Popover } from 'antd'
+import { Popover, Select } from 'antd'
 import Notifications from '../Notifications'
 const Header = () => {
   const navigateTo = useNavigate()
@@ -45,7 +45,6 @@ const Header = () => {
           :
           <img src={logoDark} width="120" height="90"/>
         }
-          
         </span>
         <div className="menu">
           <span onClick={()=>{navigateTo('/')}}>Home</span>
@@ -58,7 +57,12 @@ const Header = () => {
             <SearchRoundedIcon sx={{ color: '#745B3F', fontSize: '18px' }}/>
           </div>
           <div className="search-input">
-            <input placeholder="Search for forum, topic, games..." maxLength={100}/>
+            {/* <input placeholder="Search for forum, topic, games..." maxLength={100}/> */}
+            <Select
+              defaultValue="lucy"
+              style={{ width: 120 }}
+              options={[{ value: 'lucy', label: 'Lucy' }]}
+            />
           </div>
           <div className="search-clear">
             <ClearRoundedIcon sx={{ color: '#745B3F', fontSize: '18px'}}/>

@@ -61,3 +61,7 @@ enum Settings {
   Activities = 'Activities',
   Security = 'Privacy and Security'
 }
+
+interface HomeMergedReq {
+  type: string
+}

@@ -1,16 +1,34 @@
 import { returnAllGamesAPI } from "@/request/api"
 import { message } from "antd"
 import { useEffect, useState } from "react"
+import Loading from "../Loading"
 
 const Forum = () => {
   const [games, setGames] = useState([])
+  const [showList, setShowList] = useState([])
+  const [showMore, setShowMore] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     returnAllGames()
   },[])
 
+  const showMoreHandle = () => {
+    setShowList(games)
+    setShowMore(false)
+  }
+
   const returnAllGames = async() => {
+    setIsLoading(true)
     const returnAllGamesRes = await returnAllGamesAPI()
     if(returnAllGamesRes.code === 200) {
+      setIsLoading(false)
+      if(returnAllGamesRes.data && returnAllGamesRes.data.length > 9){
+        setShowMore(true)
+        setShowList(returnAllGamesRes.data.slice(0,9))
+      }else{
+        setShowMore(false)
+        setShowList(returnAllGamesRes.data||[])
+      }
       setGames(returnAllGamesRes.data)
       return
     }
@@ -23,8 +41,9 @@ const Forum = () => {
         <span className="jump-back-tabs-btn active">Games</span>
       </div>
       <div className="jump-back-main-wrap">
+        {isLoading&&<Loading/>}
         <div className="jump-back-main">
-          { games.map((game, index)=>{
+          { showList.map((game, index)=>{
             return (
               <div className="jump-back-main-item" key={index}>
                 <div className="jump-back-main-item-left">
@@ -38,7 +57,7 @@ const Forum = () => {
             })
           }
         </div>
-        <div className="jump-back-more">&gt;&gt; View more</div>
+        { showMore &&  <div className="jump-back-more" onClick={showMoreHandle}>&gt;&gt; View more</div>}        
       </div>
     </div>
   )
