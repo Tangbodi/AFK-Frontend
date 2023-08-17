@@ -65,3 +65,8 @@ enum Settings {
 interface HomeMergedReq {
   type: string
 }
+
+interface SearchForumsReq {
+  type: string;
+  keyword: string;
+}

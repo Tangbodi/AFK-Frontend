@@ -97,3 +97,10 @@ export const getHomeGameImagesAPI = (): Promise<APIRes> => request.get('/api/v1/
  * @param type
  */
 export const homeMergedAPI = (params: HomeMergedReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/home-merged', params)
+
+/**
+ * search-forums
+ * @param type
+ * @param keyword
+ */
+export const searchForumsAPI = (params: SearchForumsReq): Promise<APIRes> => request.post('/api/v1/search-forums', params)
