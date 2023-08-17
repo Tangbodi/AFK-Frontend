@@ -20,7 +20,7 @@ const View = () => {
     //     dis({type:"add1"})
     //   }, 1000)
     // })
-    // redux-thunk写法
+    // redux-thunk写法 
     // dispatch调用状态管理中的asyncAdd1()
     dispatch(numStatus.asyncActions.asyncAdd1)
   }

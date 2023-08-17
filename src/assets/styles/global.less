@@ -30,6 +30,7 @@
 @theme-dark8: #140F0A;
 @font-color:#333333;
 @font-white:#F2F2F2;
+@border-gray:#E9E9E9;
 body{
   font-family: DM Sans;
   color: @dark;
@@ -94,6 +95,7 @@ img {
   --loginDescColor:@theme-dark6;
   --loginFontColor:@white;
   --loginCloseBtn:@warning-red;
+  --searchResultBorder:@border-gray;
 }
  
 .theme-dark{
@@ -143,6 +145,7 @@ img {
   --loginDescColor:@theme-dark;
   --loginFontColor:@dark;
   --loginCloseBtn:@warning-red;
+  --searchResultBorder:@theme-dark3;
 }  
 
 
@@ -223,6 +226,22 @@ img {
     &.active, &:hover{
       background: #745B3F;
       color: #fff;
+    }
+  }
+}
+
+.hot-games{
+  margin-top: 30px;
+  ul{
+    display: flex;
+    gap:10px;
+    align-content:space-between;
+    li{
+      border-radius: 10px;
+      overflow: hidden;
+      &:nth-child(3n){
+        margin-right: 0!important;
+      }
     }
   }
 }

@@ -17,6 +17,7 @@ const Activities = lazy(()=> import("../views/Settings/Activities"))
 const Notifications = lazy(()=> import("../views/Settings/Notifications"))
 const Security = lazy(()=> import("../views/Settings/Security"))
 const News = lazy(()=> import("../views/News"))
+const Search = lazy(()=> import("../views/Search"))
 /**
  * 懒加载组件处理
  * @param comp 
@@ -91,6 +92,10 @@ const routes = [
       {
         path: '/news/:id',
         element: withLoadingComponent(<News/>)
+      },
+      {
+        path: '/search',
+        element: withLoadingComponent(<Search/>)
       },
     ]
   },
