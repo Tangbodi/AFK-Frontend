@@ -70,3 +70,17 @@ interface SearchForumsReq {
   type: string;
   keyword: string;
 }
+
+interface GameInfoReq {
+  genreId: string;
+  gameId: string;
+}
+
+interface GameData {
+  description: string;
+  gameId: number;
+  gameName: string;
+  genreId: number;
+  iconUrl: string
+
+}

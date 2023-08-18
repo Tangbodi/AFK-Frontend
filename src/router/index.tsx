@@ -78,7 +78,7 @@ const routes = [
     element: <Layout/>,
     children: [
       {
-        path: '/forum',
+        path: '/forum/:gameId',
         element: withLoadingComponent(<Forum/>)
       },
       {

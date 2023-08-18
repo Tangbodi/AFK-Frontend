@@ -31,12 +31,31 @@
           font-size: 28px;
           font-style: normal;
           font-weight: 500;
-          line-height: 28px; 
+          // line-height: 28px; 
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .game-detail-title-l{
+            flex: 1;
+          }
+          .game-detail-title-r{
+            font-size: 14px;
+            color:#745B3F;
+            font-weight: 400;
+            margin-left: auto;
+            display: flex;
+            svg{
+              margin-right: 2px;
+            }
+          }
         }
         .game-detail-desc{
           margin-top: 14px;
           color: var(--descColor);
-          font-feature-settings: 'clig' off, 'liga' off;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 4; /* 设置最大显示行数 */
+          -webkit-box-orient: vertical;
           text-overflow: ellipsis;
           font-size: 16px;
           font-style: normal;
@@ -170,13 +189,14 @@
             width: 110px;
             height: 40px;
             text-align: center;
+            cursor: pointer;
             &.prev-btn{
               i{
                 display: inline-block;
                 width: 7px;
                 height: 7px;
                 border-top: 2px solid var(--fontColor);
-                border-left: 2x solid var(--fontColor);
+                border-left: 2px solid var(--fontColor);
                 transform: rotate(-45deg);
                 margin-right:8px;
               }
@@ -193,6 +213,7 @@
               }
             }
             &.disabled{
+              pointer-events: none;
               color: var(--paginationDisabledFontColor);
               i{
                 border-top: 2px solid var(--paginationDisabledFontColor);

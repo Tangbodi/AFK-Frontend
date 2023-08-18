@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import Uploader from '@/components/Uploader'
 import './postDialog.less'
 const PostDialog = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { TextArea } = Input
   const showModal = () => {
     setIsModalOpen(true)
