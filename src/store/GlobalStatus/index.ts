@@ -15,6 +15,10 @@ const store = {
   },
   // redux-thunk异步写法
   asyncActions: { // 只放异步方法
+    // asyncSavedForums(dispatch:Function) {
+    //   console.log('xxss')
+    //   dispatch({type:'savedForums', val: 22})
+    // }
   },
   actionNames: {}
 }
