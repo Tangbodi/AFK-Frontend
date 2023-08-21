@@ -21,16 +21,16 @@ const Forum = () => {
   const { savedForums } = useSelector((state: RootState) => ({
     savedForums: state.gobalStatus.savedForums
   }))
-  console.log('savedForums',savedForums)
   const [isSaved, setIsSaved] = useState(false)
   const [pageSize, setPageSize] = useState(2)
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)
   useEffect(()=>{ 
-    gameInfo(searchParams.get('genreId'), gameId)
+    console.log('savedForums',savedForums)
+    savedForums && gameInfo(searchParams.get('genreId'), gameId)
     getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
-  },[])
+  },[savedForums])
 
   const onPrevious = () => {
     let _currentPage = currentPage
@@ -48,6 +48,8 @@ const Forum = () => {
     const gameInfoRes = await gameInfoAPI({genre, game})
     if(gameInfoRes.code === 200) {
       setGameData(gameInfoRes.data|| {})
+      const gameName = gameInfoRes.data.gameName
+      gameName && setIsSaved(savedForums.findIndex(save=>save.gameName === gameName) > -1)
       return
     }
     message.warning(gameInfoRes.message)

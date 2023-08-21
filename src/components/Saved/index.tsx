@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from 'react'
 import { getForumsAPI } from '@/request/api'
 import { message } from 'antd'
 import { useDispatch } from 'react-redux'
-import globalStatus from '@/store/GlobalStatus'
 const Saved = () => {
   const saveListRef = useRef(null)
   const dispatch = useDispatch()
