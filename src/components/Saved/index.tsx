@@ -3,8 +3,10 @@ import { Grade, GradeOutlined } from '@mui/icons-material'
 import { useRef, useState, useEffect } from 'react'
 import { getForumsAPI } from '@/request/api'
 import { message } from 'antd'
+import { useDispatch } from 'react-redux'
 const Saved = () => {
   const saveListRef = useRef(null)
+  const dispatch = useDispatch()
   const [dHeight, setDHeight] = useState(106)
   const [visible, setVisible] = useState(false)
   const [isShow, setIsShow] = useState('none')
@@ -15,7 +17,7 @@ const Saved = () => {
     getForums()
   }, [])
   const mouseOver = () => {
-    setIsShow('block')
+    showList.length && setIsShow('block')
     setVisible(true)
     setDHeight(saveListRef.current.offsetHeight)
   }
@@ -34,6 +36,7 @@ const Saved = () => {
       } else {
         setShowList(getForumsRes.data)
       }
+      dispatch({type:"savedForums", val: getForumsRes.data})
       setForums(getForumsRes.data||[])
       return
     }

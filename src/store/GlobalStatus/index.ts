@@ -8,6 +8,9 @@ const store = {
     },
     searchResult(newState: {result: any}, action: {type: string, val: any}) {
       newState.result = action.val
+    },
+    savedForums(newState: {savedForums: any}, action: {type: string, val: any}) {
+      newState.savedForums = action.val
     }
   },
   // redux-thunk异步写法

@@ -72,8 +72,8 @@ interface SearchForumsReq {
 }
 
 interface GameInfoReq {
-  genreId: string;
-  gameId: string;
+  genre: string;
+  game: string;
 }
 
 interface GameData {
@@ -83,4 +83,9 @@ interface GameData {
   genreId: number;
   iconUrl: string
 
+}
+
+interface SaveGamesReq{
+  genreId: string;
+  gameId: string;
 }

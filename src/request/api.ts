@@ -58,7 +58,7 @@ export const updateMailAddressAPI = (params: UpdateMailAddressReq): Promise<APIR
  * returnAllGames
  * @method GET
  */
-export const returnAllGamesAPI = (): Promise<APIRes> => request.get('/api/v1/all-games')
+export const returnAllGamesAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/')
 
 /**
  * returnAllGamesWithGenre
@@ -88,10 +88,10 @@ export const getNewsAPI = (): Promise<APIRes> => request.get('/api/v1/get-news')
 export const saveForumsAPI = (): Promise<APIRes> => request.post('/api/v1/all-games/save-forums')
 
 /**
- * @url /api/v1/all-games/favorite-games
+ * @url /api/v1/all-games/saved-games
  * @method GET
  */
-export const getForumsAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/favorite-games')
+export const getForumsAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/saved-games')
 
 /**
  * @url /api/v1/all-games/home-game-images
@@ -100,11 +100,11 @@ export const getForumsAPI = (): Promise<APIRes> => request.get('/api/v1/all-game
 export const getHomeGameImagesAPI = (): Promise<APIRes> => request.get('/api/v1/all-games/home-game-images')
 
 /**
- * @url /api/v1/all-games-genres/genre/home-merged
+ * @url /api/v1/all-games-genres/genre/latest-popular-newest
  * @param type
  * @method POST
  */
-export const homeMergedAPI = (params: HomeMergedReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/home-merged', params)
+export const homeMergedAPI = (params: HomeMergedReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/latest-popular-newest', params)
 
 /**
  * search-forums
@@ -125,9 +125,17 @@ export const getAllPostOneGameAPI = (params: any): Promise<APIRes> => request.ge
 
 /**
  * Get One Game Info
- * @url /api/v1/all-games/game-info
+ * @url /api/v1/all-games-genres/game-info
+ * @param genre
+ * @param game
+ * @method POST
+ */
+export const gameInfoAPI = (params: GameInfoReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/game-info',{ params })
+
+/**
+ * /api/v1/all-games/save-game
  * @param genreId
  * @param gameId
  * @method POST
  */
-export const gameInfoAPI = (params: GameInfoReq): Promise<APIRes> => request.post('/api/v1/all-games/game-info', params)
+export const saveGamesAPI = (params: SaveGamesReq): Promise<APIRes> => request.post('/api/v1/all-games/save-game', params)
