@@ -133,9 +133,21 @@ export const getAllPostOneGameAPI = (params: any): Promise<APIRes> => request.ge
 export const gameInfoAPI = (params: GameInfoReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/game-info',{ params })
 
 /**
- * /api/v1/all-games/save-game
+ * @name saveGames
+ * @url /api/v1/all-games/save-game
  * @param genreId
  * @param gameId
  * @method POST
  */
 export const saveGamesAPI = (params: SaveGamesReq): Promise<APIRes> => request.post('/api/v1/all-games/save-game', params)
+
+/**
+ * Edit Post, Set Post Cache
+ * @url /api/v1/all-games-genres/edit-post
+ * @param gameId
+ * @param genreId
+ * @param title
+ * @param textRender
+ * @param imageList
+ */
+export const setPostAPI = (params: SetPostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/edit-post', params)

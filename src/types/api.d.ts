@@ -89,3 +89,11 @@ interface SaveGamesReq{
   genreId: string;
   gameId: string;
 }
+
+interface SetPostReq {
+  genreId: string;
+  gameId: string;
+  title: string;
+  textRender: string;
+  imageList: any
+}

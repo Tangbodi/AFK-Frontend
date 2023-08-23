@@ -3,12 +3,13 @@ import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
 import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, saveGamesAPI } from '@/request/api'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { message } from 'antd'
 import { useSearchParams, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 const Forum = () => {
   const { gameId } = useParams()
+  const PostDialogRef = useRef(null)
   const [posts, setPosts] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
   const [gameData, setGameData] = useState<GameData>({
@@ -73,6 +74,9 @@ const Forum = () => {
       return
     }
     message.warning(gameBaseInfoRes.message)
+  }
+  const createNewPost = () => {
+    PostDialogRef.current.showModal()
   }
   const saveGames = async() => {
     const saveGamesRes = await saveGamesAPI({genreId: searchParams.get('genreId'), gameId})
@@ -156,7 +160,7 @@ const Forum = () => {
           </div>
           <div className="afk-forum-guides-create">
             <div className="guides-create-btn">
-              <Button className="default-btn w240" variant="contained">Create New Post</Button>
+              <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
             </div>
             <div className="guides-pagination">
               <div className={prevDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onPrevious}>
@@ -168,7 +172,7 @@ const Forum = () => {
           </div>
         </div>
       </div>
-      <PostDialog/>
+      <PostDialog ref={PostDialogRef}/>
     </div>
   )
 }
