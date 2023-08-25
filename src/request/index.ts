@@ -1,6 +1,7 @@
 import { message } from 'antd'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import axios from 'axios'
+import { Console } from 'console'
 
 
 interface AxiosTokenInstance extends AxiosInstance {}
@@ -67,6 +68,8 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
   if(res.status === 200) {
     return res.data
+  } else if(res.status === 400){
+    message.warning(res.data.message)
   } else {
     throw new Error(getErrorCode2text(res.status))
   }

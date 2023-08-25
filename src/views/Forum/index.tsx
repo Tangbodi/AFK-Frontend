@@ -28,7 +28,6 @@ const Forum = () => {
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)
   useEffect(()=>{ 
-    console.log('savedForums',savedForums)
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
     getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
   },[savedForums])
@@ -172,7 +171,7 @@ const Forum = () => {
           </div>
         </div>
       </div>
-      <PostDialog ref={PostDialogRef}/>
+      <PostDialog title={gameData.gameName} ref={PostDialogRef}/>
     </div>
   )
 }

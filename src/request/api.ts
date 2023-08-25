@@ -142,12 +142,21 @@ export const gameInfoAPI = (params: GameInfoReq): Promise<APIRes> => request.get
 export const saveGamesAPI = (params: SaveGamesReq): Promise<APIRes> => request.post('/api/v1/all-games/save-game', params)
 
 /**
- * Edit Post, Set Post Cache
- * @url /api/v1/all-games-genres/edit-post
+ * /api/v1/all-games-genres/save-post-image
+ * @url /api/v1/all-games-genres/save-post-image
+ * @method post
+ */
+export const savePostImageAPI = (params: any): Promise<APIRes> => request.post('/api/v1/all-games-genres/save-post-image', params, {
+  headers: {'Content-Type': 'multipart/form-data'}
+})
+
+/**
+ * Save-post
+ * @url /api/v1/all-games-genres/save-post
  * @param gameId
  * @param genreId
  * @param title
  * @param textRender
- * @param imageList
+ * @param postImageNameList
  */
-export const setPostAPI = (params: SetPostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/edit-post', params)
+export const savePostAPI = (params: SavePostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/save-post', params)

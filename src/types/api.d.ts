@@ -90,10 +90,10 @@ interface SaveGamesReq{
   gameId: string;
 }
 
-interface SetPostReq {
+interface SavePostReq {
   genreId: string;
   gameId: string;
   title: string;
   textRender: string;
-  imageList: any
+  postImageNameList: any
 }

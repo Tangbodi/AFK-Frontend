@@ -1,18 +1,30 @@
 import type { UploadProps } from 'antd'
-import { Upload, Button } from 'antd'
+import { Upload, Button, message } from 'antd'
+import { savePostImageAPI } from '@/request/api'
 import './uploader.less'
 const { Dragger } = Upload
 const Uploader = (_props) => {
   const { getFiles } = _props
+  const handleSubmit = async(fileList) => {
+    const formData = new FormData()
+    formData.append('images', fileList[0].originFileObj)
+    const savePostImageRes = await savePostImageAPI(formData)
+    if(savePostImageRes.code === 200) {
+      getFiles(savePostImageRes.data[0])
+      return
+    }
+    message.warning(savePostImageRes.message)
+  }
   const props: UploadProps = {
-    multiple: true,
+    multiple: false,
+    maxCount: 9,
     beforeUpload() {
-      return false // 阻止默认上传
+      return false
     },
     onChange(info) {
-      const { status } = info.file;
+      const { status } = info.file
       if (status !== 'uploading') {
-        getFiles(info.fileList) // 告知父组件需要上传的文件流对象
+        handleSubmit(info.fileList.slice(-1))
         info.file.status = 'done'
       }
     },
