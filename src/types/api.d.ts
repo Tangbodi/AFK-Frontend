@@ -97,3 +97,27 @@ interface SavePostReq {
   textRender: string;
   postImageNameList: any
 }
+
+interface ShowPostBodyReq {
+  genre: string;
+  game: string;
+  post: string
+}
+
+interface LikeSavePostReq {
+  postId: string;
+  type: string;
+}
+
+interface EditCommentReq {
+  genreId: string;
+  gameId: string;
+  postId: string;
+  toUid: string;
+  content: string;
+}
+
+interface EditReplyReq extends EditCommentReq {
+  commentId: string;
+  toReplyId: string;
+}

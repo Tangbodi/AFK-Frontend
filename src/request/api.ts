@@ -160,3 +160,56 @@ export const savePostImageAPI = (params: any): Promise<APIRes> => request.post('
  * @param postImageNameList
  */
 export const savePostAPI = (params: SavePostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/save-post', params)
+
+/**
+ * showPostBody
+ * @url /api/v1/all-games-genres/save-post
+ * @param genre
+ * @param game
+ * @post 
+ * @method GET
+ */
+export const showPostBodyAPI = (params: ShowPostBodyReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/save-post',{ params })
+
+/**
+ * Get All Comments And Replies By PostId
+ * @url /api/v1/all-games-genres/comments-replies
+ * @param genre
+ * @param game
+ * @post 
+ * @method GET
+ * 
+ */
+export const commentsRepliesAPI = (params: ShowPostBodyReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/comments-replies',{ params })
+
+/**
+ * User Likes/Saves Post
+ * @url /api/v1/all-games-genres/genre/like-save-post
+ * @param postId
+ * @param type
+ */
+export const likeSavePostAPI = (params: LikeSavePostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/like-save-post',params)
+
+/**
+ * Edit Comment
+ * @url /api/v1/all-games-genres/edit-comment
+ * @param genreId
+ * @param gameId
+ * @param postId
+ * @param toUid
+ * @param content
+ */
+export const editCommentAPI = (params: EditCommentReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/edit-comment',params)
+
+/**
+ * Edit Reply
+ * @url /api/v1/all-games-genres/edit-reply
+ * @param genreId
+ * @param gameId
+ * @param postId
+ * @param toUid
+ * @param content
+ * @param commentId
+ * @param toReplyId
+ */
+export const editReplyAPI = (params: EditReplyReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/edit-reply',params)
