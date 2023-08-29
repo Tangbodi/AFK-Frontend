@@ -1,19 +1,43 @@
-.afk-like-save{
-  display: flex;
-  .afk-like-save-item{
-    font-size: 14px;
-    color: var(--topicCommentTopColor);
-    margin-right: 20px;
-    cursor: pointer;
-    svg{
-      font-size: 16px;
+.afk-like-wrap{
+  width: 100%;
+  .afk-like-save{
+    display: flex;
+    .afk-like-save-item{
+      font-size: 14px;
       color: var(--topicCommentTopColor);
-      vertical-align: -3px;
-      margin-right: 3px;
-    }
-    &.transform-1{
+      margin-right: 20px;
+      cursor: pointer;
       svg{
-        transform:rotate(-45deg);
+        font-size: 16px;
+        color: var(--topicCommentTopColor);
+        vertical-align: -3px;
+        margin-right: 3px;
+      }
+      &.transform-1{
+        svg{
+          transform:rotate(-45deg);
+        }
+      }
+    }
+  }
+  .afk-like-input{
+    margin: 15px 0;
+    .afk-like-input-area{
+      width: 100%;
+      .ant-input{
+        box-shadow: none;
+        border:1px #d9d9d9 solid;
+        &:hover{
+          border:1px #d9d9d9 solid;
+          box-shadow: none;
+        }
+      }
+    }
+    .afk-like-input-btn{
+      margin: 15px 0;
+      text-align: right;
+      .ant-btn-primary{
+        background: #745B3F;
       }
     }
   }

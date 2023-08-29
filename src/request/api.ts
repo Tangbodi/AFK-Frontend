@@ -163,13 +163,13 @@ export const savePostAPI = (params: SavePostReq): Promise<APIRes> => request.pos
 
 /**
  * showPostBody
- * @url /api/v1/all-games-genres/save-post
+ * @url /api/v1/all-games-genres/post-body
  * @param genre
  * @param game
  * @post 
  * @method GET
  */
-export const showPostBodyAPI = (params: ShowPostBodyReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/save-post',{ params })
+export const showPostBodyAPI = (params: ShowPostBodyReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/post-body',{ params })
 
 /**
  * Get All Comments And Replies By PostId

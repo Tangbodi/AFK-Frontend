@@ -82,7 +82,7 @@ const routes = [
         element: withLoadingComponent(<Forum/>)
       },
       {
-        path: '/topic/:id',
+        path: '/topic/:postId',
         element: withLoadingComponent(<Topic/>)
       },
       {

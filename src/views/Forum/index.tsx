@@ -5,9 +5,10 @@ import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, saveGamesAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
 import { message } from 'antd'
-import { useSearchParams, useParams } from 'react-router-dom'
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 const Forum = () => {
+  const navigateTo = useNavigate()
   const { gameId } = useParams()
   const PostDialogRef = useRef(null)
   const [posts, setPosts] = useState([])
@@ -19,6 +20,7 @@ const Forum = () => {
     genreId: null,
     iconUrl: ''
   })
+  
   const { savedForums } = useSelector((state: RootState) => ({
     savedForums: state.gobalStatus.savedForums
   }))
@@ -27,10 +29,15 @@ const Forum = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)
+
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
     getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
   },[savedForums])
+
+  const goToNext = (postId: string) => {
+    navigateTo(`/topic/${postId}?genre=${searchParams.get('genreId')}&game=${gameId}`)
+  }
 
   const onPrevious = () => {
     let _currentPage = currentPage
@@ -135,7 +142,7 @@ const Forum = () => {
                 return (
                   <div className='afk-forum-guides-list-td fc' key={index}>
                     <div className="list-th-replies w70">4</div>
-                    <div className="list-th-topic w416">{post.title}</div>
+                    <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                     <div className="list-th-by w130 fw400">
                       <Avatar alt={post.username} src="/static/images/avatar/1.jpg" sx={{width:'32px', height:'32px'}} />{post.username}
                     </div>
