@@ -180,7 +180,7 @@ export const showPostBodyAPI = (params: ShowPostBodyReq): Promise<APIRes> => req
  * @method GET
  * 
  */
-export const commentsRepliesAPI = (params: ShowPostBodyReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/comments-replies',{ params })
+export const commentsRepliesAPI = (params: CommentsRepliesReq): Promise<APIRes> => request.get('/api/v1/all-games-genres/comments-replies',{ params })
 
 /**
  * User Likes/Saves Post

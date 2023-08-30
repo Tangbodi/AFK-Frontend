@@ -31,3 +31,13 @@ export const mothEnmus = {
   '11': 'November',
   '12': 'December'
 }
+
+export const enum MsgTypes {
+  comment='comment',
+  reply='reply'
+}
+
+export const enum LoveTypes {
+  save='save',
+  like='like'
+}

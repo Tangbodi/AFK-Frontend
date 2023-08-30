@@ -104,6 +104,11 @@ interface ShowPostBodyReq {
   post: string
 }
 
+interface CommentsRepliesReq extends ShowPostBodyReq {
+  page: number;
+  size: number;
+}
+
 interface LikeSavePostReq {
   postId: string;
   type: string;
