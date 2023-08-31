@@ -184,11 +184,11 @@ export const commentsRepliesAPI = (params: CommentsRepliesReq): Promise<APIRes> 
 
 /**
  * User Likes/Saves Post
- * @url /api/v1/all-games-genres/genre/like-save-post
+ * @url /api/v1/all-games-genres/genre/user-like-save
  * @param postId
  * @param type
  */
-export const likeSavePostAPI = (params: LikeSavePostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/like-save-post',params)
+export const likeSavePostAPI = (params: LikeSavePostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/user-like-save',params)
 
 /**
  * Edit Comment

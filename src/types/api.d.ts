@@ -110,8 +110,9 @@ interface CommentsRepliesReq extends ShowPostBodyReq {
 }
 
 interface LikeSavePostReq {
-  postId: string;
-  type: string;
+  objectId: string;
+  status: number;
+  typeId: number;
 }
 
 interface EditCommentReq {
@@ -124,5 +125,5 @@ interface EditCommentReq {
 
 interface EditReplyReq extends EditCommentReq {
   commentId: string;
-  toReplyId: string;
+  toReplyId?: string;
 }
