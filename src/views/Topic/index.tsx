@@ -23,6 +23,8 @@ const Topic = () => {
   const [currentImage, setCurrentImage] = useState('')
   const [showBigImage, setShowBigImage] = useState(false)
   const [repliesList, setRepliesList] = useState([])
+  const [likeStatus, setLikeStatus] = useState(1)
+  const [saveStatus, setSaveStatus] = useState(1)
 
   const showPostBody = async() => {
     const params = {
@@ -36,6 +38,8 @@ const Topic = () => {
       setTitle(resData.title)
       setToUid(resData.userId)
       setUserName(resData.userName)
+      setLikeStatus(resData.likeStatus)
+      setSaveStatus(resData.saveStatus)
       setCreatedAt(dateUtils(resData.createdAt))
       setTextRender(resData.textRender)
       setImageURL(resData.imageURL)
@@ -56,7 +60,6 @@ const Topic = () => {
     const commentsRepliesRes = await commentsRepliesAPI(params)
     if(commentsRepliesRes.code === 200) {
       const repliesData = commentsRepliesRes.data || {}
-      console.log('re', repliesData.content)
       setRepliesList([...repliesData.content])
       return 
     }
@@ -79,6 +82,10 @@ const Topic = () => {
 
   const unfoldBigImages = () => {
     setShowBigImage(false)
+  }
+
+  const getLeaveMsg = (val: boolean) => {
+    val && commentsReplies(1)
   }
 
   useEffect(()=>{ 
@@ -159,7 +166,7 @@ const Topic = () => {
               </div>
             }
             <div className="main-content-controls">
-              <Controls type={MsgTypes.comment} toUid={toUid} isPost={true}/>
+              <Controls type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={likeStatus} saveStatus={saveStatus} getLeaveMsgFn={getLeaveMsg} />
             </div>
           </div>
             {
@@ -180,9 +187,9 @@ const Topic = () => {
                           {replies.comment.content}
                         </div>
                         <div className="main-content-controls comment-type">
-                          <Controls comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false}/>
+                          <Controls comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
                         </div>
-                        <Stepper reply={replies.reply}/>
+                        <Stepper reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                       </div>
                   </div>
                 )

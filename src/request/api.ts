@@ -185,8 +185,9 @@ export const commentsRepliesAPI = (params: CommentsRepliesReq): Promise<APIRes> 
 /**
  * User Likes/Saves Post
  * @url /api/v1/all-games-genres/genre/user-like-save
- * @param postId
- * @param type
+ * @param objectId
+ * @param typeId 0=post, 1=comment, 2=reply, 3=post save
+ * @param status 0=不喜欢 1=喜欢
  */
 export const likeSavePostAPI = (params: LikeSavePostReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/genre/user-like-save',params)
 

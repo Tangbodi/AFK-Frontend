@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material'
 import { Input, Button, message } from 'antd'
 import { useState, forwardRef } from 'react'
-import { MsgTypes, LoveTypes } from '@/config'
+import { MsgTypes } from '@/config'
 import { likeSavePostAPI, editCommentAPI, editReplyAPI } from '@/request/api'
 import { useSearchParams, useParams } from 'react-router-dom'
 type Props = {
@@ -16,37 +16,55 @@ type Props = {
   isPost?: boolean,
   toUid?: string,
   isReply?: boolean, // 是否是回复别人的回复
-  comment?: any
-  reply?: any
+  comment?: any,
+  reply?: any,
+  likeStatus?: number,
+  saveStatus?: number,
+  getLeaveMsgFn?: Function
 }
 const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
   const { TextArea } = Input
-  const { type, isPost, toUid, isReply, comment, reply } = props
+  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn } = props
   const { postId } = useParams()
   const [content, setContent] = useState('')
   const [searchParams] = useSearchParams()
   const gameId =  searchParams.get('game')
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
-
+  const [postLikeStatus, setPostLikeStatus] = useState(likeStatus||(comment&&comment.likeStatus)||(reply&&reply.likeStatus))
+  const [postSaveStatus, setPostSaveStatus] = useState(saveStatus)
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
   }
-  const likeSavePost = async() => {
+  const likeSavePost = async(status?:any, isSave?: boolean) => {
     const params: any = {}
-    if(comment) params.type = 1 // 如果comment不为空
-    if(reply) params.type = 2 // 如果reply不为空
-    if(!comment && !reply) params.type = 0 // 如果comment &&  reply 不为空
-    if(isPost) params.type = 3
-    console.log('x', type)
-    console.log('c', comment)
-    console.log('r', reply)
-    // const likeSavePostRes = await likeSavePostAPI(params)
-    // if(likeSavePostRes.code === 200) {
-    //   return
-    // }
-    // message.warning(likeSavePostRes.message)
+    if(reply) params.typeId = 2 // 如果reply不为空
+    if(comment) params.typeId = 1 // 如果comment不为空
+    if(!comment && !reply) params.typeId = 0 // 如果comment && reply 不为空
+    if(isPost && isSave) {
+      setPostSaveStatus(postSaveStatus ? 0 : 1)
+      params.typeId = 3
+      params.objectId = postId
+      params.status = postSaveStatus
+    } else {
+      if(type === MsgTypes.comment) {
+        // 如果type是comment类型 说明是评论自身
+        params.objectId = postId
+        setPostLikeStatus(postLikeStatus?0:1)
+        params.status = postLikeStatus
+      } else {
+        params.status = status
+        setPostLikeStatus(status)
+        if(reply) params.objectId = reply.replyId
+        if(comment) params.objectId = comment.commentId
+      }
+    }
+    const likeSavePostRes = await likeSavePostAPI(params)
+    if(likeSavePostRes.code === 200) {
+      return
+    }
+    message.warning(likeSavePostRes.message)
   }
 
   const sumitCommentOrReply = async() => {
@@ -56,6 +74,8 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
       const editCommentRes = await editCommentAPI({ toUid, gameId, genreId, content, postId })
       if(editCommentRes.code === 200) {
         message.success('comment successful')
+        getLeaveMsgFn(true)
+        setInputShow(false)
         // 向父组件传值 告诉它 我提交成功了， 让父组件执行刷新操作
         return
       }
@@ -76,6 +96,9 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
     const editReplyRes = await editReplyAPI(params)
     if(editReplyRes.code === 200) {
       message.success('replay successful')
+      getLeaveMsgFn(true)
+      // 向父组件传值 告诉它 我提交成功了， 只把自己的内容传输给父组件，让父组件做伪刷新
+      // 伪刷新问题：无replyId 当用户再次对自己的新回复进行再回复时会出错
       return
     }
     message.warning(editReplyRes.message)
@@ -84,8 +107,12 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
   return (
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
-        <div className="afk-like-save-item" onClick={likeSavePost}><FavoriteBorderRounded/><FavoriteRounded/>Like</div>
-        { isPost &&  <div className="afk-like-save-item" onClick={likeSavePost}><GradeOutlined/><Grade/>Save</div> }
+        <div className="afk-like-save-item" onClick={()=>{likeSavePost(postLikeStatus?0:1)}}>
+          { postLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
+          </div>
+        { isPost &&  <div className="afk-like-save-item" onClick={()=>{likeSavePost(null, true)}}>
+         {postSaveStatus ? <GradeOutlined/>:<Grade/>}Save
+        </div> }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
           {
             type === MsgTypes.comment ? <><ChatBubbleOutlineOutlined/>Comment</> : <><ChatBubbleOutlineOutlined/>Reply</>

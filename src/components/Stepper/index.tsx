@@ -6,9 +6,13 @@ import { dateUtils } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 type Props = {
   reply?: any
+  getLeaveMsgFn?: Function
 }
 const VerticalLinearStepper: React.FC<Props> = forwardRef((props, ref)=>{
-  const { reply } = props
+  const { reply, getLeaveMsgFn } = props
+  const getLeaveMidMsg = (val: any) => {
+    getLeaveMsgFn(val)
+  }
   return (
     <div className="forum-steps">
       {
@@ -33,7 +37,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, ref)=>{
                   }
                   { replyItem.content }
                 </div>
-                <Controls type={MsgTypes.reply} reply={replyItem} isReply={true}/>
+                <Controls type={MsgTypes.reply} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
               </div>
             </div>
           )
