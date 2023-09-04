@@ -84,13 +84,27 @@ const Topic = () => {
     setShowBigImage(false)
   }
 
-  const getLeaveMsg = (val: boolean) => {
-    val && commentsReplies(1)
+  const getLeaveMsg = (value: any) => {
+    // val && commentsReplies(1)
+    if(typeof(value) === 'boolean') {
+      commentsReplies(1)
+    } else {
+      const { pIndex, cIndex } = value
+      const childCommentObj: any = repliesList[pIndex]
+      if(!childCommentObj.reply) {
+        childCommentObj.reply = []
+        childCommentObj.reply.push(value)
+      } else{
+        childCommentObj.reply.splice(cIndex, 0 , value)
+      }
+      console.log('childCommentObj', childCommentObj)
+      setRepliesList([...repliesList])
+    }
   }
 
   useEffect(()=>{ 
     showPostBody()
-    commentsReplies(1)
+    commentsReplies(3)
   },[])
   
   return (
@@ -106,7 +120,7 @@ const Topic = () => {
         <div className='afk-top-main-content'>
           <div className="main-content-title">
             <div className="content-title-left">
-              <Avatar alt={userName} src="/static/images/avatar/1.jpg" sx={{width:'48px', height:'48px'}}/>{userName}
+              <Avatar alt={userName} sx={{width:'48px', height:'48px'}}/>{userName}
             </div>
             <div className="content-title-right">
               {createdAt}
@@ -176,7 +190,7 @@ const Topic = () => {
                   <div className='afk-top-main-content-item' key={index}>
                       <div className="main-content-title">
                         <div className="content-title-left">
-                          <Avatar alt={replies.comment.username} src="/static/images/avatar/1.jpg" sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
+                          <Avatar alt={replies.comment.username} sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
                         </div>
                         <div className="content-title-right">
                           {dateUtils(replies.comment.createdAt)}
@@ -187,9 +201,9 @@ const Topic = () => {
                           {replies.comment.content}
                         </div>
                         <div className="main-content-controls comment-type">
-                          <Controls comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
+                          <Controls pIndex={index} cIndex={0} comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
                         </div>
-                        <Stepper reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
+                        <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                       </div>
                   </div>
                 )

@@ -51,6 +51,9 @@ const Register = forwardRef((props, ref) => {
     if(loginRes.code === 200) {
       message.success('Login successful')
       setIsModalOpen(false)
+      sessionStorage.setItem('afk-username', loginRes.data.username)
+      sessionStorage.setItem('afk-userid', loginRes.data.userId)
+      sessionStorage.setItem('afk-jsessionid', loginRes.data.jsessionid)
       return
     }
     message.warning(loginRes.message)

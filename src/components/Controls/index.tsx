@@ -18,13 +18,15 @@ type Props = {
   isReply?: boolean, // 是否是回复别人的回复
   comment?: any,
   reply?: any,
+  pIndex?: number, // 父索引
+  cIndex?: number, // 子索引
   likeStatus?: number,
   saveStatus?: number,
   getLeaveMsgFn?: Function
 }
 const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
   const { TextArea } = Input
-  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn } = props
+  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex } = props
   const { postId } = useParams()
   const [content, setContent] = useState('')
   const [searchParams] = useSearchParams()
@@ -76,6 +78,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
         message.success('comment successful')
         getLeaveMsgFn(true)
         setInputShow(false)
+        console.log('in', inputShow)
         // 向父组件传值 告诉它 我提交成功了， 让父组件执行刷新操作
         return
       }
@@ -88,7 +91,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
     if(!isReply) { // 如果是直接回复评论
       params.toUid = comment.fromUid
       params.commentId =  comment.commentId
-    } else { // // 如果是回复别人已经发生的回复
+    } else {  // 如果是回复别人已经发生的回复
       params.toUid = reply.fromUid
       params.toReplyId = reply.replyId,
       params.commentId =  reply.commentId
@@ -96,12 +99,29 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
     const editReplyRes = await editReplyAPI(params)
     if(editReplyRes.code === 200) {
       message.success('replay successful')
-      getLeaveMsgFn(true)
-      // 向父组件传值 告诉它 我提交成功了， 只把自己的内容传输给父组件，让父组件做伪刷新
-      // 伪刷新问题：无replyId 当用户再次对自己的新回复进行再回复时会出错
+      setInputShow(false)
+      getLeaveMsgFn(
+        {
+          pIndex,
+          likeStatus: 0,
+          cIndex: cIndex+1,
+          content: params.content,
+          replyId: editReplyRes.data.replyId,
+          toReplyId: editReplyRes.data.replyId,
+          commentId: editReplyRes.data.commentId,
+          createdAt: editReplyRes.data.createdAt,
+          fromUid: sessionStorage.getItem('afk-userid'),
+          toUsername: sessionStorage.getItem('afk-username'),
+          fromUsername:sessionStorage.getItem('afk-username')
+        }
+      )
       return
     }
     message.warning(editReplyRes.message)
+  }
+
+  const cancleHandle = () => {
+    setInputShow(false)
   }
 
   return (
@@ -126,13 +146,13 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
           <div className='afk-like-input-area'>
             <TextArea
               maxLength={100}
-              style={{ height: 220, resize: 'none' }}
+              style={{ height: 220 }}
               onChange={onChange}
               placeholder="Please input"
             />
           </div>
           <div className='afk-like-input-btn'>
-            {/* <Button className='afk-like-cancel-btn'>Cancel</Button> */}
+            <Button className='afk-like-cancel-btn' onClick={cancleHandle}>Cancel</Button>
             <Button type="primary" onClick={sumitCommentOrReply}>{type === MsgTypes.comment?'Comment':'Reply'}</Button>
           </div>
         </div>

@@ -1,15 +1,16 @@
 import './stepper.less'
 import Avatar from '@mui/material/Avatar'
 import Controls from '@/components/Controls'
-import { useState, forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { dateUtils } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 type Props = {
   reply?: any
+  pIndex?: number
   getLeaveMsgFn?: Function
 }
 const VerticalLinearStepper: React.FC<Props> = forwardRef((props, ref)=>{
-  const { reply, getLeaveMsgFn } = props
+  const { reply, getLeaveMsgFn, pIndex } = props
   const getLeaveMidMsg = (val: any) => {
     getLeaveMsgFn(val)
   }
@@ -22,7 +23,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, ref)=>{
             <div className='form-steps-item' key={index}>
               <div className="form-steps-item-top">
                 <div className='form-steps-item-top-left'>
-                  <Avatar alt={replyItem.fromUsername} src="/static/images/avatar/1.jpg" sx={{width:'48px', height:'48px'}}/>
+                  <Avatar alt={replyItem.fromUsername}  sx={{width:'48px', height:'48px'}}/>
                 </div>
                 <div className="form-steps-item-top-right">
                   <div className='top-right-name'>{replyItem.fromUsername}</div>
@@ -37,15 +38,15 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, ref)=>{
                   }
                   { replyItem.content }
                 </div>
-                <Controls type={MsgTypes.reply} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
+                <Controls pIndex={pIndex} cIndex={index} type={MsgTypes.reply} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
               </div>
             </div>
           )
         })
       }
-      <div className='form-steps-more'>
+      {/* <div className='form-steps-more'>
         &gt;&gt; More Replies
-      </div>
+      </div> */}
     </div>
   )
 })

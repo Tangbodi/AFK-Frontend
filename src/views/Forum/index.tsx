@@ -144,25 +144,12 @@ const Forum = () => {
                     <div className="list-th-replies w70">4</div>
                     <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                     <div className="list-th-by w130 fw400">
-                      <Avatar alt={post.username} src="/static/images/avatar/1.jpg" sx={{width:'32px', height:'32px'}} />{post.username}
+                      <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
                     </div>
-                    {/* <div className="list-th-last w130 fw400">
-                      <Avatar alt="Aosh7651" src="/static/images/avatar/1.jpg" sx={{width:'32px', height:'32px'}} />Aosh7651
-                    </div> */}
                   </div>
                 )
               })
             }
-            {/* <div className='afk-forum-guides-list-td fc'>
-              <div className="list-th-replies w70">4</div>
-              <div className="list-th-topic w416">Why does Nintendo keep patching dupe methods?</div>
-              <div className="list-th-by w130 fw400">
-                <Avatar alt="Josh7651" src="/static/images/avatar/1.jpg" sx={{width:'32px', height:'32px'}} />Josh7651
-              </div>
-              <div className="list-th-last w130 fw400">
-                <Avatar alt="Aosh7651" src="/static/images/avatar/1.jpg" sx={{width:'32px', height:'32px'}} />Aosh7651
-              </div>
-            </div> */}
           </div>
           <div className="afk-forum-guides-create">
             <div className="guides-create-btn">
