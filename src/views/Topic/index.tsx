@@ -85,7 +85,6 @@ const Topic = () => {
   }
 
   const getLeaveMsg = (value: any) => {
-    // val && commentsReplies(1)
     if(typeof(value) === 'boolean') {
       commentsReplies(1)
     } else {
@@ -97,14 +96,13 @@ const Topic = () => {
       } else{
         childCommentObj.reply.splice(cIndex, 0 , value)
       }
-      console.log('childCommentObj', childCommentObj)
       setRepliesList([...repliesList])
     }
   }
 
   useEffect(()=>{ 
     showPostBody()
-    commentsReplies(3)
+    commentsReplies(1)
   },[])
   
   return (
