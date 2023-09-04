@@ -96,7 +96,7 @@ const Header = () => {
         </span>
         <div className="menu">
           <span onClick={()=>{navigateTo('/')}}>Home</span>
-          <span onClick={()=>{navigateTo('/store')}}>Store</span>
+          {/* <span onClick={()=>{navigateTo('/store')}}>Store</span> */}
         </div>
       </div>
       <div className="afk-header-center">

@@ -1,4 +1,5 @@
 import './topic.less'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
@@ -6,9 +7,10 @@ import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
 import { useSearchParams, useParams } from 'react-router-dom'
-import { message } from 'antd'
+import { message, Skeleton, Divider } from 'antd'
 import { dateUtils, arrayToObjArray } from '@/utils/utils'
 import { MsgTypes } from '@/config'
+
 
 const Topic = () => {
   const { postId } = useParams()
@@ -25,6 +27,8 @@ const Topic = () => {
   const [repliesList, setRepliesList] = useState([])
   const [likeStatus, setLikeStatus] = useState(1)
   const [saveStatus, setSaveStatus] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  let [page, setPage] = useState(1)
 
   const showPostBody = async() => {
     const params = {
@@ -49,7 +53,7 @@ const Topic = () => {
     message.warning(showPostBodyRes.message)
   }
 
-  const commentsReplies = async(page: number) => {
+  const commentsReplies = async() => {
     const params = {
       page,
       size: 4,
@@ -60,7 +64,11 @@ const Topic = () => {
     const commentsRepliesRes = await commentsRepliesAPI(params)
     if(commentsRepliesRes.code === 200) {
       const repliesData = commentsRepliesRes.data || {}
-      setRepliesList([...repliesData.content])
+      // setRepliesList([...repliesData.content])
+      setRepliesList(repliesList.concat(repliesData.content))
+      setTotalPages(repliesData.totalPages)
+      page = page + 1
+      setPage(page)
       return 
     }
     message.warning(commentsRepliesRes.message)
@@ -86,7 +94,7 @@ const Topic = () => {
 
   const getLeaveMsg = (value: any) => {
     if(typeof(value) === 'boolean') {
-      commentsReplies(1)
+      commentsReplies()
     } else {
       const { pIndex, cIndex } = value
       const childCommentObj: any = repliesList[pIndex]
@@ -96,17 +104,29 @@ const Topic = () => {
       } else{
         childCommentObj.reply.splice(cIndex, 0 , value)
       }
+      // setRepliesList([...repliesList])
       setRepliesList([...repliesList])
     }
   }
 
   useEffect(()=>{ 
     showPostBody()
-    commentsReplies(1)
+    commentsReplies()
   },[])
   
   return (
-    <div className="afk-topic">
+    <div className="afk-topic" id="scrollableDiv" style={{
+      height: 400,
+      overflow: 'auto'
+    }}>
+      <InfiniteScroll
+            dataLength={repliesList.length}
+            next={commentsReplies}
+            hasMore={totalPages>=page}
+            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+            endMessage={<Divider plain>It is all, nothing more</Divider>}
+            scrollableTarget="scrollableDiv"
+          >
       <div className="afk-topic-main">
       <div className="afk-topic-title">Forum - Tears of the Kingdom</div>
         <div className="afk-topic-main-title">
@@ -139,7 +159,7 @@ const Topic = () => {
                         <div className='images-item-main'>
                           <div className='images-item-hoverMask hover-in'></div>
                           <div className='images-item-slot'>
-                            <img src={`//${image}`}/>
+                            <img src={image}/>
                           </div>
                         </div>
                       </div>
@@ -156,7 +176,7 @@ const Topic = () => {
                 </div>
                 <div className='content-unfold-main'>
                   <div className='unfold-main-bigImg' onClick={unfoldBigImages}>
-                    <img src={`//${currentImage}`}/>
+                    <img src={currentImage}/>
                   </div>
                   <div className='unfold-main-smallImg'>
                     { imagesList && imagesList.length && 
@@ -166,7 +186,7 @@ const Topic = () => {
                             <div className={image.active?'smallImg-item-main item-active':'smallImg-item-main'}>
                               <div className='item-main-hoverMask hover-in'></div>
                               <div className='item-main-slot'>
-                                <img src={`//${image.url}`}/>
+                                <img src={image.url}/>
                               </div>
                             </div>
                           </div>
@@ -181,8 +201,8 @@ const Topic = () => {
               <Controls type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={likeStatus} saveStatus={saveStatus} getLeaveMsgFn={getLeaveMsg} />
             </div>
           </div>
-            {
-              repliesList && repliesList.length && 
+          
+            {repliesList && repliesList.length && 
               repliesList.map((replies, index) => {
                 return (
                   <div className='afk-top-main-content-item' key={index}>
@@ -205,10 +225,12 @@ const Topic = () => {
                       </div>
                   </div>
                 )
-              })
-            }
+              
+            })}
+            
         </div>
       </div>
+      </InfiniteScroll>
     </div>
   )
 }

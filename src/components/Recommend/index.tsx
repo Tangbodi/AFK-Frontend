@@ -45,7 +45,7 @@ const Recommend = () => {
         <Banner/>
       </div>
       <div className="afk-recommend-right">
-        <Box sx={{ width: '100%', typography: 'body1' }}>
+        <Box sx={{ width: '100%'}}>
           <TabContext value={currentTabValue}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleChange}>

@@ -49,7 +49,7 @@ const Forum = () => {
             return (
               <div className="jump-back-main-item" key={index} onClick={()=>{navigate(`/forum/${game.gameId}?genreId=${game.genreId}`)}}>
                 <div className="jump-back-main-item-left">
-                  <img src={'//'+game.iconUrl} width={64} height={64}/>
+                  <img src={game.iconUrl} width={64} height={64}/>
                 </div>
                 <div className="jump-back-main-item-right">
                   <div className="item-right-title">{game.gameName}</div>

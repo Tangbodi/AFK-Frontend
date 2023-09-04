@@ -101,7 +101,7 @@ const Forum = () => {
         </div>
         <div className="afk-forum-main-game">
           <div className="game-logo">
-            <img src={`//${gameData.iconUrl}`} width={138} height={138}/>
+            <img src={gameData.iconUrl} width={138} height={138}/>
           </div>
           <div className="game-detail">
             <div className="game-detail-title">
