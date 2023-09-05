@@ -18,6 +18,7 @@ const Topic = () => {
   const [title, setTitle] = useState()
   const [toUid, setToUid] = useState('')
   const [userName, setUserName] =  useState()
+  const [gameName, setGameName] = useState()
   const [createdAt, setCreatedAt] = useState('')
   const [textRender, setTextRender] = useState('')
   const [imageURL, setImageURL] = useState([])
@@ -41,6 +42,7 @@ const Topic = () => {
       const resData = showPostBodyRes.data || {}
       setTitle(resData.title)
       setToUid(resData.userId)
+      setGameName(resData.gameName)
       setUserName(resData.userName)
       setLikeStatus(resData.likeStatus)
       setSaveStatus(resData.saveStatus)
@@ -128,7 +130,7 @@ const Topic = () => {
             scrollableTarget="scrollableDiv"
           >
       <div className="afk-topic-main">
-      <div className="afk-topic-title">Forum - Tears of the Kingdom</div>
+      <div className="afk-topic-title">Forum - {gameName}</div>
         <div className="afk-topic-main-title">
           <span className="main-title-tag">Q&A</span>
           <div className="main-title-text">
