@@ -10,17 +10,15 @@ import Banner from '../Banner'
 import { useNavigate } from 'react-router-dom'
 import { homeMergedAPI } from '@/request/api'
 import { homeTabsList } from '@/config'
-import Loading from '../Loading'
 const Recommend = () => {
   const [currentTabValue, setCurrentTabValue] = useState('latest')
   const [postsList, setPostsList] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const navigateTo = useNavigate()
   useEffect(()=>{
     handleChange(null, currentTabValue) // 默认加载第一个tab
   },[])
   // tab切换change触发
-  const handleChange = (event: SyntheticEvent, type = currentTabValue) => {
+  const handleChange = (_: SyntheticEvent, type = currentTabValue) => {
     setCurrentTabValue(type)
     homeMerged(type)
   }
@@ -30,10 +28,8 @@ const Recommend = () => {
   }
   // 首页tabs接口
   const homeMerged = async(type: string) => {
-    setIsLoading(true)
     const homeMergedRes = await homeMergedAPI({type})
     if(homeMergedRes.code === 200) {
-      setIsLoading(false)
       setPostsList(homeMergedRes.data||[])
       return
     }
@@ -56,13 +52,6 @@ const Recommend = () => {
               homeTabsList.map(tab =>(
                 <TabPanel value={tab.value} key={tab.value}>
                   {
-                    isLoading &&
-                    <div className='tab-loading'>
-                      <Loading/>
-                    </div>
-                  }
-                  {
-                    !isLoading &&
                     postsList.map(postsItem => {
                       return (
                         <div className='tab-panel-item' key={postsItem.postId} onClick={()=>{goToRouter(postsItem.postId)}}>

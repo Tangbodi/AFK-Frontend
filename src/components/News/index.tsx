@@ -3,13 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { getNewsAPI } from '@/request/api'
 import { useEffect, useState } from "react"
 import { message } from "antd"
-import Loading from '../Loading'
 const News = () => {
   const navigateTo = useNavigate()
   const [newsList, setNewsList] = useState([])
   const [showList, setShowList] = useState([])
   const [showMore, setShowMore] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     getNews()
   },[])
@@ -20,10 +18,8 @@ const News = () => {
   }
 
   const getNews = async() => {
-    setIsLoading(true)
     const getNewsRes = await getNewsAPI()
     if(getNewsRes.code === 200) {
-      setIsLoading(false)
       if(getNewsRes.data && getNewsRes.data.length > 3) {
         setShowMore(true)
         setShowList(getNewsRes.data.slice(0,3))
@@ -40,7 +36,6 @@ const News = () => {
     <div className="afk-news mt20">
       <div className="afk-home-title">News</div>
       <div className="afk-news-list">
-        { isLoading && <Loading/> }
         {
           showList.map((news, index)=> {
             return (

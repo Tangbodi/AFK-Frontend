@@ -1,4 +1,4 @@
-import request from './index'
+import request from './index.tsx'
 
 export const captchaAPI = (): Promise<CaptchaAPIRes> => request.get('/prod-api/captchaImage')
 

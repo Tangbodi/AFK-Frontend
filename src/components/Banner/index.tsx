@@ -39,21 +39,6 @@ class Banner extends Component<any,any> {
               )
             })
           }
-          
-          {/* <div className="afk-banner-item">
-            <img src={banner1} height={300} />
-            <div className="banner-desc">
-              <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
-              <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom2</p>
-            </div>
-          </div>
-          <div className="afk-banner-item">
-            <img src={banner1} height={300} />
-            <div className="banner-desc">
-              <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
-              <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom3</p>
-            </div>
-          </div> */}
         </Carousel>
         <div className="banner-btn prev-btn" onClick={this.prev}></div>
         <div className="banner-btn next-btn" onClick={this.next}></div>

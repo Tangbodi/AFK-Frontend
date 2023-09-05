@@ -1,8 +1,26 @@
 import { message } from 'antd'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import axios from 'axios'
-import { Console } from 'console'
+import ReactDOM from 'react-dom'
+import BackdropLoading from '@/components/Backdrop'
 
+
+let requestCount = 0
+const showLoading = () => {
+  if (requestCount === 0) {
+      var dom = document.createElement('div')
+      dom.setAttribute('id', 'loading')
+      document.body.appendChild(dom)
+      ReactDOM.render(<BackdropLoading/>, dom)
+  }
+  requestCount++
+} 
+const hideLoading = () => {
+  requestCount--
+  if (requestCount === 0) {
+      document.body.removeChild(document.getElementById('loading'))
+  }
+}
 
 interface AxiosTokenInstance extends AxiosInstance {}
 const instance: AxiosTokenInstance = axios.create({
@@ -60,12 +78,15 @@ const getErrorCode2text = (response: any): string => {
 }
 
 instance.interceptors.request.use(config => {
+  config.headers.isLoading !== false && showLoading()
   return config
 }, err => {
+  err.config.headers.isLoading !== false && hideLoading()
   return Promise.reject(err)
 })
 
 instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
+  res.config.headers.isLoading !== false && hideLoading()
   if(res.status === 200) {
     return res.data
   } else if(res.status === 400){
@@ -74,6 +95,7 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
     throw new Error(getErrorCode2text(res.status))
   }
 }, (error: any) => {
+  error.config.headers.isLoading !== false && hideLoading()
   let __emsg: string = error.message || ''
   if (error.message) __emsg = error.message
   if (error.response) __emsg = error.response.data.message ? error.response.data.message : error.response.data.data
