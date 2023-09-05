@@ -10,3 +10,7 @@ After installing the dependencies, build the project by executing:
 ```
 npm run dev
 ```
+### Production
+```
+npm run build
+```
