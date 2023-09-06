@@ -78,6 +78,19 @@
           color: var(--formInputColor);
           background: var(--navInputBgColor);
         }
+        .info-input-mobile{
+          border: #fff 1px solid;
+          outline: 0;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          width: 100%;
+          height: 46px;
+          line-height: 46px;
+          color: var(--formInputColor);
+          background: var(--navInputBgColor);
+          &:focus,&:hover{box-shadow: none;}
+        }
         .ant-input{
           color: var(--formInputColor);
           background: var(--navInputBgColor);
@@ -123,6 +136,9 @@
         }
         .phone-box-r{
           flex: 1;
+          .ant-form-item{
+            margin-bottom: 0;
+          }
           .ant-input{
             border:0;
             outline: 0;

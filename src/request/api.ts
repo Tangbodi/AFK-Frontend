@@ -30,18 +30,18 @@ export const logoutAPI = (): Promise<APIRes> => request.post('/api/v1/user/logou
 /**
  * getUserInfo
  */
-export const getUserInfoAPI = (): Promise<APIRes> => request.get('/api/v1/user/login/user-info/username')
+export const getUserInfoAPI = (): Promise<APIRes> => request.get('/api/v1/user-info/')
+
+/**
+ * /api/v1/user-info/mail-address
+ */
+export const getMailAddressAPI = (): Promise<APIRes> => request.get('/api/v1/user-info/mail-address')
 
 /**
  * update email address
  * @param params email
  */
-export const updateEmailAddressAPI = (params: UpdateEmailAddressReq): Promise<APIRes> => request.put('/api/v1/user/login/user-info/username/update-email', params)
-
-/**
- * getMail
- */
-export const getMailAddressAPI = (): Promise<APIRes> => request.get('/api/v1/user/login/user-info/username/mail-address')
+export const updateEmailAPI = (params: UpdateEmailAddressReq): Promise<APIRes> => request.put('/api/v1/user-info/update-email', params)
 
 /**
  * updateMailAddress
@@ -52,7 +52,7 @@ export const getMailAddressAPI = (): Promise<APIRes> => request.get('/api/v1/use
  * @param params zip
  * @param params phone
  */
-export const updateMailAddressAPI = (params: UpdateMailAddressReq): Promise<APIRes> => request.put('/api/v1/user/login/user-info/username/update-mail-address', params)
+export const updateMailAddressAPI = (params: UpdateMailAddressReq): Promise<APIRes> => request.put('/api/v1/user-info/update-mail-address', params)
 
 /**
  * returnAllGames
