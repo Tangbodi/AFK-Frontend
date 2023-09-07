@@ -14,6 +14,8 @@ const Notifications = lazy(()=> import("../views/Settings/Notifications"))
 const Security = lazy(()=> import("../views/Settings/Security"))
 const News = lazy(()=> import("../views/News"))
 const Search = lazy(()=> import("../views/Search"))
+const Redirect = lazy(()=> import("../views/Redirect"))
+const ErrorComp = lazy(()=> import("../views/Redirect/error"))
 /**
  * 懒加载组件处理
  * @param comp 
@@ -74,6 +76,14 @@ const routes = [
       {
         path: '/search',
         element: withLoadingComponent(<Search/>)
+      },
+      {
+        path: '/redirect',
+        element: withLoadingComponent(<Redirect/>)
+      },
+      {
+        path: '/error',
+        element: withLoadingComponent(<ErrorComp/>)
       },
     ]
   },

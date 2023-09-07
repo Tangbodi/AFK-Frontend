@@ -214,3 +214,28 @@ export const editCommentAPI = (params: EditCommentReq): Promise<APIRes> => reque
  * @param toReplyId
  */
 export const editReplyAPI = (params: EditReplyReq): Promise<APIRes> => request.post('/api/v1/all-games-genres/edit-reply',params)
+
+/**
+ * /api/v1/user-info/update-password
+ * @url /api/v1/user-info/update-password
+ * @param oldPassword
+ * @param newPassword
+ * @param confirmPassword
+ */
+
+export const updatePasswordAPI = (params: UpdatePasswordReq) : Promise<APIRes> => request.put('/api/v1/user-info/update-password',params)
+
+/**
+ * /api/v1/user-info/forgot-password
+ * @url /api/v1/user-info/forgot-password
+ * @param email 
+ */
+export const forgotPasswordAPI = (params: ForgotPasswordReq): Promise<APIRes> => request.post('/api/v1/user-info/forgot-password',params)
+
+/**
+ * /api/v1/user-info/forgot-password/enter-password
+ * @url /api/v1/user-info/forgot-password/enter-password
+ * @param newPassword
+ * @param confirmPassword
+ */
+export const enterPasswordAPI = (params: ForgotPasswordReq): Promise<APIRes> => request.put('/api/v1/user-info/forgot-password/enter-password',params)

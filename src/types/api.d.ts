@@ -127,3 +127,18 @@ interface EditReplyReq extends EditCommentReq {
   commentId: string;
   toReplyId?: string;
 }
+
+interface UpdatePasswordReq {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+interface ForgotPasswordReq {
+  email: string
+}
+
+interface EnterPasswordReq{
+  newPassword: string;
+  confirmPassword: string;
+}

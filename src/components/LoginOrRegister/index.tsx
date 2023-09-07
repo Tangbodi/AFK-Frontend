@@ -1,6 +1,6 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
 import { Modal, Form, Input, Button, message } from 'antd'
-import { registrationAPI, loginAPI } from '@/request/api'
+import { registrationAPI, loginAPI, forgotPasswordAPI } from '@/request/api'
 import { getTheme } from '@/utils/theme'
 import logo from '@/assets/images/login-logo.png'
 import logoDark from '@/assets/images/login-logo-dark.png'
@@ -10,6 +10,7 @@ import './register.less'
 const Register = forwardRef((props, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLoginValue, setIsLoginValue] = useState(false)
+  const [isForgot, setIsForgot] = useState(false)
   const [form] = Form.useForm()
   useImperativeHandle(ref, () => ({
     showModal
@@ -22,11 +23,16 @@ const Register = forwardRef((props, ref) => {
   const gotoLoginOrSinup = () => {
     setIsLoginValue(!isLoginValue)
   }
+  const hanldeForgot = () => {
+    setIsForgot(true)
+  }
   const handleOk = () => {
     setIsModalOpen(false)
   }
 
   const handleCancel = () => {
+    setIsLoginValue(false)
+    setIsForgot(false)
     setIsModalOpen(false)
   }
 
@@ -58,6 +64,26 @@ const Register = forwardRef((props, ref) => {
     }
     message.warning(loginRes.message)
   }
+
+  const forgotPassword = async() => {
+    const params = await form.validateFields()
+    const emailRegx = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+    if(!params.email) {
+      message.warning('Please input you email')
+      return
+    }
+    if(!emailRegx.test(params.email)){
+      message.warning('Email is invalid')
+      return
+    }
+    const forgotPasswordRes = await forgotPasswordAPI(params)
+    if(forgotPasswordRes.code === 200) {
+      message.success(forgotPasswordRes.data)
+      return
+    }
+    message.warning(forgotPasswordRes.message)
+  }
+
   return (
     <>
       <Modal width={440} maskClosable={false} wrapClassName="afk-login" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -67,8 +93,18 @@ const Register = forwardRef((props, ref) => {
             : <img src={logoDark} width={200} height={60}/>
           }
         </div>
+        { isForgot &&
+          <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
+            <Form.Item name="email" label="Email">
+              <Input className="login-input" type="email" />
+            </Form.Item>
+            <div className="form-login">
+              <Button type="primary" className="form-login-btn" onClick={forgotPassword}>Submit</Button>
+            </div>
+          </Form>
+        }
         {
-          !isLoginValue ? <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
+          !isLoginValue && !isForgot && <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
           <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
@@ -86,15 +122,17 @@ const Register = forwardRef((props, ref) => {
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Have an account? Log In</div>
         </Form> 
-        : 
-        <Form form={form} className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
+        }
+        {
+          isLoginValue && !isForgot &&
+          <Form form={form} className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
           <Form.Item name="username" label="Username"  rules={[{ required: true, message: 'Please input your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
           <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your password!' }]}>
             <Input.Password className="login-input"  />
           </Form.Item>
-          <div className="forget-password">Forget password?</div>
+          <div className="forget-password" onClick={hanldeForgot}>Forget password?</div>
           <div className="form-login">
             <Button type="primary" className="form-login-btn" onClick={onLogin}>Log In</Button>
           </div>
