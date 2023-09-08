@@ -25,7 +25,7 @@ const hideLoading = () => {
 interface AxiosTokenInstance extends AxiosInstance {}
 const instance: AxiosTokenInstance = axios.create({
   baseURL: "/",
-  timeout: 5000,
+  timeout: 50000,
   responseType: 'json',
     headers: {
       'Content-Type': 'application/json',
@@ -101,6 +101,11 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
   if (error.response) __emsg = error.response.data.message ? error.response.data.message : error.response.data.data
   if (__emsg && __emsg.includes('timeout')) __emsg = 'timeout'
   if (error?.response?.status !== 200) {
+    if(error?.response?.status !== 401) {
+      message.error(__emsg)
+      window.location.href = window.location.origin
+      return
+    }
     message.error(__emsg)
   }
   return Promise.reject(new Error(__emsg))

@@ -12,7 +12,7 @@ const Forum = () => {
   const { gameId } = useParams()
   const PostDialogRef = useRef(null)
   const [posts, setPosts] = useState([])
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const [gameData, setGameData] = useState<GameData>({
     description: '',
     gameId: null,

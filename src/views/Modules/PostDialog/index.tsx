@@ -15,7 +15,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
   const { gameId } = useParams()
   const [form] = Form.useForm()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   useImperativeHandle(ref, () => ({
     showModal
   }))

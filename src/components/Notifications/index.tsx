@@ -1,45 +1,59 @@
+import { useEffect, useState } from 'react'
 import './notifications.less'
+import { unreadMessageAPI, markAllAPI } from '@/request/api'
+import { message } from 'antd'
 const Notifications = () => {
+  const [unreadMessages, setUnreadMessages] = useState([])
+  const unreadMessageMethod = async() => {
+    const unreadMessagesRes = await unreadMessageAPI()
+    if(unreadMessagesRes.code === 200) {
+      setUnreadMessages(unreadMessagesRes.data||[])
+      return
+    }
+    message.warning(unreadMessagesRes.message)
+  }
+
+  const readReply = async() => {
+    const readReplyRes = await markAllAPI()
+    if(readReplyRes.code === 200) {
+      message.success(readReplyRes.data)
+      return
+    }
+    message.warning(readReplyRes.message)
+  }
+  useEffect(() => {
+    unreadMessageMethod()
+  }, [])
   return (
+
     <div className='afk-popup'>
       <div className='afk-popup-title'>
         <div className='afk-popup-title-left'>Notifications</div>
-        <div className='afk-popup-title-right'>Mark all as read</div>
+        { unreadMessages.length > 0 && <div className='afk-popup-title-right' onClick={readReply}>Mark all as read</div> }
       </div>
       <div className='afk-popup-ul'>
-        <div className='afk-popup-li'>
-          <div className='afk-popup-li-icon'>
-            A
-          </div>
-          <div className='afk-popup-li-right'>
-            <div className='afk-popup-li-right-content'>
-              <span>Kofa2387</span> liked your reply: <span>“Consectetur adipiscingtConsectetur adipConsectetur adipConsectetur adipConsectetur adipConsectetur adip”</span>
-            </div>
-            <div className='afk-popup-li-right-time'>3 hours ago</div>
-          </div>
-        </div>
-        <div className='afk-popup-li'>
-          <div className='afk-popup-li-icon'>
-            A
-          </div>
-          <div className='afk-popup-li-right'>
-            <div className='afk-popup-li-right-content'>
-              <span>Kofa2387</span> liked your reply: <span>“Consectetur adipiscingtConsectetur adipConsectetur adipConsectetur adipConsectetur adipConsectetur adip”</span>
-            </div>
-            <div className='afk-popup-li-right-time'>3 hours ago</div>
-          </div>
-        </div>
-        <div className='afk-popup-li'>
-          <div className='afk-popup-li-icon'>
-            A
-          </div>
-          <div className='afk-popup-li-right'>
-            <div className='afk-popup-li-right-content'>
-              <span>Kofa2387</span> liked your reply: <span>“Consectetur adipiscingtConsectetur adipConsectetur adipConsectetur adipConsectetur adipConsectetur adip”</span>
-            </div>
-            <div className='afk-popup-li-right-time'>3 hours ago</div>
-          </div>
-        </div>
+        {
+          unreadMessages && 
+          unreadMessages.map((msg, index) => {
+            return (
+              <div className='afk-popup-li' key={index}>
+                <div className='afk-popup-li-icon'>
+                  {msg.fromUsername && msg.fromUsername.charAt(0)}
+                </div>
+                <div className='afk-popup-li-right'>
+                  <div className='afk-popup-li-right-content'>
+                    <span>{msg.fromUsername}</span> liked your reply: <span>"{msg.content}"</span>
+                  </div>
+                  {/* <div className='afk-popup-li-right-time'>3 hours ago</div> */}
+                </div>
+              </div>
+            )
+          })
+        }
+        {
+          !unreadMessages.length && 
+          <div className='afk-popup-no-content'>No Content</div>
+        }
       </div>
     </div>
   )

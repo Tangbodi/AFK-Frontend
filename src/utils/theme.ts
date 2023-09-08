@@ -19,3 +19,11 @@ export const keepTheme = ():void => {
     setTheme('theme-light')
   }
 }
+
+export const autoSetTheme = () => {
+  const nowTime = new Date()
+	const minutes = nowTime.getHours() * 60 + nowTime.getMinutes() //当前时间转换成分
+  const endTime = "18:00"
+  const endTimeToMinutes = Number(endTime.split(':')[0])*60
+  endTimeToMinutes <= minutes ? setTheme('theme-dark') : setTheme('theme-light')
+}

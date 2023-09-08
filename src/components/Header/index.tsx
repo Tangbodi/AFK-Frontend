@@ -21,7 +21,7 @@ const Header = () => {
   const [currentTheme, setCurrentTheme] = useState(getTheme())
   const [optionVisible, setOptionVisible] = useState(false)
   const [selectedType, setSelectedType] = useState(null)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const navigateTo = useNavigate()
   const location = useLocation()
   const AccountRef = useRef(null)
@@ -34,6 +34,11 @@ const Header = () => {
 
   // goto account info
   const handleClick = (isLogin: boolean) => { 
+    const hasEssionid = sessionStorage.getItem('afk-jsessionid')
+    if(hasEssionid) {
+      navigateTo('/settings/myinfo')
+      return
+    }
     AccountRef.current.showModal(isLogin)
   }
 

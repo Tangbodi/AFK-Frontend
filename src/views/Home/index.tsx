@@ -6,14 +6,25 @@ import Forum from "@/components/Forum"
 import Hot from '@/components/Hot'
 import News from '@/components/News'
 import './home.less'
-import { useEffect, useRef } from 'react'
-import { getHomeGameImagesAPI } from '@/request/api'
+import { useEffect, useRef, useState } from 'react'
+import { getHomeGameImagesAPI, getNewsAPI } from '@/request/api'
 import { message } from "antd"
 const View = () => {
   const bannerRef = useRef(null)
+  const [newsList, setNewsList] = useState([])
   useEffect(() => {
+    getNews()
     getHomeGameImages()
   },[])
+
+  const getNews = async() => {
+    const getNewsRes = await getNewsAPI()
+    if(getNewsRes.code === 200) {
+      setNewsList(getNewsRes.data||[])
+      return
+    }
+    message.warning(getNewsRes.message)
+  }
 
   const getHomeGameImages = async() => {
     const getHomeGameImagesRes = await getHomeGameImagesAPI()
@@ -27,13 +38,13 @@ const View = () => {
   return (
     <div className="afk-home">
       <Header/>
-      <main className="afk-main">
+      <div className="afk-main">
         <Banner ref={bannerRef}/>
-        <Recommend/>
-        <News/>
+        <Recommend newsData={newsList}/>
+        <News newsData={newsList}/>
         <Hot/>
         <Forum/>
-      </main>
+      </div>
       <Footer/>
     </div>
   )

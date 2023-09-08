@@ -239,3 +239,14 @@ export const forgotPasswordAPI = (params: ForgotPasswordReq): Promise<APIRes> =>
  * @param confirmPassword
  */
 export const enterPasswordAPI = (params: ForgotPasswordReq): Promise<APIRes> => request.put('/api/v1/user-info/forgot-password/enter-password',params)
+
+/**
+ * /api/v1/user-info/unread-message
+ */
+export const unreadMessageAPI = (): Promise<APIRes> => request.get('/api/v1/user-info/unread-message')
+
+/**
+ * /api/v1/user-info/mark-all-as-read
+ */
+export const markAllAPI = (): Promise<APIRes> => request.put('/api/v1/user-info/mark-all-as-read')
+

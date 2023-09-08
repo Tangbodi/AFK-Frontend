@@ -1,6 +1,6 @@
 import './recommend.less'
 import { message } from 'antd'
-import { useEffect, useState, SyntheticEvent } from 'react'
+import { useEffect, useState, SyntheticEvent, forwardRef, useRef } from 'react'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
@@ -10,13 +10,19 @@ import Banner from '../Banner'
 import { useNavigate } from 'react-router-dom'
 import { homeMergedAPI } from '@/request/api'
 import { homeTabsList } from '@/config'
-const Recommend = () => {
+type Props = {
+  newsData: any
+}
+const Recommend: React.FC<Props> = forwardRef((props, ref) => {
   const [currentTabValue, setCurrentTabValue] = useState('latest')
   const [postsList, setPostsList] = useState([])
   const navigateTo = useNavigate()
+  const bannerRef = useRef(null)
+  const { newsData } = props
   useEffect(()=>{
-    handleChange(null, currentTabValue) // 默认加载第一个tab
-  },[])
+    newsData && handleChange(null, currentTabValue) // 默认加载第一个tab
+    bannerRef.current.getData(newsData)
+  },[newsData])
   // tab切换change触发
   const handleChange = (_: SyntheticEvent, type = currentTabValue) => {
     setCurrentTabValue(type)
@@ -29,6 +35,7 @@ const Recommend = () => {
   // 首页tabs接口
   const homeMerged = async(type: string) => {
     const homeMergedRes = await homeMergedAPI({type})
+    setPostsList([])
     if(homeMergedRes.code === 200) {
       setPostsList(homeMergedRes.data||[])
       return
@@ -38,7 +45,7 @@ const Recommend = () => {
   return (
     <div className="afk-recommend">
       <div className="afk-recommend-left">
-        <Banner/>
+        <Banner ref={bannerRef}/>
       </div>
       <div className="afk-recommend-right">
         <Box sx={{ width: '100%'}}>
@@ -52,9 +59,9 @@ const Recommend = () => {
               homeTabsList.map(tab =>(
                 <TabPanel value={tab.value} key={tab.value}>
                   {
-                    postsList.map(postsItem => {
+                    postsList.map((postsItem, index) => {
                       return (
-                        <div className='tab-panel-item' key={postsItem.postId} onClick={()=>{goToRouter(postsItem.postId)}}>
+                        <div className='tab-panel-item' key={index} onClick={()=>{goToRouter(postsItem.postId)}}>
                           <p>{postsItem.title || postsItem.content}</p>
                           <span>{postsItem.gameName}</span>
                         </div>
@@ -69,5 +76,5 @@ const Recommend = () => {
       </div>
     </div>
   )
-}
+})
 export default Recommend
