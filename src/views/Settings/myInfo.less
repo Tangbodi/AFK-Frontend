@@ -33,11 +33,12 @@
       border-radius: 16px;
       box-shadow: 0px 2px 12px 0px rgba(59, 41, 23, 0.10);
       position: relative;
-      background: #fff;
+      background: var(--jumpBgColor);
       .info-noedit{
         height: 32px;
         line-height: 32px;
         font-size: 16px;
+        color: var(--fontColor);
       }
       .afk-user-form-edit{
         position: absolute;
@@ -159,6 +160,7 @@
         .afk-user-form-location-l{
           font-size: 20px;
           font-weight: 700;
+          color: var(--fontColor);
         }
         .afk-user-form-location-r{
           display: flex;
@@ -178,12 +180,14 @@
       }
       .location-preview{
         .location-preview-title{
+          color: var(--fontColor);
           font-size: 18px;
           font-weight: 700;
           margin: 15px 0;
         }
         .location-preview-desc{
           margin-bottom: 10px;
+          color: var(--fontColor);
         }
       }
     }
