@@ -86,8 +86,9 @@ interface GameData {
 }
 
 interface SaveGamesReq{
-  genreId: string;
-  gameId: string;
+  objectId: string;
+  status: number;
+  typeId: number;
 }
 
 interface SavePostReq {

@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.14.1",
     "@mui/lab": "^5.0.0-alpha.139",
     "@mui/material": "^5.14.4",
+    "@tinymce/tinymce-react": "^4.3.0",
     "antd": "^5.7.0",
     "axios": "^1.4.0",
     "moment": "^2.29.4",

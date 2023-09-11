@@ -55,14 +55,14 @@ const Topic = () => {
     message.warning(showPostBodyRes.message)
   }
 
-  const commentsReplies = async() => {
-    const params = {
-      page,
+  const commentsReplies = async(hasPage?: number) => {
+    const params: any = {
       size: 4,
       post: postId,
       game: searchParams.get('game'),
       genre: searchParams.get('genre')
     }
+    params.page = hasPage ? hasPage : page
     const commentsRepliesRes = await commentsRepliesAPI(params)
     if(commentsRepliesRes.code === 200) {
       const repliesData = commentsRepliesRes.data || {}
@@ -96,7 +96,7 @@ const Topic = () => {
 
   const getLeaveMsg = (value: any) => {
     if(typeof(value) === 'boolean') {
-      commentsReplies()
+      commentsReplies(1)
     } else {
       const { pIndex, cIndex } = value
       const childCommentObj: any = repliesList[pIndex]
@@ -113,7 +113,7 @@ const Topic = () => {
 
   useEffect(()=>{ 
     showPostBody()
-    commentsReplies()
+    commentsReplies(1)
   },[])
   
   return (
@@ -154,7 +154,7 @@ const Topic = () => {
               !showBigImage &&
               <div className='main-content-images'>
                 {
-                  imageURL && imageURL.length && 
+                  imageURL.length > 0 && 
                   imageURL.map((image, index)=>{
                     return (
                       <div className='main-content-images-item' key={index} onClick={()=>{showImgDetail(index)}}>
@@ -204,29 +204,31 @@ const Topic = () => {
             </div>
           </div>
           
-            {repliesList && repliesList.length && 
+            { repliesList.length && 
               repliesList.map((replies, index) => {
-                return (
-                  <div className='afk-top-main-content-item' key={index}>
-                      <div className="main-content-title">
-                        <div className="content-title-left">
-                          <Avatar alt={replies.comment.username} sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
+                if(replies) {
+                  return (
+                    <div className='afk-top-main-content-item' key={index}>
+                        <div className="main-content-title">
+                          <div className="content-title-left">
+                            <Avatar alt={replies.comment.username} sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
+                          </div>
+                          <div className="content-title-right">
+                            {dateUtils(replies.comment.createdAt)}
+                          </div>
                         </div>
-                        <div className="content-title-right">
-                          {dateUtils(replies.comment.createdAt)}
+                        <div className="main-content-detail">
+                          <div className="main-content-desc">
+                            {replies.comment.content}
+                          </div>
+                          <div className="main-content-controls comment-type">
+                            <Controls pIndex={index} cIndex={0} comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
+                          </div>
+                          <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                         </div>
-                      </div>
-                      <div className="main-content-detail">
-                        <div className="main-content-desc">
-                          {replies.comment.content}
-                        </div>
-                        <div className="main-content-controls comment-type">
-                          <Controls pIndex={index} cIndex={0} comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
-                        </div>
-                        <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
-                      </div>
-                  </div>
-                )
+                    </div>
+                  )
+                }
               
             })}
             

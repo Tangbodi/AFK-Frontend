@@ -26,9 +26,11 @@
       width: 100%;
       .ant-input{
         box-shadow: none;
-        border:1px #d9d9d9 solid;
+        color: var(--tabActiveColor);
+        background: var(--navInputBgColor);
+        border:1px  var(--commentBorderColor) solid;
         &:hover{
-          border:1px #d9d9d9 solid;
+          border:1px var(--commentBorderColor) solid;
           box-shadow: none;
         }
       }
@@ -39,14 +41,18 @@
       .afk-like-cancel-btn{
         margin-right: 10px;
         background: none;
+        border: 1px solid var(--cancelBtnFontColor);
+        color:var(--cancelBtnFontColor);
         &:hover{
-          border:1px #745B3F solid;
           box-shadow: none;
-          color: #745B3F;
+          border: 1px solid var(--cancelBtnFontColor);
+          color:var(--cancelBtnFontColor);
         }
       }
       .ant-btn-primary{
-        background: #745B3F;
+        // background: #745B3F;
+        background: var(--tabActiveBgColor);
+        color: var(--tabActiveColor);
       }
     }
   }

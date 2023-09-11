@@ -25,10 +25,11 @@ const Forum = () => {
     savedForums: state.gobalStatus.savedForums
   }))
   const [isSaved, setIsSaved] = useState(false)
-  const [pageSize, setPageSize] = useState(2)
+  const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)
+  const [status, setStatus] = useState(1)
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
@@ -85,9 +86,9 @@ const Forum = () => {
     PostDialogRef.current.showModal()
   }
   const saveGames = async() => {
-    const saveGamesRes = await saveGamesAPI({genreId: searchParams.get('genreId'), gameId})
+    const saveGamesRes = await saveGamesAPI({ typeId: 4, objectId: gameId, status })
     if(saveGamesRes.code === 200) {
-      setIsSaved(saveGamesRes.data)
+      setStatus(saveGamesRes.data)
       return
     }
     message.warning(saveGamesRes.message)
@@ -108,7 +109,7 @@ const Forum = () => {
               <div className='game-detail-title-l'>{ gameData.gameName }</div>
               <div className='game-detail-title-r' onClick={saveGames}>
                 {
-                  isSaved ? <Grade style={{fontSize:'14px'}}/>
+                  status ? <Grade style={{fontSize:'14px'}}/>
                   : <GradeOutlined style={{fontSize:'14px'}}/>
                 }Save
                 </div>
@@ -141,7 +142,7 @@ const Forum = () => {
               posts && posts.map((post, index) => {
                 return (
                   <div className='afk-forum-guides-list-td fc' key={index}>
-                    <div className="list-th-replies w70">4</div>
+                    <div className="list-th-replies w70">{post.view}</div>
                     <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                     <div className="list-th-by w130 fw400">
                       <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}

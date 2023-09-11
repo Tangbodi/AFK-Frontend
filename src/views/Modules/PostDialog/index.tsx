@@ -1,6 +1,7 @@
-import { useState, useImperativeHandle, forwardRef } from 'react'
+import { useState, useImperativeHandle, forwardRef, useRef } from 'react'
 import { Button, Modal, Form, Input, message } from 'antd'
 import { useSearchParams, useParams } from 'react-router-dom'
+import { Editor } from '@tinymce/tinymce-react'
 import Uploader from '@/components/Uploader'
 import { savePostAPI } from '@/request/api'
 import './postDialog.less'
@@ -12,10 +13,13 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
   const { TextArea } = Input
   const { title } = props
   const imageIdList = []
+  const editorRef = useRef(null)
+  const [textRender, setTextRender] = useState('');
   const { gameId } = useParams()
   const [form] = Form.useForm()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [searchParams] = useSearchParams()
+  
   useImperativeHandle(ref, () => ({
     showModal
   }))
@@ -25,22 +29,20 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
 
   const handleOk = async() => {
     const values = await form.validateFields()
-    
+
     if(!values.title) {
-      message.warning("Please input title")
+      message.warning("Please enter post title")
       return
     }
-    if(!values.textRender){
-      message.warning('Please input post content')
+    if(!textRender) {
+      message.warning("Please enter post Content")
       return
     }
-    // setIsModalOpen(false)
     if(imageIdList.length) {
       values.postImageNameList = imageIdList
     }
-    const savePostRes = await savePostAPI(Object.assign({}, values, { genreId: searchParams.get('genreId'), gameId }))
+    const savePostRes = await savePostAPI(Object.assign({}, values, { textRender, genreId: searchParams.get('genreId'), gameId }))
     if(savePostRes.code === 200) {
-      console.log('ass', savePostRes)
       if(savePostRes.data && savePostRes.data.postId) {
         message.success("save success")
         setIsModalOpen(false)
@@ -67,37 +69,40 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
           <Form.Item name="title" label="Title">
             <Input className="titleInput" />
           </Form.Item>
-          {/* <Form.Item name="hastag" className='postDialog-btns' label="HashTag">
-            <Button type="primary" icon={<PlusOutlined />}>
-              Guides
-            </Button>
-            <Button type="primary" icon={<PlusOutlined />}>
-              News
-            </Button>
-            <Button type="primary" icon={<PlusOutlined />}>
-              Q&A
-            </Button>
-            <Button type="primary" icon={<PlusOutlined />}>
-              Reviews
-            </Button>
-            <Button type="primary" icon={<PlusOutlined />}>
-              Chat
-            </Button>
-          </Form.Item> */}
-          <Form.Item name="textRender" label="Post Content">
-            <TextArea
-              className="inputTextarea"
-              maxLength={100}
-              rows={5}
-              style={{resize: 'none' }}
-              placeholder="What are your thoughts?"
-            />
-          </Form.Item>
+          <div className='afk-editor-wrap'>
+            <div className='afk-editor-title'>Post Content</div>
+            <div className='afk-editor-detail'>
+              <Editor
+                apiKey='sn5ytycr1mo04zyd7qmgf69k1xqv3choi63zrsy2bpksdvtv'
+                onInit={(evt, editor) => editorRef.current = editor}
+                initialValue={''}
+                onEditorChange={(newValue) => setTextRender(newValue)}
+                init={{
+                  height: 300,
+                  width: '100%',
+                  menubar: false,
+                  plugins: [
+                    'advlist', 'lists', 'charmap', 'preview',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen', 'emoticons',
+                    'insertdatetime', 'table', 'code', 'help', 'wordcount'
+                  ],
+                  toolbar: 'undo redo | styles ' +
+                    'bold italic underline forecolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help' +
+                    'code | emoticons | preview ',
+                  statusbar: false,
+                  content_style: 'body { background-color: #fff; }'
+                }}
+              />
+            </div>
+          </div>
           <Form.Item name="postImageNameList" label="Image & Video">
             <Uploader getFiles={getFileList}/>
           </Form.Item>
         </Form>
       </Modal>
+      
   )
 })
 export default PostDialog

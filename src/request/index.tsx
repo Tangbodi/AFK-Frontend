@@ -1,8 +1,9 @@
 import { message } from 'antd'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import axios from 'axios'
-import ReactDOM from 'react-dom'
+// import ReactDOM from 'react-dom'
 import BackdropLoading from '@/components/Backdrop'
+import { createRoot } from "react-dom/client";
 
 
 let requestCount = 0
@@ -11,7 +12,9 @@ const showLoading = () => {
       var dom = document.createElement('div')
       dom.setAttribute('id', 'loading')
       document.body.appendChild(dom)
-      ReactDOM.render(<BackdropLoading/>, dom)
+      // ReactDOM.render(<BackdropLoading/>, dom) react17的写法 18支持 但会告警
+      const target = createRoot(document.getElementById('loading'))
+      target.render(<BackdropLoading/>)
   }
   requestCount++
 } 
@@ -78,7 +81,7 @@ const getErrorCode2text = (response: any): string => {
 }
 
 instance.interceptors.request.use(config => {
-  // config.headers.isLoading !== false && showLoading()
+  config.headers.isLoading !== false && showLoading()
   return config
 }, err => {
   err.config.headers.isLoading !== false && hideLoading()
@@ -101,12 +104,18 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
   if (error.response) __emsg = error.response.data.message ? error.response.data.message : error.response.data.data
   if (__emsg && __emsg.includes('timeout')) __emsg = 'timeout'
   if (error?.response?.status !== 200) {
+    // debugger
     if(error?.response?.status !== 401) {
       message.error(__emsg)
       window.location.href = window.location.origin
-      return
+    } else {
+      message.error(__emsg)
+      const pathname = window.location.pathname
+      if(pathname.indexOf('settings') != -1) {
+        sessionStorage.removeItem('afk-jsessionid')
+        window.location.href = window.location.origin
+      }
     }
-    message.error(__emsg)
   }
   return Promise.reject(new Error(__emsg))
 })
