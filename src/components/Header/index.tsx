@@ -113,7 +113,7 @@ const Header = () => {
             inputShow ?
             (
               <div className='search-inputs'>
-                <Input placeholder="Please input ..." allowClear={{clearIcon:<CloseOutlined className='search-inputs-close'/>}} onPressEnter={(e)=>{onSearch(e)}}/>
+                <Input placeholder="Please enter ..." allowClear={{clearIcon:<CloseOutlined className='search-inputs-close'/>}} onPressEnter={(e)=>{onSearch(e)}}/>
               </div>
             )
             :

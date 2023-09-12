@@ -1,7 +1,6 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import Loading from '@/components/Loading'
-import Login from '@/views/Login'
 import Home from '@/views/Home/index'
 import Layout from '@/views/Layout/layout'
 import SettingsLayout from '@/views/Layout/settingsLayout'
@@ -86,10 +85,6 @@ const routes = [
         element: withLoadingComponent(<ErrorComp/>)
       },
     ]
-  },
-  {
-    path: '/login',
-    element: <Login/> 
   },
   // 访问不存在的路由处理
   {

@@ -147,9 +147,7 @@ const Topic = () => {
             </div>
           </div>
           <div className="main-content-detail">
-            <div className="main-content-desc">
-              {textRender}
-            </div>
+            <div className="main-content-desc" dangerouslySetInnerHTML={{__html: textRender}}/>
             {
               !showBigImage &&
               <div className='main-content-images'>

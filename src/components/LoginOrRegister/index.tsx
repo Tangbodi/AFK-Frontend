@@ -31,6 +31,7 @@ const Register = forwardRef((props, ref) => {
   }
 
   const handleCancel = () => {
+    form.resetFields()
     setIsLoginValue(false)
     setIsForgot(false)
     setIsModalOpen(false)
@@ -60,6 +61,7 @@ const Register = forwardRef((props, ref) => {
       sessionStorage.setItem('afk-username', loginRes.data.username)
       sessionStorage.setItem('afk-userid', loginRes.data.userId)
       sessionStorage.setItem('afk-jsessionid', loginRes.data.jsessionid)
+      form.resetFields()
       return
     }
     message.warning(loginRes.message)
@@ -69,7 +71,7 @@ const Register = forwardRef((props, ref) => {
     const params = await form.validateFields()
     const emailRegx = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
     if(!params.email) {
-      message.warning('Please input you email')
+      message.warning('Please enter you email')
       return
     }
     if(!emailRegx.test(params.email)){
@@ -79,6 +81,7 @@ const Register = forwardRef((props, ref) => {
     const forgotPasswordRes = await forgotPasswordAPI(params)
     if(forgotPasswordRes.code === 200) {
       message.success(forgotPasswordRes.data)
+      form.resetFields()
       return
     }
     message.warning(forgotPasswordRes.message)
@@ -105,13 +108,13 @@ const Register = forwardRef((props, ref) => {
         }
         {
           !isLoginValue && !isForgot && <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
-          <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please enter your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
-          <Form.Item name="email" label="Email" rules={[{type: 'email',message: 'The input is not valid E-mail!'},{required: true,message: 'Please input your E-mail!'}]}>
+          <Form.Item name="email" label="Email" rules={[{type: 'email',message: 'The input is not valid E-mail!'},{required: true,message: 'Please enter your E-mail!'}]}>
             <Input className="login-input"  />
           </Form.Item>
-          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your password!' }]}>
+          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please enter your password!' }]}>
             <Input.Password className="login-input"  />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' }]}>
@@ -126,10 +129,10 @@ const Register = forwardRef((props, ref) => {
         {
           isLoginValue && !isForgot &&
           <Form form={form} className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
-          <Form.Item name="username" label="Username"  rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item name="username" label="Username"  rules={[{ required: true, message: 'Please enter your username!' }]}>
             <Input className="login-input" />
           </Form.Item>
-          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your password!' }]}>
+          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please enter your password!' }]}>
             <Input.Password className="login-input"  />
           </Form.Item>
           <div className="forget-password" onClick={hanldeForgot}>Forget password?</div>

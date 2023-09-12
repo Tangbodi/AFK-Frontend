@@ -29,8 +29,8 @@ const Recommend: React.FC<Props> = forwardRef((props, ref) => {
     homeMerged(type)
   }
   // 路由跳转
-  const goToRouter = (id) => {
-    navigateTo(`/topic/${id}`)
+  const goToRouter = ({postId, genreId, gameId}) => {
+    navigateTo(`/topic/${postId}?genre=${genreId}&game=${gameId}`)
   }
   // 首页tabs接口
   const homeMerged = async(type: string) => {
@@ -61,7 +61,7 @@ const Recommend: React.FC<Props> = forwardRef((props, ref) => {
                   {
                     postsList.map((postsItem, index) => {
                       return (
-                        <div className='tab-panel-item' key={index} onClick={()=>{goToRouter(postsItem.postId)}}>
+                        <div className='tab-panel-item' key={index} onClick={()=>{goToRouter(postsItem)}}>
                           <p>{postsItem.title || postsItem.content}</p>
                           <span>{postsItem.gameName}</span>
                         </div>

@@ -7,11 +7,11 @@ import { savePostAPI } from '@/request/api'
 import './postDialog.less'
 type Props = {
   title: string,
-  ref: any
+  ref: any,
+  reload: Function
 }
 const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
-  const { TextArea } = Input
-  const { title } = props
+  const { title, reload } = props
   const imageIdList = []
   const editorRef = useRef(null)
   const [textRender, setTextRender] = useState('');
@@ -35,7 +35,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
       return
     }
     if(!textRender) {
-      message.warning("Please enter post Content")
+      message.warning("Please enter post content")
       return
     }
     if(imageIdList.length) {
@@ -46,6 +46,8 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
       if(savePostRes.data && savePostRes.data.postId) {
         message.success("save success")
         setIsModalOpen(false)
+        form.resetFields()
+        reload()
       }
       return
     }
@@ -53,6 +55,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
   }
 
   const handleCancel = () => {
+    form.resetFields()
     setIsModalOpen(false)
   }
 
@@ -75,6 +78,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
               <Editor
                 apiKey='sn5ytycr1mo04zyd7qmgf69k1xqv3choi63zrsy2bpksdvtv'
                 onInit={(evt, editor) => editorRef.current = editor}
+                tinymceScriptSrc={'/tinymce/tinymce.min.js'}
                 initialValue={''}
                 onEditorChange={(newValue) => setTextRender(newValue)}
                 init={{

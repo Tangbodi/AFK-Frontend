@@ -33,7 +33,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
   const gameId =  searchParams.get('game')
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
-  const [postLikeStatus, setPostLikeStatus] = useState(likeStatus||(comment&&comment.likeStatus)||(reply&&reply.likeStatus))
+  const [postLikeStatus, setPostLikeStatus] = useState(likeStatus ||(comment&&comment.likeStatus)||(reply&&reply.likeStatus))
   const [postSaveStatus, setPostSaveStatus] = useState(saveStatus)
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -148,7 +148,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
               maxLength={100}
               style={{ height: 220 }}
               onChange={onChange}
-              placeholder="Please input"
+              placeholder="Please enter"
             />
           </div>
           <div className='afk-like-input-btn'>

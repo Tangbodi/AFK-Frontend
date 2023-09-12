@@ -17,6 +17,12 @@
   .login-input{
     height: 50px;
     border: 0;
+    color: var(--navPlaceholderColor);
+    background: var(--navInputBgColor);
+    .ant-input{
+      color: var(--navPlaceholderColor);
+      background: var(--navInputBgColor);
+    }
   }
   .forget-password{
     cursor: pointer;
@@ -44,5 +50,12 @@
     font-weight: 500;
     margin-top: 5px;
     cursor: pointer;
+  }
+}
+.afk-post-form{
+  .ant-form-item-required{
+    &::before{
+      text-indent: -999px;
+    }
   }
 }

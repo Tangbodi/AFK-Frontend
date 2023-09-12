@@ -166,7 +166,7 @@ const Forum = () => {
           </div>
         </div>
       </div>
-      <PostDialog title={gameData.gameName} ref={PostDialogRef}/>
+      <PostDialog title={gameData.gameName} ref={PostDialogRef} reload={()=>{getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)}}/>
     </div>
   )
 }

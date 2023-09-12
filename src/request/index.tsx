@@ -107,7 +107,7 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
     // debugger
     if(error?.response?.status !== 401) {
       message.error(__emsg)
-      window.location.href = window.location.origin
+      // window.location.href = window.location.origin
     } else {
       message.error(__emsg)
       const pathname = window.location.pathname
