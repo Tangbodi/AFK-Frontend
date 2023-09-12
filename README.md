@@ -17,9 +17,11 @@
 │   └── views        //页面文件夹
 ├── .eslintrc.cjs      //eslint 配置
 ├── .gitignore         //git 提交忽略文件
-├── index.html         //index.html模板
+├── index.html          //index.html模板
 ├── tsconfig.json       //tsconfig
-├── vite.config.ts     //vite 配置
+├── tsconfig.node.json  //tsconfig.node.json 配置
+├── vite.config.ts      //vite 配置
+├── package-lock.json   
 ├── package.json
 ```
 ### Development

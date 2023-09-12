@@ -41,6 +41,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
     if(imageIdList.length) {
       values.postImageNameList = imageIdList
     }
+    if(!values.postImageNameList) values.postImageNameList = []
     const savePostRes = await savePostAPI(Object.assign({}, values, { textRender, genreId: searchParams.get('genreId'), gameId }))
     if(savePostRes.code === 200) {
       if(savePostRes.data && savePostRes.data.postId) {
