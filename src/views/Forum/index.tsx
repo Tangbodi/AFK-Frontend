@@ -109,7 +109,7 @@ const Forum = () => {
               <div className='game-detail-title-l'>{ gameData.gameName }</div>
               <div className='game-detail-title-r' onClick={saveGames}>
                 {
-                  status ? <Grade style={{fontSize:'14px'}}/>
+                  isSaved ? <Grade style={{fontSize:'14px'}}/>
                   : <GradeOutlined style={{fontSize:'14px'}}/>
                 }Save
                 </div>
