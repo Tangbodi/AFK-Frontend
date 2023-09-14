@@ -2,7 +2,7 @@ import './forum.less'
 import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
 import { Grade, GradeOutlined } from '@mui/icons-material'
-import { getAllPostOneGameAPI, gameInfoAPI, saveGamesAPI } from '@/request/api'
+import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
 import { message } from 'antd'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
@@ -29,7 +29,6 @@ const Forum = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)
-  const [status, setStatus] = useState(1)
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
@@ -86,9 +85,10 @@ const Forum = () => {
     PostDialogRef.current.showModal()
   }
   const saveGames = async() => {
-    const saveGamesRes = await saveGamesAPI({ typeId: 4, objectId: gameId, status })
+    const status = isSaved ? 0 : 1
+    const saveGamesRes = await likeSavePostAPI({ typeId: 4, objectId: gameId, status })
     if(saveGamesRes.code === 200) {
-      setStatus(saveGamesRes.data)
+      setIsSaved(status === 0)
       return
     }
     message.warning(saveGamesRes.message)

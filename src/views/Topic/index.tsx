@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
+// import BackTop from '@/components/BackTop'
 import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
@@ -117,11 +118,7 @@ const Topic = () => {
   },[])
   
   return (
-    <div className="afk-topic" id="scrollableDiv" style={{
-      height: 400,
-      overflow: 'auto'
-    }}>
-      <InfiniteScroll
+    <InfiniteScroll
             dataLength={repliesList.length}
             next={commentsReplies}
             hasMore={totalPages>=page}
@@ -129,6 +126,11 @@ const Topic = () => {
             endMessage={<Divider plain>It is all, nothing more</Divider>}
             scrollableTarget="scrollableDiv"
           >
+    <div className="afk-topic" id="scrollableDiv" style={{
+      height: 400,
+      overflow: 'auto'
+    }}>
+      
       <div className="afk-topic-main">
       <div className="afk-topic-title">Forum - {gameName}</div>
         <div className="afk-topic-main-title">
@@ -232,8 +234,9 @@ const Topic = () => {
             
         </div>
       </div>
-      </InfiniteScroll>
     </div>
+    {/* <div style={{color:"#777",position:"fixed", right:'-50px', bottom:'100px', zIndex:99, background:'#000'}}>Topxxx</div> */}
+    </InfiniteScroll>
   )
 }
 export default Topic

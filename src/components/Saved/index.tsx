@@ -26,6 +26,7 @@ const Saved = () => {
     setVisible(false)
     setDHeight(106)
   } 
+    
   
   const getForums = async() => {
     const getForumsRes = await getForumsAPI()
@@ -42,7 +43,6 @@ const Saved = () => {
     }
     message.warning(getForumsRes.message)
   }
-  
   const showMoreHandle = () => {
     setShowList(forums)
     setShowMore(false)

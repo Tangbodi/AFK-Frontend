@@ -7,7 +7,7 @@ import {
   ChatBubbleOutlineOutlined
 } from '@mui/icons-material'
 import { Input, Button, message } from 'antd'
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef, useEffect } from 'react'
 import { MsgTypes } from '@/config'
 import { likeSavePostAPI, editCommentAPI, editReplyAPI } from '@/request/api'
 import { useSearchParams, useParams } from 'react-router-dom'
@@ -33,8 +33,24 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
   const gameId =  searchParams.get('game')
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
-  const [postLikeStatus, setPostLikeStatus] = useState(likeStatus ||(comment&&comment.likeStatus)||(reply&&reply.likeStatus))
-  const [postSaveStatus, setPostSaveStatus] = useState(saveStatus)
+  const [childLikeStatus, setChildLikeStatus] = useState(likeStatus ||(comment&&comment.likeStatus)||(reply&&reply.likeStatus))
+  const [childSaveStatus, setChildSaveStatus] = useState(saveStatus)
+
+  useEffect(()=>{
+    reply&&reply.likeStatus&&setChildLikeStatus(reply.likeStatus)
+  },[reply&&reply.likeStatus])
+
+  useEffect(()=>{
+    comment&&comment.likeStatus&&setChildLikeStatus(comment.likeStatus)
+  },[comment&&comment.likeStatus])
+
+  useEffect(()=>{
+    setChildLikeStatus(likeStatus)
+  },[likeStatus])
+
+  useEffect(()=>{
+    setChildSaveStatus(saveStatus)
+  },[saveStatus])
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
@@ -45,19 +61,19 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
     if(comment) params.typeId = 1 // 如果comment不为空
     if(!comment && !reply) params.typeId = 0 // 如果comment && reply 不为空
     if(isPost && isSave) {
-      setPostSaveStatus(postSaveStatus ? 0 : 1)
+      setChildSaveStatus(childSaveStatus ? 0 : 1)
       params.typeId = 3
       params.objectId = postId
-      params.status = postSaveStatus
+      params.status = status
     } else {
       if(type === MsgTypes.comment) {
         // 如果type是comment类型 说明是评论自身
         params.objectId = postId
-        setPostLikeStatus(postLikeStatus?0:1)
-        params.status = postLikeStatus
-      } else {
+        setChildLikeStatus(childLikeStatus?0:1)
         params.status = status
-        setPostLikeStatus(status)
+      } else {
+        setChildLikeStatus(childLikeStatus?0:1)
+        params.status = status
         if(reply) params.objectId = reply.replyId
         if(comment) params.objectId = comment.commentId
       }
@@ -100,21 +116,19 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
     if(editReplyRes.code === 200) {
       message.success('replay successful')
       setInputShow(false)
-      getLeaveMsgFn(
-        {
-          pIndex,
-          likeStatus: 0,
-          cIndex: cIndex+1,
-          content: params.content,
-          replyId: editReplyRes.data.replyId,
-          toReplyId: editReplyRes.data.replyId,
-          commentId: editReplyRes.data.commentId,
-          createdAt: editReplyRes.data.createdAt,
-          fromUid: sessionStorage.getItem('afk-userid'),
-          toUsername: sessionStorage.getItem('afk-username'),
-          fromUsername:sessionStorage.getItem('afk-username')
-        }
-      )
+      getLeaveMsgFn({
+        pIndex,
+        likeStatus: 0,
+        cIndex: cIndex+1,
+        content: params.content,
+        replyId: editReplyRes.data.replyId,
+        toReplyId: editReplyRes.data.replyId,
+        commentId: editReplyRes.data.commentId,
+        createdAt: editReplyRes.data.createdAt,
+        fromUid: sessionStorage.getItem('afk-userid'),
+        toUsername: sessionStorage.getItem('afk-username'),
+        fromUsername:sessionStorage.getItem('afk-username')
+      })
       return
     }
     message.warning(editReplyRes.message)
@@ -127,11 +141,11 @@ const ControlsComp: React.FC<Props> = forwardRef((props, ref) => {
   return (
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
-        <div className="afk-like-save-item" onClick={()=>{likeSavePost(postLikeStatus?0:1)}}>
-          { postLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
+        <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
+          { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
           </div>
         { isPost &&  <div className="afk-like-save-item" onClick={()=>{likeSavePost(null, true)}}>
-         {postSaveStatus ? <GradeOutlined/>:<Grade/>}Save
+         {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
         </div> }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
           {
