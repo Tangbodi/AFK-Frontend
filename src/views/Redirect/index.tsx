@@ -27,16 +27,25 @@ const Redirect = () => {
   }
   return (
     <div className="afk-redirect">
+      <div className='afk-redirect-top'>
+        <div className='afk-redirect-top-tit'>Reset Password</div>
+        <div className='afk-redirect-top-desc'>Choose a new password for your account</div>
+      </div>
       <div className='afk-redirect-form'>
         <Form form={form}  className="afk-post-form" layout="vertical" autoComplete="off" scrollToFirstError>
           <Form.Item name="newPassword" label="New Password">
-            <Input.Password className="login-input"  />
+            <Input.Password className="login-input" placeholder='Your new password *'  />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Confirm New Password">
-            <Input.Password className="login-input"  />
+            <Input.Password className="login-input" placeholder='Confirm your new password *'/>
           </Form.Item>
           <div className="form-login">
-            <Button type="primary" className="form-login-btn" onClick={enterPassword}>Sign Up</Button>
+            <div className=''>
+              <Button type="primary" className="form-login-btn" onClick={enterPassword}>Reset Password</Button>
+            </div>
+            <div>
+              <Button className="back-to-login" onClick={enterPassword}>Back to Login</Button>
+            </div>
           </div>
         </Form> 
       </div>

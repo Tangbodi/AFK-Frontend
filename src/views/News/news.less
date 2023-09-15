@@ -1,0 +1,124 @@
+.afk-news-query{
+  width: 1150px;
+  margin:0 auto;
+  min-height: calc(100vh - 180px);
+  .news-crumbs{
+    margin: 50px 0 40px 0;
+    color: #947954;
+    font-family: DM Sans;
+    font-size: 16px;
+  }
+  .news-list{
+    .news-list-item{
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+      margin-bottom: 10px;
+      .news-list-item-top{
+        padding: 10px 30px;
+        background: #EEDFC9;
+        display: flex;
+        height: 50px;
+        align-items: center;
+        .news-list-item-top-l{
+          cursor: pointer;
+          color: #3B2917;
+          font-weight: 700;
+        }
+        .news-list-item-top-r{
+          margin-left: auto;
+          span{
+            color:#745B3F;
+            font-size: 14px;
+          }
+          .item-top-r-forum{
+            margin-right: 10px;
+          }
+        }
+      }
+      .news-list-item-detail{
+        padding: 30px;
+        .news-list-item-content-title{
+            color: #3B2917;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .news-list-item-content-time{
+            color: #745B3F;
+            font-size: 14px;
+            margin: 14px 0 10px 0;
+            span{
+              color: #96351E;
+              font-weight: 400;
+            }
+        }
+        .news-list-item-content-main{
+            font-size: 16px;
+            color: #333;
+            line-height: 26px;
+        }
+      }
+      .news-list-item-content{
+        margin: 10px 30px;
+        display: flex;
+        .news-list-item-content-l{
+          margin-right: 24px;
+          width: 260px;
+          height: 178px;
+          position: relative;
+          .item-top-l-slot{
+            z-index: 8;
+            vertical-align: top;
+            overflow: hidden;
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            .item-top-l-img{
+              height: 100%;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              img{
+                width: 100%;
+                height: 100%;
+                top: 0;
+                object-fit:cover;
+              }
+            }
+          }
+        }
+        .news-list-item-content-r{
+          flex: 1;
+          .news-list-item-content-r-title{
+            color: #3B2917;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+          }
+          .news-list-item-content-r-date{
+            color: #745B3F;
+            font-size: 14px;
+            margin: 14px 0 10px 0;
+            span{
+              color: #96351E;
+              font-weight: 400;
+            }
+          }
+          .news-list-item-content-r-main{
+            font-size: 16px;
+            color: #333;
+            line-height: 26px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5; /* 设置最大显示行数 */
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+    
+  }
+}

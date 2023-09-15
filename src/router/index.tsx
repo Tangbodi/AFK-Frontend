@@ -4,6 +4,7 @@ import Loading from '@/components/Loading'
 import Home from '@/views/Home/index'
 import Layout from '@/views/Layout/layout'
 import SettingsLayout from '@/views/Layout/settingsLayout'
+import NotFound from '@/views/Exception/NotFound'
 const Forum = lazy(()=> import("../views/Forum"))
 const Topic = lazy(()=> import("../views/Topic"))
 const Store = lazy(()=> import("../views/Store"))
@@ -12,6 +13,7 @@ const Activities = lazy(()=> import("../views/Settings/Activities"))
 const Notifications = lazy(()=> import("../views/Settings/Notifications"))
 const Security = lazy(()=> import("../views/Settings/Security"))
 const News = lazy(()=> import("../views/News"))
+const NewsDetail = lazy(()=> import("../views/News/detail"))
 const Search = lazy(()=> import("../views/Search"))
 const Redirect = lazy(()=> import("../views/Redirect"))
 const ErrorComp = lazy(()=> import("../views/Redirect/error"))
@@ -57,6 +59,10 @@ const routes = [
     element: <Layout/>,
     children: [
       {
+        path: '/404',
+        element: <NotFound/>
+      },
+      {
         path: '/forum/:gameId',
         element: withLoadingComponent(<Forum/>)
       },
@@ -69,8 +75,12 @@ const routes = [
         element: withLoadingComponent(<Store/>)
       },
       {
-        path: '/news/:id',
+        path:'/news',
         element: withLoadingComponent(<News/>)
+      },
+      {
+        path: '/news/:id',
+        element: withLoadingComponent(<NewsDetail/>)
       },
       {
         path: '/search',
@@ -89,7 +99,7 @@ const routes = [
   // 访问不存在的路由处理
   {
     path: '*',
-    element: <Navigate to='/'/>
+    element: <Navigate to='/404'/>
   }
 ]
 

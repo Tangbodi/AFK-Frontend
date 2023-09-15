@@ -1,10 +1,26 @@
 .afk-redirect{
   min-height: calc(100vh - 180px);
   box-sizing: border-box;
+  width: 520px;
+  margin: 130px auto;
+  .afk-redirect-top{
+    .afk-redirect-top-tit{
+      font-size: 20px;
+      color: #3B2917;
+      font-weight: 700;
+      line-height: 26px;
+    }
+    .afk-redirect-top-desc{
+      font-size: 14px;
+      color:#745B3F;
+      font-weight: 400;
+      margin: 10px 0 70px 0;
+    }
+  }
   .afk-redirect-form{
-    width: 500px;
-    margin: 100px auto;
+    
     .ant-form-item-label{
+      display: none;
       label{
         color: var(--fontColor);
         font-size: 18px;
@@ -23,9 +39,21 @@
     }
     .form-login{
       margin-top: 35px;
+      text-align: center;
+      .back-to-login{
+        width: 226px;
+          height: 56px;
+          color: #745B3F;
+          background: none;
+          border:#745B3F 1px solid;
+          margin-top: 10px;
+          &:hover{
+            color: #745B3F;
+          }
+      }
       .form-login-btn{
-        width: 100%;
-        height: 50px;
+        width: 226px;
+        height: 56px;
         color: var(--loginFontColor);
         background: var(--loginDescColor);
         &:hover{

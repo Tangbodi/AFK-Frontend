@@ -5,7 +5,7 @@ import { keepTheme, autoSetTheme } from "./utils/theme"
 
 const App = () => {
   useEffect(() => {
-    autoSetTheme()
+    // autoSetTheme()
     keepTheme()
   })
   const outlet = useRoutes(router) 
