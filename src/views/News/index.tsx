@@ -4,6 +4,7 @@ import { getNewsAPI } from '@/request/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { message } from "antd"
+import { PeopleOutline, Grade, GradeOutlined } from '@mui/icons-material'
 const NewsQuery = () => {
   const navigateTo = useNavigate()
   const [newsList, setNewsList] = useState([])
@@ -32,8 +33,10 @@ const NewsQuery = () => {
                     LOGO {news.title}
                   </div>
                   <div className="news-list-item-top-r">
-                    <span className='item-top-r-forum'>Forum</span>
-                    <span className='item-top-r-Save'>Save</span>
+                    <span className='item-top-r-forum'>
+                      <PeopleOutline/>Forum
+                    </span>
+                    <span className='item-top-r-Save'><GradeOutlined/>Save</span>
                   </div>
                 </div>
                 <div className="news-list-item-content">

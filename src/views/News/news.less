@@ -27,12 +27,18 @@
         }
         .news-list-item-top-r{
           margin-left: auto;
-          span{
+          display: flex;
+          align-items: center;
+          .item-top-r-forum,.item-top-r-Save{
+            margin-right: 10px;
             color:#745B3F;
             font-size: 14px;
-          }
-          .item-top-r-forum{
-            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            svg{
+              margin-right: 3px;
+            }
           }
         }
       }

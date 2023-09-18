@@ -17,6 +17,7 @@ const NewsDetail = lazy(()=> import("../views/News/detail"))
 const Search = lazy(()=> import("../views/Search"))
 const Redirect = lazy(()=> import("../views/Redirect"))
 const ErrorComp = lazy(()=> import("../views/Redirect/error"))
+const SendEmail = lazy(()=> import("../views/Forgot/SendEmail"))
 /**
  * 懒加载组件处理
  * @param comp 
@@ -59,8 +60,8 @@ const routes = [
     element: <Layout/>,
     children: [
       {
-        path: '/404',
-        element: <NotFound/>
+        path: '/forgot/sendemail',
+        element: withLoadingComponent(<SendEmail/>)
       },
       {
         path: '/forum/:gameId',
@@ -94,6 +95,10 @@ const routes = [
         path: '/error',
         element: withLoadingComponent(<ErrorComp/>)
       },
+      {
+        path: '/404',
+        element: <NotFound/>
+      }
     ]
   },
   // 访问不存在的路由处理
