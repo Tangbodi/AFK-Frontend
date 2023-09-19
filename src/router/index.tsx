@@ -5,6 +5,8 @@ import Home from '@/views/Home/index'
 import Layout from '@/views/Layout/layout'
 import SettingsLayout from '@/views/Layout/settingsLayout'
 import NotFound from '@/views/Exception/NotFound'
+import VerifySuccess from '@/views/Forgot/VerifySuccess'
+import VerifyFailed from '@/views/Forgot/VerifyFailed'
 const Forum = lazy(()=> import("../views/Forum"))
 const Topic = lazy(()=> import("../views/Topic"))
 const Store = lazy(()=> import("../views/Store"))
@@ -62,6 +64,14 @@ const routes = [
       {
         path: '/forgot/sendemail',
         element: withLoadingComponent(<SendEmail/>)
+      },
+      {
+        path: '/verifysuccess',
+        element: withLoadingComponent(<VerifySuccess/>)
+      },
+      {
+        path: '/verifyfailed',
+        element: withLoadingComponent(<VerifyFailed/>)
       },
       {
         path: '/forum/:gameId',
