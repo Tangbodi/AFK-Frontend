@@ -6,7 +6,7 @@ const VerifySuccess = () => {
     <div className='afk-forgot-email'>
       <div className='afk-verify-success'>
         <div className='afk-forgot-verify-icon'>
-          <Done sx={{ fontSize: 26 }}/>
+          <Done sx={{ fontSize: 28 }}/>
         </div>
         <div className='afk-forgot-verify-content'>
           Thank you

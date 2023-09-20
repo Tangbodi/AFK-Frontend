@@ -86,6 +86,76 @@
     }
     .afk-forum-guides{
       margin-top: 34px;
+      .afk-one-game-news{
+        background: #fff;
+        border-radius: 8px;
+        margin: 20px 0;
+        .one-game-news-item{
+          padding: 10px 25px;
+          border-bottom: 1px #EEDFC9 solid;
+          display: flex;
+          &:last-child{
+            border-bottom: none;
+          }
+          .one-game-news-item-l{
+            margin-right: 24px;
+            width: 260px;
+            height: 178px;
+            position: relative;
+            .news-item-l-slot{
+              z-index: 8;
+              vertical-align: top;
+              overflow: hidden;
+              display: inline-block;
+              position: relative;
+              width: 100%;
+              height: 100%;
+              .news-item-l-img{
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                img{
+                  width: 100%;
+                  height: 100%;
+                  top: 0;
+                  object-fit:cover;
+                }
+              }
+            }
+          }
+          .news-list-item-content-r{
+            flex: 1;
+            .news-list-item-content-r-title{
+              color: #3B2917;
+              font-size: 18px;
+              font-weight: 500;
+              cursor: pointer;
+            }
+            .news-list-item-content-r-date{
+              color: #745B3F;
+              font-size: 14px;
+              margin: 14px 0 10px 0;
+              span{
+                color: #96351E;
+                font-weight: 400;
+              }
+            }
+            .news-list-item-content-r-main{
+              font-size: 16px;
+              color: #333;
+              line-height: 26px;
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 5; /* 设置最大显示行数 */
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+      
       .afk-forum-guides-tabs{
         .guides-btn{
           width: 104px;

@@ -1,5 +1,26 @@
 import './news.less'
+import { getNewsDetailAPI } from '@/request/api'
+import { message } from 'antd'
+import { useEffect } from 'react'
+import { useSearchParams, useParams } from 'react-router-dom'
 const NewsQuery = () => {
+  const { newsId } = useParams()
+  const [searchParams] = useSearchParams()
+  useEffect(() => {
+    getNewsDetail()
+  })
+  const getNewsDetail = async() => {
+    const params = {
+      newsId,
+      gameId: Number(searchParams.get('gameId')),
+      genreId: Number(searchParams.get('genreId'))
+    }
+    const getNewsDetailRes = await getNewsDetailAPI(params)
+    if(getNewsDetailRes.code === 200) {
+      return
+    }
+    message.warning(getNewsDetailRes.message)
+  }
   return (
     <div className="afk-news-query">
       <div className="news-crumbs">News</div>

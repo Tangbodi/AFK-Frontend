@@ -90,7 +90,7 @@ const routes = [
         element: withLoadingComponent(<News/>)
       },
       {
-        path: '/news/:id',
+        path: '/news/:newsId',
         element: withLoadingComponent(<NewsDetail/>)
       },
       {

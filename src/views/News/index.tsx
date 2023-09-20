@@ -1,27 +1,43 @@
 import './news.less'
-
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { getNewsAPI } from '@/request/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { message } from "antd"
-import { PeopleOutline, Grade, GradeOutlined } from '@mui/icons-material'
+import { message, Divider } from "antd"
+import { PeopleOutline, GradeOutlined } from '@mui/icons-material'
 const NewsQuery = () => {
   const navigateTo = useNavigate()
+  let [page, setPage] = useState(1) 
   const [newsList, setNewsList] = useState([])
-  const getNews = async() => {
-    const getNewsRes = await getNewsAPI()
+  const [totalPages, setTotalPages] = useState(1)
+  const getNews = async(haspage?:number) => {
+    const params: any = {size: 10}
+    params.page = haspage ? haspage : page
+    const getNewsRes = await getNewsAPI(params)
     if(getNewsRes.code === 200) {
-      setNewsList(getNewsRes.data||[])
+      const newsResData = getNewsRes.data || {}
+      setNewsList(newsList.concat(newsResData.content))
+      setTotalPages(newsResData.totalPages)
+      page = page + 1
+      setPage(page)
       return
     }
     message.warning(getNewsRes.message)
   }
   useEffect(() => {
-    getNews()
+    getNews(1)
   },[])
   return (
     <div className="afk-news-query">
       <div className="news-crumbs">News</div>
+      <InfiniteScroll
+        dataLength={newsList.length}
+        next={getNews}
+        hasMore={totalPages>=page}
+        loader={false}
+        endMessage={<Divider plain>It is all, nothing more</Divider>}
+        scrollableTarget="scrollableDiv"
+      >
       <div className="news-list">
         {
           newsList.length > 0 &&
@@ -30,7 +46,7 @@ const NewsQuery = () => {
               <div className="news-list-item" key={news.newsId}>
                 <div className="news-list-item-top">
                   <div className="news-list-item-top-l" onClick={()=>{navigateTo(`/news/${news.newsId}`)}}>
-                    LOGO {news.title}
+                    <img src={news.gameIconUrl} width={48} height={48}/> {news.gameName}
                   </div>
                   <div className="news-list-item-top-r">
                     <span className='item-top-r-forum'>
@@ -48,7 +64,7 @@ const NewsQuery = () => {
                     </div>
                   </div>
                   <div className="news-list-item-content-r">
-                    <div className="news-list-item-content-r-title" onClick={()=>{navigateTo(`/news/${news.newsId}`)}}>{news.title}</div>
+                    <div className="news-list-item-content-r-title" onClick={()=>{navigateTo(`/news/${news.newsId}?gameId=${news.gameId}&genreId=${news.genreId}`)}}>{news.title}</div>
                     <div className="news-list-item-content-r-date">{news.pubDate} by <span>Blizzard Entertainment</span></div>
                     <div className="news-list-item-content-r-main">
                       {news.description}
@@ -60,6 +76,7 @@ const NewsQuery = () => {
           })
         }
       </div>
+      </InfiniteScroll>
     </div>
   )
 }

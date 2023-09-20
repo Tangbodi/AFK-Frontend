@@ -8,7 +8,7 @@ import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
 import { useSearchParams, useParams } from 'react-router-dom'
-import { message, Skeleton, Divider } from 'antd'
+import { message, Divider } from 'antd'
 import { dateUtils, arrayToObjArray } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 
@@ -122,7 +122,7 @@ const Topic = () => {
             dataLength={repliesList.length}
             next={commentsReplies}
             hasMore={totalPages>=page}
-            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+            loader={false}
             endMessage={<Divider plain>It is all, nothing more</Divider>}
             scrollableTarget="scrollableDiv"
           >

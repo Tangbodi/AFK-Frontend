@@ -143,3 +143,14 @@ interface EnterPasswordReq{
   newPassword: string;
   confirmPassword: string;
 }
+
+interface GetNewsReq {
+  page: number;
+  size: number;
+}
+
+interface GetNewsDetailReq {
+  gameId: number;
+  genreId: number;
+  newsId: string;
+}

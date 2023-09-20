@@ -2,7 +2,7 @@ import './forum.less'
 import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
 import { Grade, GradeOutlined } from '@mui/icons-material'
-import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI } from '@/request/api'
+import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
 import { message } from 'antd'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
@@ -12,6 +12,9 @@ const Forum = () => {
   const { gameId } = useParams()
   const PostDialogRef = useRef(null)
   const [posts, setPosts] = useState([])
+  const [newsList, setNewsList] = useState([])
+  const [totalPage, setTotalPage] = useState(1)
+  const [guidesShow, setGuidesShow] = useState(false)
   const [searchParams] = useSearchParams()
   const [gameData, setGameData] = useState<GameData>({
     description: '',
@@ -81,9 +84,11 @@ const Forum = () => {
     }
     message.warning(gameBaseInfoRes.message)
   }
+
   const createNewPost = () => {
     PostDialogRef.current.showModal()
   }
+
   const saveGames = async() => {
     const status = isSaved ? 0 : 1
     const saveGamesRes = await likeSavePostAPI({ typeId: 4, objectId: gameId, status })
@@ -93,6 +98,23 @@ const Forum = () => {
     }
     message.warning(saveGamesRes.message)
   }
+
+  const getOneGameNews = async(page:number) => {
+    const params = {page, size: 5, genre:searchParams.get('genreId'), game: gameId}
+    const getOneGameNewsRes = await getOneGameNewsAPI(params)
+    if(getOneGameNewsRes.code === 200) {
+      const newsResData = getOneGameNewsRes.data || {}
+      setTotalPage(newsResData.totalPages)
+      setNewsList(newsResData.content||[])
+      return
+    }
+    message.warning(getOneGameNewsRes.message) 
+  }
+
+  const tabClick = () => {
+    getOneGameNews(1)
+  }
+
   return (
     <div className="afk-forum">
       <div className="afk-forum-title">Forum</div>
@@ -124,14 +146,17 @@ const Forum = () => {
           </div> */}
         </div>
         <div className="afk-forum-guides">
-          {/* <div className="afk-forum-guides-tabs">
+          <div className="afk-forum-guides-tabs">
             <Button className="guides-btn" variant="contained">Guides</Button>
-            <Button className="guides-btn" variant="contained">News</Button>
-            <Button className="guides-btn" variant="contained">Q&A</Button>
+            <Button className="guides-btn" variant="contained" onClick={tabClick}>News</Button>
+            {/* <Button className="guides-btn" variant="contained">Q&A</Button>
             <Button className="guides-btn" variant="contained">Reviews</Button>
-            <Button className="guides-btn" variant="contained">Chat</Button>
-          </div> */}
-          <div className="afk-forum-guides-list">
+            <Button className="guides-btn" variant="contained">Chat</Button> */}
+          </div>
+          {
+          guidesShow && (
+            <>
+            <div className="afk-forum-guides-list">
             <div className='afk-forum-guides-list-th'>
               <div className="list-th-replies w70">REPLIES</div>
               <div className="list-th-topic w416">TOPIC</div>
@@ -163,6 +188,34 @@ const Forum = () => {
               <div className="current">{currentPage}</div>
               <div className={nextDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNext}>Next<i/></div>
             </div>
+          </div>
+          </>
+          )
+        }
+          <div className='afk-one-game-news'>
+            {
+              newsList && newsList.map((news, index)=>{
+                return (
+                  <div className='one-game-news-item' key={index}>
+                    <div className="one-game-news-item-l">
+                      <div className='news-item-l-slot'>
+                        <div className='news-item-l-img'>
+                          <img src={news.mediaContentUrl}/>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="news-list-item-content-r">
+                      <div className="news-list-item-content-r-title">{news.title}</div>
+                      <div className="news-list-item-content-r-date">{news.pubDate} by <span>{news.source}</span></div>
+                      <div className="news-list-item-content-r-main">
+                        {news.description}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
+            }
+            
           </div>
         </div>
       </div>
