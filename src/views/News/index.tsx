@@ -1,10 +1,10 @@
 import './news.less'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { getNewsAPI } from '@/request/api'
+import { getNewsAPI, likeSavePostAPI } from '@/request/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { message, Divider } from "antd"
-import { PeopleOutline, GradeOutlined } from '@mui/icons-material'
+import { PeopleOutline, GradeOutlined, Grade } from '@mui/icons-material'
 const NewsQuery = () => {
   const navigateTo = useNavigate()
   let [page, setPage] = useState(1) 
@@ -24,6 +24,19 @@ const NewsQuery = () => {
     }
     message.warning(getNewsRes.message)
   }
+
+  const saveGames = async(news, index) => {
+    const status = news.isSaved ? 0 : 1
+    const saveGamesRes = await likeSavePostAPI({ typeId: 4, objectId: news.gameId, status })
+    if(saveGamesRes.code === 200) {
+      news.isSaved = !news.isSaved
+      newsList.splice(index, 1, news)
+      setNewsList([...newsList])
+      return
+    }
+    message.warning(saveGamesRes.message)
+  }
+
   useEffect(() => {
     getNews(1)
   },[])
@@ -41,18 +54,19 @@ const NewsQuery = () => {
       <div className="news-list">
         {
           newsList.length > 0 &&
-          newsList.map(news => {
+          newsList.map((news, index) => {
             return (
               <div className="news-list-item" key={news.newsId}>
                 <div className="news-list-item-top">
-                  <div className="news-list-item-top-l" onClick={()=>{navigateTo(`/news/${news.newsId}`)}}>
+                  <div className="news-list-item-top-l" onClick={()=>{navigateTo(`/forum/${news.gameId}?genreId=${news.genreId}&c=1`)}}>
                     <img src={news.gameIconUrl} width={48} height={48}/> {news.gameName}
                   </div>
                   <div className="news-list-item-top-r">
                     <span className='item-top-r-forum'>
-                      <PeopleOutline/>Forum
+                      <PeopleOutline style={{fontSize:'18px'}}/>Forum
                     </span>
-                    <span className='item-top-r-Save'><GradeOutlined/>Save</span>
+                    <span className='item-top-r-Save' onClick={()=>{saveGames(news,index)}}>
+                      { news.isSaved ? <Grade style={{fontSize:'14px'}}/> : <GradeOutlined style={{fontSize:'14px'}}/>}Save</span>
                   </div>
                 </div>
                 <div className="news-list-item-content">

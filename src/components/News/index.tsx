@@ -31,7 +31,7 @@ const News: React.FC<Props> = forwardRef((props, ref) => {
         {
           showList && showList.map((news, index)=> {
             return (
-              <div className="afk-news-list-item" key={index} onClick={()=>{navigateTo(`/news/1`)}}>
+              <div className="afk-news-list-item" key={index} onClick={()=>{navigateTo(`/news/${news.newsId}?gameId=${news.gameId}&genreId=${news.genreId}`)}}>
                 <div className="list-item-left">
                   <div className='list-item-left-main'>
                     <div className='list-item-left-slot'>

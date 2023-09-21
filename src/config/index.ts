@@ -17,6 +17,7 @@ export const searchOptions = [
   { label: "Search in Forums", value: 'forum'}
 ]
 
+export const forumsTabs = ['Forums', 'News']
 export const mothEnmus = {
   '01': 'Jan',
   '02': 'Feb',
@@ -41,3 +42,4 @@ export const enum LoveTypes {
   save='save',
   like='like'
 }
+

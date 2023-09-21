@@ -150,7 +150,21 @@ interface GetNewsReq {
 }
 
 interface GetNewsDetailReq {
+  game: number;
+  genre: number;
+  news: string;
+}
+
+interface NewsDetail {
+  content: string;
+  description: string;
+  gameIconUrl: string;
   gameId: number;
+  gameName: string;
   genreId: number;
+  mediaContentUrl: string;
   newsId: string;
+  pubDate: string;
+  source: string;
+  title: string;
 }

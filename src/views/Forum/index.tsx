@@ -5,6 +5,7 @@ import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
 import { message } from 'antd'
+import { forumsTabs } from '@/config'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 const Forum = () => {
@@ -15,7 +16,9 @@ const Forum = () => {
   const [newsList, setNewsList] = useState([])
   const [totalPage, setTotalPage] = useState(1)
   const [guidesShow, setGuidesShow] = useState(false)
+  const [newsShow, setNewsShow] = useState(false)
   const [searchParams] = useSearchParams()
+  const [currentTabIndex, setCurrentTabIndex] = useState(Number(searchParams.get('c')))
   const [gameData, setGameData] = useState<GameData>({
     description: '',
     gameId: null,
@@ -23,7 +26,6 @@ const Forum = () => {
     genreId: null,
     iconUrl: ''
   })
-  
   const { savedForums } = useSelector((state: RootState) => ({
     savedForums: state.gobalStatus.savedForums
   }))
@@ -111,10 +113,22 @@ const Forum = () => {
     message.warning(getOneGameNewsRes.message) 
   }
 
-  const tabClick = () => {
-    getOneGameNews(1)
+  const tabClick = (index:number) => {
+     if(index) {
+      setNewsShow(true)
+      setGuidesShow(false)
+      getOneGameNews(1)
+      setCurrentTabIndex(index)
+     } else{
+      setNewsShow(false)
+      setGuidesShow(true)
+      setCurrentTabIndex(index)
+     }
+    
   }
-
+  useEffect(()=>{
+    tabClick(currentTabIndex)
+  },[])
   return (
     <div className="afk-forum">
       <div className="afk-forum-title">Forum</div>
@@ -147,21 +161,21 @@ const Forum = () => {
         </div>
         <div className="afk-forum-guides">
           <div className="afk-forum-guides-tabs">
-            <Button className="guides-btn" variant="contained">Guides</Button>
-            <Button className="guides-btn" variant="contained" onClick={tabClick}>News</Button>
-            {/* <Button className="guides-btn" variant="contained">Q&A</Button>
-            <Button className="guides-btn" variant="contained">Reviews</Button>
-            <Button className="guides-btn" variant="contained">Chat</Button> */}
+            {
+              forumsTabs && forumsTabs.map((tab, index)=>{
+                return (
+                  <Button key={index} className={currentTabIndex === index ? 'guides-btn active' : 'guides-btn'} variant="contained" onClick={()=>{tabClick(index)}}>{tab}</Button>
+                )
+              })
+            }
           </div>
-          {
-          guidesShow && (
+          { guidesShow && (
             <>
             <div className="afk-forum-guides-list">
             <div className='afk-forum-guides-list-th'>
               <div className="list-th-replies w70">REPLIES</div>
               <div className="list-th-topic w416">TOPIC</div>
               <div className="list-th-by w130">CREATED BY</div>
-              {/* <div className="list-th-last w130">LAST POST</div> */}
             </div>
             {
               posts && posts.map((post, index) => {
@@ -194,9 +208,9 @@ const Forum = () => {
         }
           <div className='afk-one-game-news'>
             {
-              newsList && newsList.map((news, index)=>{
+              newsShow && newsList && newsList.map((news, index)=>{
                 return (
-                  <div className='one-game-news-item' key={index}>
+                  <div className='one-game-news-item' key={index} onClick={()=>{navigateTo(`/news/${news.newsId}?gameId=${news.gameId}&genreId=${news.genreId}`)}}>
                     <div className="one-game-news-item-l">
                       <div className='news-item-l-slot'>
                         <div className='news-item-l-img'>

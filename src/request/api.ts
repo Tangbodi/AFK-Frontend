@@ -87,7 +87,7 @@ export const getOneGameNewsAPI = (params: GetNewsReq): Promise<APIRes> => reques
 /**
  * /api/v1/game-news
  */
-export const getNewsDetailAPI = (params: GetNewsDetailReq): Promise<APIRes> => request.get('/api/v1/game-news', { params })
+export const getNewsDetailAPI = (params: GetNewsDetailReq): Promise<APIRes> => request.get('/api/v1/game-news', {params})
 /**
  * @url /api/v1/all-games/save-forums
  * @param genreId
