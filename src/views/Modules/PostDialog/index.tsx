@@ -78,7 +78,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
             <div className='afk-editor-detail'>
               <Editor
                 apiKey='sn5ytycr1mo04zyd7qmgf69k1xqv3choi63zrsy2bpksdvtv'
-                onInit={(evt, editor) => editorRef.current = editor}
+                onInit={(_evt, editor) => editorRef.current = editor}
                 tinymceScriptSrc={'/tinymce/tinymce.min.js'}
                 initialValue={''}
                 onEditorChange={(newValue) => setTextRender(newValue)}

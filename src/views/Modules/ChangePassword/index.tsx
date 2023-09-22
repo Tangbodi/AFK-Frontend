@@ -2,7 +2,7 @@ import { useState, useImperativeHandle, forwardRef } from 'react'
 import { Button, Modal, Form, Input, message } from 'antd'
 import './changepassword.less'
 import { updatePasswordAPI } from '@/request/api'
-const ChangePassword = forwardRef((props, ref) => {
+const ChangePassword = forwardRef((_, ref) => {
   const [form] = Form.useForm()
   const [isModalOpen, setIsModalOpen] = useState(false)
   useImperativeHandle(ref, () => ({

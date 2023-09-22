@@ -14,7 +14,7 @@ const Forum = () => {
   const PostDialogRef = useRef(null)
   const [posts, setPosts] = useState([])
   const [newsList, setNewsList] = useState([])
-  const [totalPage, setTotalPage] = useState(1)
+  const [_totalPage, setTotalPage] = useState(1)
   const [guidesShow, setGuidesShow] = useState(false)
   const [newsShow, setNewsShow] = useState(false)
   const [searchParams] = useSearchParams()
@@ -30,7 +30,7 @@ const Forum = () => {
     savedForums: state.gobalStatus.savedForums
   }))
   const [isSaved, setIsSaved] = useState(false)
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)

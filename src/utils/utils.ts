@@ -5,6 +5,7 @@ export const actionNamesOper = (actions, actionNames): void => {
     _actionNames[key] = key
   }
   actionNames = _actionNames
+  console.log(actionNames)
 }
 
 export const dateUtils = (timeStr: string) => {

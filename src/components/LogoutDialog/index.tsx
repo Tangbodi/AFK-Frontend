@@ -8,7 +8,7 @@ import { logoutAPI } from '@/request/api'
 import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 
-const LogoutDialog = forwardRef((props, ref) => {
+const LogoutDialog = forwardRef((_props, ref) => {
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const naigateTo = useNavigate()

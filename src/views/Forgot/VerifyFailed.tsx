@@ -1,6 +1,6 @@
 import './forgot.less'
 import emailIconLight from '@/assets/images/email-icon-light.png'
-import emailIconDark from '@/assets/images/email-icon-dark.png'
+// import emailIconDark from '@/assets/images/email-icon-dark.png'
 import Button from '@mui/material/Button'
 const VerifyFailed = () => {
   return (

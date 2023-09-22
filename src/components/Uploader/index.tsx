@@ -44,11 +44,10 @@ const Uploader = (_props) => {
           canvas.height = targetHeight
           context.clearRect(0, 0, canvas.width, canvas.height)
           context.drawImage(img, 0, 0, canvas.width, canvas.height)
-          let data = ""
           if(file.size <= 628288) {
             handleSubmit(file)
           } else {
-            data = canvas.toDataURL("image/jpeg", 0.4)
+            canvas.toDataURL("image/jpeg", 0.4)
             canvas.toBlob(
               blob => {
                 Object.keys(imgInfo).forEach(i => {

@@ -13,7 +13,7 @@ import { homeTabsList } from '@/config'
 type Props = {
   newsData: any
 }
-const Recommend: React.FC<Props> = forwardRef((props, ref) => {
+const Recommend: React.FC<Props> = forwardRef((props, _) => {
   const [currentTabValue, setCurrentTabValue] = useState('latest')
   const [postsList, setPostsList] = useState([])
   const navigateTo = useNavigate()

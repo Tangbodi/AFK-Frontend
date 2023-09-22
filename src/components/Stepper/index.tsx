@@ -9,7 +9,7 @@ type Props = {
   pIndex?: number
   getLeaveMsgFn?: Function
 }
-const VerticalLinearStepper: React.FC<Props> = forwardRef((props, ref)=>{
+const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
   const { reply, getLeaveMsgFn, pIndex } = props
   const getLeaveMidMsg = (val: any) => {
     getLeaveMsgFn(val)

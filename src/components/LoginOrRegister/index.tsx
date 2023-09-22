@@ -7,7 +7,7 @@ import logoDark from '@/assets/images/login-logo-dark.png'
 import './register.less'
 
 
-const Register = forwardRef((props, ref) => {
+const Register = forwardRef((_props, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLoginValue, setIsLoginValue] = useState(false)
   const [isForgot, setIsForgot] = useState(false)
