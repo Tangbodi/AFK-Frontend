@@ -1,7 +1,7 @@
 import Header from "@/components/Header"
 import Banner from '@/components/Banner'
 import Footer from "@/components/Footer"
-// import Recommend from "@/components/Recommend"
+import Recommend from "@/components/Recommend"
 import Forum from "@/components/Forum"
 import Hot from '@/components/Hot'
 import News from '@/components/News'
@@ -41,7 +41,7 @@ const View = () => {
       <Header/>
       <div className="afk-main">
         <Banner ref={bannerRef}/>
-        {/* <Recommend newsData={newsData}/> */}
+        <Recommend newsData={newsData}/>
         <News newsData={newsData}/>
         <Hot/>
         <Forum/>

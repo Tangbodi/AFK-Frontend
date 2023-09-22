@@ -49,7 +49,7 @@ const NewsQuery = () => {
               <img src={newsData.gameIconUrl} width={48} height={48}/> {newsData.gameName}
             </div>
             <div className="news-list-item-top-r">
-              <span className='item-top-r-forum'>
+              <span className='item-top-r-forum' onClick={()=>{navigateTo(`/forum/${newsData.gameId}?genreId=${newsData.genreId}&c=0`)}}>
                 <PeopleOutline style={{fontSize:'18px'}}/>Forum
               </span>
               <span className='item-top-r-Save' onClick={saveGames}>

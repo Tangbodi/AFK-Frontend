@@ -4,7 +4,7 @@ import { Button, Avatar } from '@mui/material'
 import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
-import { message } from 'antd'
+import { message } from "antd"
 import { forumsTabs } from '@/config'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -34,6 +34,9 @@ const Forum = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(false)
+  const [currentNewsPage, setCurrentNewsPage] = useState(1)
+  const [prevNewsDisabled, setPrevNewsDisabled] = useState(true)
+  const [nextNewsDisabled, setNextNewsDisabled] = useState(false)
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
@@ -54,6 +57,18 @@ const Forum = () => {
     let _currentPage = currentPage
     _currentPage++
     getAllPostOneGame(searchParams.get('genreId'), gameId, _currentPage, pageSize)
+  }
+
+  const onNewsPrevious = () => {
+    let _currentPage = currentNewsPage
+    _currentPage--
+    getOneGameNews(_currentPage)
+  }
+
+  const onNewsNext = () => {
+    let _currentPage = currentNewsPage
+    _currentPage++
+    getOneGameNews(_currentPage)
   }
 
   const gameInfo = async(genre: string, game: string) => {
@@ -102,12 +117,23 @@ const Forum = () => {
   }
 
   const getOneGameNews = async(page:number) => {
-    const params = {page, size: 5, genre:searchParams.get('genreId'), game: gameId}
+    const params: any = {page, size: 5, genre:searchParams.get('genreId'), game: gameId}
     const getOneGameNewsRes = await getOneGameNewsAPI(params)
     if(getOneGameNewsRes.code === 200) {
       const newsResData = getOneGameNewsRes.data || {}
+      setCurrentNewsPage(page)
+      if(page !== 1) {
+        setPrevNewsDisabled(false)
+      } else {
+        setPrevNewsDisabled(true)
+      }
+      if(page >= newsResData.totalPages) {
+        setNextNewsDisabled(true)
+      } else {
+        setNextNewsDisabled(false)
+      }
+      setNewsList(newsResData.content)
       setTotalPage(newsResData.totalPages)
-      setNewsList(newsResData.content||[])
       return
     }
     message.warning(getOneGameNewsRes.message) 
@@ -171,66 +197,76 @@ const Forum = () => {
           </div>
           { guidesShow && (
             <>
-            <div className="afk-forum-guides-list">
-            <div className='afk-forum-guides-list-th'>
-              <div className="list-th-replies w70">REPLIES</div>
-              <div className="list-th-topic w416">TOPIC</div>
-              <div className="list-th-by w130">CREATED BY</div>
-            </div>
-            {
-              posts && posts.map((post, index) => {
-                return (
-                  <div className='afk-forum-guides-list-td fc' key={index}>
-                    <div className="list-th-replies w70">{post.view}</div>
-                    <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
-                    <div className="list-th-by w130 fw400">
-                      <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
-                    </div>
-                  </div>
-                )
-              })
-            }
-          </div>
-          <div className="afk-forum-guides-create">
-            <div className="guides-create-btn">
-              <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
-            </div>
-            <div className="guides-pagination">
-              <div className={prevDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onPrevious}>
-                <i/>Previous
+              <div className="afk-forum-guides-list">
+              <div className='afk-forum-guides-list-th'>
+                <div className="list-th-replies w70">REPLIES</div>
+                <div className="list-th-topic w416">TOPIC</div>
+                <div className="list-th-by w130">CREATED BY</div>
               </div>
-              <div className="current">{currentPage}</div>
-              <div className={nextDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNext}>Next<i/></div>
+              {
+                posts && posts.map((post, index) => {
+                  return (
+                    <div className='afk-forum-guides-list-td fc' key={index}>
+                      <div className="list-th-replies w70">{post.view}</div>
+                      <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
+                      <div className="list-th-by w130 fw400">
+                        <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
+                      </div>
+                    </div>
+                  )
+                })
+              }
             </div>
-          </div>
-          </>
-          )
-        }
-          <div className='afk-one-game-news'>
-            {
-              newsShow && newsList && newsList.map((news, index)=>{
-                return (
-                  <div className='one-game-news-item' key={index} onClick={()=>{navigateTo(`/news/${news.newsId}?gameId=${news.gameId}&genreId=${news.genreId}`)}}>
-                    <div className="one-game-news-item-l">
-                      <div className='news-item-l-slot'>
-                        <div className='news-item-l-img'>
-                          <img src={news.mediaContentUrl}/>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="news-list-item-content-r">
-                      <div className="news-list-item-content-r-title">{news.title}</div>
-                      <div className="news-list-item-content-r-date">{news.pubDate} by <span>{news.source}</span></div>
-                      <div className="news-list-item-content-r-main">
-                        {news.description}
-                      </div>
-                    </div>
+            <div className="afk-forum-guides-create">
+              <div className="guides-create-btn">
+                <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
+              </div>
+              <div className="guides-pagination">
+                <div className={prevDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onPrevious}>
+                  <i/>Previous
+                </div>
+                <div className="current">{currentPage}</div>
+                <div className={nextDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNext}>Next<i/></div>
+              </div>
+            </div>
+            </>)
+          }
+          {
+            newsShow && (
+              <div className='afk-one-game-wrap'>
+                <div className='afk-one-game-news'>
+                    { newsList && newsList.map((news, index)=>{
+                        return (
+                          <div className='one-game-news-item' key={index} onClick={()=>{navigateTo(`/news/${news.newsId}?gameId=${news.gameId}&genreId=${news.genreId}`)}}>
+                            <div className="one-game-news-item-l">
+                              <div className='news-item-l-slot'>
+                                <div className='news-item-l-img'>
+                                  <img src={news.mediaContentUrl}/>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="news-list-item-content-r">
+                              <div className="news-list-item-content-r-title">{news.title}</div>
+                              <div className="news-list-item-content-r-date">{news.pubDate} by <span>{news.source}</span></div>
+                              <div className="news-list-item-content-r-main">
+                                {news.description}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                </div>
+                <div className="guides-pagination mb20">
+                  <div className={prevNewsDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onNewsPrevious}>
+                    <i/>Previous
                   </div>
-                )
-              })
-            }
-            
-          </div>
+                  <div className="current">{currentNewsPage}</div>
+                  <div className={nextNewsDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNewsNext}>Next<i/></div>
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
       <PostDialog title={gameData.gameName} ref={PostDialogRef} reload={()=>{getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)}}/>

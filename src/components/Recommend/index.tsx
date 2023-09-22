@@ -21,7 +21,7 @@ const Recommend: React.FC<Props> = forwardRef((props, ref) => {
   const { newsData } = props
   useEffect(()=>{
     newsData && handleChange(null, currentTabValue) // 默认加载第一个tab
-    bannerRef.current.getData(newsData)
+    newsData && bannerRef.current.getData(newsData.content)
   },[newsData])
   // tab切换change触发
   const handleChange = (_: SyntheticEvent, type = currentTabValue) => {
