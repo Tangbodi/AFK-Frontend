@@ -11,18 +11,18 @@
   .news-list{
     .news-list-item{
       border-radius: 10px;
-      background: #fff;
+      background: var(--newsContentBgColor);
       overflow: hidden;
       margin-bottom: 10px;
       .news-list-item-top{
         padding: 10px 30px;
-        background: #EEDFC9;
+        background: var(--newsNavBgColor);
         display: flex;
         height: 50px;
         align-items: center;
         .news-list-item-top-l{
           cursor: pointer;
-          color: #3B2917;
+          color: var(--newsNavColor);
           font-weight: 700;
           display: flex;
           align-items: center;
@@ -36,7 +36,7 @@
           align-items: center;
           .item-top-r-forum,.item-top-r-Save{
             margin-right: 10px;
-            color:#745B3F;
+            color: var(--newsNavRightColor);
             font-size: 14px;
             cursor: pointer;
             display: flex;
@@ -50,22 +50,22 @@
       .news-list-item-detail{
         padding: 30px;
         .news-list-item-content-title{
-            color: #3B2917;
+            color: var(--newsContentTitleColor);
             font-size: 18px;
             font-weight: 500;
         }
         .news-list-item-content-time{
-            color: #745B3F;
+            color: var(--newsDateColor);
             font-size: 14px;
             margin: 14px 0 10px 0;
             span{
-              color: #96351E;
+              color: var(--newsAuthorColor);
               font-weight: 400;
             }
         }
         .news-list-item-content-main{
             font-size: 16px;
-            color: #333;
+            color: var(--newsContentTitleColor);
             line-height: 26px;
         }
         .news-list-item-content-imgs{
@@ -108,7 +108,7 @@
         .news-list-item-content-r{
           flex: 1;
           .news-list-item-content-r-title{
-            color: #3B2917;
+            color: var(--newsContentTitleColor);
             font-size: 18px;
             font-weight: 500;
             cursor: pointer;
@@ -124,7 +124,7 @@
           }
           .news-list-item-content-r-main{
             font-size: 16px;
-            color: #333;
+            color: var(--newsContentDescColor);
             line-height: 26px;
             overflow: hidden;
             display: -webkit-box;
