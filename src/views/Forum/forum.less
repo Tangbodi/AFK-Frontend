@@ -88,12 +88,12 @@
     .afk-forum-guides{
       margin-top: 34px;
       .afk-one-game-news{
-        background: #fff;
+        background: var(--newsContentBgColor);
         border-radius: 8px;
         margin: 20px 0;
         .one-game-news-item{
           padding: 10px 25px;
-          border-bottom: 1px #EEDFC9 solid;
+          border-bottom: 1px var(--newsItemBorderColor) solid;
           display: flex;
           &:last-child{
             border-bottom: none;
@@ -129,23 +129,23 @@
           .news-list-item-content-r{
             flex: 1;
             .news-list-item-content-r-title{
-              color: #3B2917;
+              color: var(--newsContentTitleColor);
               font-size: 18px;
               font-weight: 500;
               cursor: pointer;
             }
             .news-list-item-content-r-date{
-              color: #745B3F;
+              color: var(--newsDateColor);
               font-size: 14px;
               margin: 14px 0 10px 0;
               span{
-                color: #96351E;
+                color: var(--newsAuthorColor);
                 font-weight: 400;
               }
             }
             .news-list-item-content-r-main{
               font-size: 16px;
-              color: #333;
+              color: var(--newsContentDescColor);
               line-height: 26px;
               overflow: hidden;
               display: -webkit-box;
