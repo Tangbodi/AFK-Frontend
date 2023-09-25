@@ -6,6 +6,7 @@ import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI }
 import { useEffect, useState, useRef } from 'react'
 import { message } from "antd"
 import { forumsTabs } from '@/config'
+import { useDispatch } from 'react-redux'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 const Forum = () => {
@@ -26,6 +27,7 @@ const Forum = () => {
     genreId: null,
     iconUrl: ''
   })
+  const dispatch = useDispatch()
   const { savedForums } = useSelector((state: RootState) => ({
     savedForums: state.gobalStatus.savedForums
   }))
@@ -103,6 +105,11 @@ const Forum = () => {
   }
 
   const createNewPost = () => {
+    // const isLoged = sessionStorage.getItem('afk-jsessionid')
+    // if(!isLoged) {
+    //   // dispatch({type:"setIsLogin", val: !!isLoged})
+    //   return
+    // }
     PostDialogRef.current.showModal()
   }
 

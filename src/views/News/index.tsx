@@ -18,8 +18,7 @@ const NewsQuery = () => {
       const newsResData = getNewsRes.data || {}
       setNewsList(newsList.concat(newsResData.content))
       setTotalPages(newsResData.totalPages)
-      page = page + 1
-      setPage(page)
+      setPage(page + 1)
       return
     }
     message.warning(getNewsRes.message)
@@ -62,7 +61,7 @@ const NewsQuery = () => {
                     <img src={news.gameIconUrl} width={48} height={48}/> {news.gameName}
                   </div>
                   <div className="news-list-item-top-r">
-                    <span className='item-top-r-forum'>
+                    <span className='item-top-r-forum' onClick={()=>{navigateTo(`/forum/${news.gameId}?genreId=${news.genreId}&c=1`)}}>
                       <PeopleOutline style={{fontSize:'18px'}}/>Forum
                     </span>
                     <span className='item-top-r-Save' onClick={()=>{saveGames(news,index)}}>

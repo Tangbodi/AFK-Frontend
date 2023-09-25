@@ -94,7 +94,6 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         message.success('comment successful')
         getLeaveMsgFn(true)
         setInputShow(false)
-        console.log('in', inputShow)
         // 向父组件传值 告诉它 我提交成功了， 让父组件执行刷新操作
         return
       }

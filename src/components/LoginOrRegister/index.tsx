@@ -5,11 +5,14 @@ import { getTheme } from '@/utils/theme'
 import logo from '@/assets/images/login-logo.png'
 import logoDark from '@/assets/images/login-logo-dark.png'
 import './register.less'
+type Props = {
+  closeable: Function
+}
 
-
-const Register = forwardRef((_props, ref) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isLoginValue, setIsLoginValue] = useState(false)
+const Register: React.FC<Props> = forwardRef((props, ref) => {
+  const { closeable } = props
+  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isLoginValue, setIsLoginValue] = useState(true)
   const [isForgot, setIsForgot] = useState(false)
   const [form] = Form.useForm()
   useImperativeHandle(ref, () => ({
@@ -35,6 +38,7 @@ const Register = forwardRef((_props, ref) => {
     setIsLoginValue(false)
     setIsForgot(false)
     setIsModalOpen(false)
+    closeable(true)
   }
 
   const onSignUp = async() => {

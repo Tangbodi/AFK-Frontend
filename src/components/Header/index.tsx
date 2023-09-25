@@ -24,12 +24,13 @@ const Header = () => {
   const [searchParams] = useSearchParams()
   const navigateTo = useNavigate()
   const location = useLocation()
-  const AccountRef = useRef(null)
   const dispatch = useDispatch()
+  const [visible, setVisible] = useState(false)
   
   useEffect(() => {
     // 如果当前路由为search，则执行一次查询api
     if(location.pathname === '/search') searchForums(searchParams.get('type'),searchParams.get('keywords'))
+    setTheme(localStorage.getItem('theme'))
   },[])
 
   // goto account info
@@ -39,7 +40,9 @@ const Header = () => {
       navigateTo('/settings/myinfo')
       return
     }
-    AccountRef.current.showModal(isLogin)
+    setVisible(isLogin)
+    console.log('v', visible, isLogin)
+    // AccountRef.current.showModal(isLogin)
   }
 
   // open search input component
@@ -79,7 +82,9 @@ const Header = () => {
     // 如果当前路由为search，则执行一次查询api
     if(location.pathname === '/search') searchForums(selectedType,e.target.value.trim())
   }
-
+  const closeable = (isClosed: boolean) => {
+    setVisible(!isClosed)
+  }
   // theme 切换
   const modifyMode = () => {
     const currentTheme = localStorage.getItem('theme')
@@ -163,7 +168,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-    <LoginOrRegister ref={AccountRef}/>
+    { visible &&  <LoginOrRegister closeable={closeable}/>}
     <Saved/>
     </>
   )

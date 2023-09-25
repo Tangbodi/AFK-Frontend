@@ -11,6 +11,9 @@ const store = {
     },
     savedForums(newState: {savedForums: any}, action: {type: string, val: any}) {
       newState.savedForums = action.val
+    },
+    setIsLogin(newState:{isLogin: boolean}, action: {type: string, val: boolean}){
+      newState.isLogin = action.val
     }
   },
   // redux-thunk异步写法
