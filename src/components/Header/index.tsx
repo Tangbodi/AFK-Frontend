@@ -38,11 +38,12 @@ const Header = () => {
   },[])
 
   useMemo(()=>{
-    setVisible(isLoginFiber)
+    // setVisible(isLoginFiber)
   }, [isLoginFiber])
 
   // goto account info
   const handleClick = (isLogin: boolean) => { 
+    dispatch({type:'isLoginFiber', val: false})
     if(afkToken) {
       navigateTo('/settings/myinfo')
       return
@@ -175,7 +176,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-    { visible &&  <LoginOrRegister closeable={closeable}/>}
+    { (visible || isLoginFiber) &&  <LoginOrRegister closeable={closeable}/>}
     <Saved/>
     </>
   )
