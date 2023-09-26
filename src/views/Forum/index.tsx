@@ -3,7 +3,7 @@ import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
 import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { message } from "antd"
 import { forumsTabs } from '@/config'
 import { useDispatch } from 'react-redux'
@@ -29,7 +29,7 @@ const Forum = () => {
   })
   const dispatch = useDispatch()
   const { savedForums } = useSelector((state: RootState) => ({
-    savedForums: state.gobalStatus.savedForums
+    savedForums: state.gobalStatus.savedForums,
   }))
   const [isSaved, setIsSaved] = useState(false)
   const [pageSize] = useState(10)
@@ -42,8 +42,7 @@ const Forum = () => {
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
-    getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
-  },[savedForums])
+  },[]) // savedForums
 
   const goToNext = (postId: string) => {
     navigateTo(`/topic/${postId}?genre=${searchParams.get('genreId')}&game=${gameId}`)
@@ -105,11 +104,11 @@ const Forum = () => {
   }
 
   const createNewPost = () => {
-    // const isLoged = sessionStorage.getItem('afk-jsessionid')
-    // if(!isLoged) {
-    //   // dispatch({type:"setIsLogin", val: !!isLoged})
-    //   return
-    // }
+    const isLoged = sessionStorage.getItem('afk-jsessionid')
+    if(!isLoged) {
+      dispatch({type:'isLoginFiber', val: true})
+      return
+    }
     PostDialogRef.current.showModal()
   }
 
@@ -161,6 +160,7 @@ const Forum = () => {
   }
   useEffect(()=>{
     tabClick(currentTabIndex)
+    getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
   },[])
   return (
     <div className="afk-forum">

@@ -7,8 +7,8 @@ import iconUser from '@/assets/images/icon_user.png'
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import { setTheme, getTheme } from '@/utils/theme'
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { useState, useRef, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect, useMemo } from 'react'
 import { searchOptions } from '@/config'
 import { Popover, Input, message } from 'antd'
 import { searchForumsAPI } from '@/request/api'
@@ -25,6 +25,10 @@ const Header = () => {
   const navigateTo = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
+  const { afkToken, isLoginFiber } = useSelector((state: RootState) => ({
+    afkToken: state.gobalStatus.afkToken,
+    isLoginFiber: state.gobalStatus.isLoginFiber
+  }))
   const [visible, setVisible] = useState(false)
   
   useEffect(() => {
@@ -33,17 +37,20 @@ const Header = () => {
     setTheme(localStorage.getItem('theme'))
   },[])
 
+  useMemo(()=>{
+    setVisible(isLoginFiber)
+  }, [isLoginFiber])
+
   // goto account info
   const handleClick = (isLogin: boolean) => { 
-    const hasEssionid = sessionStorage.getItem('afk-jsessionid')
-    if(hasEssionid) {
+    if(afkToken) {
       navigateTo('/settings/myinfo')
       return
     }
     setVisible(isLogin)
-    console.log('v', visible, isLogin)
     // AccountRef.current.showModal(isLogin)
   }
+  
 
   // open search input component
   const optionVisibleHandle = () => {

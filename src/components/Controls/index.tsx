@@ -65,15 +65,18 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       params.typeId = 3
       params.objectId = postId
       params.status = status
+      console.log('params.status', params.status)
     } else {
       if(type === MsgTypes.comment) {
         // 如果type是comment类型 说明是评论自身
         params.objectId = postId
         setChildLikeStatus(childLikeStatus?0:1)
         params.status = status
+        console.log('params.status2', params.status)
       } else {
         setChildLikeStatus(childLikeStatus?0:1)
         params.status = status
+        console.log('params.status3', params.status)
         if(reply) params.objectId = reply.replyId
         if(comment) params.objectId = comment.commentId
       }
@@ -143,7 +146,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
           { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
           </div>
-        { isPost &&  <div className="afk-like-save-item" onClick={()=>{likeSavePost(null, true)}}>
+        { isPost &&  <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
          {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
         </div> }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>

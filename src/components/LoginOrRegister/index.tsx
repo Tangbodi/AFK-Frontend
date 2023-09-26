@@ -1,5 +1,6 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
 import { Modal, Form, Input, Button, message } from 'antd'
+import { useDispatch } from 'react-redux'
 import { registrationAPI, loginAPI, forgotPasswordAPI } from '@/request/api'
 import { getTheme } from '@/utils/theme'
 import logo from '@/assets/images/login-logo.png'
@@ -11,6 +12,7 @@ type Props = {
 
 const Register: React.FC<Props> = forwardRef((props, ref) => {
   const { closeable } = props
+  const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(true)
   const [isLoginValue, setIsLoginValue] = useState(true)
   const [isForgot, setIsForgot] = useState(false)
@@ -39,6 +41,7 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
     setIsForgot(false)
     setIsModalOpen(false)
     closeable(true)
+    dispatch({type:'isLoginFiber', val: false})
   }
 
   const onSignUp = async() => {
@@ -65,6 +68,7 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
       sessionStorage.setItem('afk-username', loginRes.data.username)
       sessionStorage.setItem('afk-userid', loginRes.data.userId)
       sessionStorage.setItem('afk-jsessionid', loginRes.data.jsessionid)
+      dispatch({type:"afkToken", val: loginRes.data.jsessionid})
       form.resetFields()
       return
     }
