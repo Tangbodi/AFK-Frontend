@@ -40,6 +40,7 @@ const MyInfo = () => {
     message.warning(updateEmailRes.message)
   }
 
+
   const infoEditHandle = () => {
     setInfoEdit(!infoEdit)
   }

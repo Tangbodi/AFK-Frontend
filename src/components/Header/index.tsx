@@ -48,7 +48,8 @@ const Header = () => {
       navigateTo('/settings/myinfo')
       return
     }
-    setVisible(isLogin)
+    // setVisible(isLogin)
+    dispatch({type:'isLoginFiber', val: isLogin})
     // AccountRef.current.showModal(isLogin)
   }
   
@@ -91,7 +92,8 @@ const Header = () => {
     if(location.pathname === '/search') searchForums(selectedType,e.target.value.trim())
   }
   const closeable = (isClosed: boolean) => {
-    setVisible(!isClosed)
+    // setVisible(!isClosed)
+    dispatch({type:'isLoginFiber', val: !isClosed})
   }
   // theme 切换
   const modifyMode = () => {
@@ -176,7 +178,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-    { (visible || isLoginFiber) &&  <LoginOrRegister closeable={closeable}/>}
+    { isLoginFiber &&  <LoginOrRegister closeable={closeable}/>}
     <Saved/>
     </>
   )

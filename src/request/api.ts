@@ -259,3 +259,12 @@ export const unreadMessageAPI = (): Promise<APIRes> => request.get('/api/v1/user
  */
 export const markAllAPI = (): Promise<APIRes> => request.put('/api/v1/user-info/mark-all-as-read')
 
+/**
+ * /api/v1/user/setting
+ */
+export const getUserSettingAPI = (): Promise<APIRes> => request.get('/api/v1/user/setting')
+
+/**
+ * /api/v1/user/setting
+ */
+export const updateUserSettingAPI = (params): Promise<APIRes> => request.put('/api/v1/user/setting', params)
