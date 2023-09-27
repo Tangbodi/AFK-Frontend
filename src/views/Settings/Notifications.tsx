@@ -46,6 +46,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }))
 const Notifications = () => {
+  const [mentionsOfUsername, setMentionsOfUsername] = useState(false)
   const [commentOnPost, setCommentOnPost] = useState(false)
   const [likeOnComment, setLikeOnComment] = useState(false)
   const [likeOnPost, setLikeOnPost] = useState(false)
@@ -54,15 +55,15 @@ const Notifications = () => {
   const [saveOnPost, setSaveOnPost] = useState(false)
   const getUserSetting = async () => {
     const getUserSettingRes = await getUserSettingAPI()
-    console.log('rrss', getUserSettingRes)
     const getUserSettingResData = getUserSettingRes.data || {}
     if(getUserSettingRes.code === 200) {
+      setLikeOnPost(!!getUserSettingResData.likeOnPost)
       setCommentOnPost(!!getUserSettingResData.commentOnPost)
       setLikeOnComment(!!getUserSettingResData.likeOnComment)
-      setLikeOnPost(!!getUserSettingResData.likeOnPost)
       setPostOnSavedGame(!!getUserSettingResData.postOnSavedGame)
       setReplyOnComment(!!getUserSettingResData.replyOnComment)
       setSaveOnPost(!!getUserSettingResData.saveOnPost)
+      setMentionsOfUsername(!!getUserSettingResData.mentionsOfUsername)
     }
   }
 
@@ -99,11 +100,11 @@ const Notifications = () => {
       <div className='settings-notification-wrap'>
         <div className="settings-notification-item">
             <Typography>Mentions of username</Typography>
-            <AntSwitch defaultChecked />
+            <AntSwitch checked={mentionsOfUsername} onChange={()=>{switchChange('mentionsOfUsername', !mentionsOfUsername)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>Saved your posts</Typography>
-            <AntSwitch defaultChecked />
+            <AntSwitch checked={saveOnPost} onChange={()=>{switchChange('saveOnPost', !saveOnPost)}}  />
         </div>
         <div className="settings-notification-item">
             <Typography>Likes on your posts</Typography>
@@ -111,7 +112,7 @@ const Notifications = () => {
         </div>
         <div className="settings-notification-item">
             <Typography>Replies on your posts</Typography>
-            <AntSwitch defaultChecked />
+            <AntSwitch checked={commentOnPost} onChange={()=>{switchChange('commentOnPost', !commentOnPost)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>Likes on your comments</Typography>
@@ -123,7 +124,7 @@ const Notifications = () => {
         </div>
         <div className="settings-notification-item">
             <Typography>New posts on your saved games</Typography>
-            <AntSwitch checked={saveOnPost} onChange={()=>{switchChange('saveOnPost', !saveOnPost)}} />
+            <AntSwitch checked={postOnSavedGame} onChange={()=>{switchChange('postOnSavedGame', !postOnSavedGame)}}/>
         </div>
       </div>
       <div className="settings-notification-title">RECOMMENDATIONS</div>
