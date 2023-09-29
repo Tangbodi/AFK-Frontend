@@ -20,9 +20,9 @@ const Forum = () => {
   const returnAllGames = async() => {
     const returnAllGamesRes = await returnAllGamesAPI()
     if(returnAllGamesRes.code === 200) {
-      if(returnAllGamesRes.data && returnAllGamesRes.data.length > 9){
+      if(returnAllGamesRes.data && returnAllGamesRes.data.length > 15){
         setShowMore(true)
-        setShowList(returnAllGamesRes.data.slice(0,9))
+        setShowList(returnAllGamesRes.data.slice(0,15))
       }else{
         setShowMore(false)
         setShowList(returnAllGamesRes.data||[])

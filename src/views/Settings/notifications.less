@@ -1,5 +1,5 @@
 .afk-settings-notification{
-  background: #fff;
+  background: var(--notificationsBgColor);
   margin: 30px 43px;
   border-radius: 10px;
   overflow: hidden;
@@ -8,7 +8,7 @@
     font-size: 16px;
     font-weight: 700;
     padding: 18px 44px;
-    border-bottom: #EEDFC9 1px solid;
+    border-bottom: var(--notificationsBorderColor) 1px solid;
   }
   .settings-notification-wrap{
     display: flex;
@@ -22,12 +22,12 @@
       max-width: calc(100% / 2);
       padding: 18px 100px 18px 14px;
       box-sizing: border-box;
-      border-bottom: #EEDFC9 1px solid;
+      border-bottom: var(--notificationsBorderColor) 1px solid;
       display: flex;
       .MuiTypography-root{
         padding-left: 30px;
         padding-right: 70px;
-        color: #3B2917;
+        color: var(--notificationsColor);
       }
       .MuiSwitch-root{
         margin-left: auto;

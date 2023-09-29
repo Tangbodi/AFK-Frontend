@@ -1,13 +1,15 @@
 .afk-security{
   padding: 120px;
   .security-card{
-    background: #fff;
+    background: var(--notificationsBgColor);
     padding: 30px;
     border-radius: 10px;
+    color: var(--notificationsColor);
     box-shadow: 0px 2px 12px 0px rgba(59, 41, 23, 0.1);
     .security-title{
       font-size: 22px;
       font-weight: 700;
+      color: var(--notificationsColor);
     }
     .security-password{
       display: flex;
@@ -39,10 +41,12 @@
     .security-passwordstatus{
       display: flex;
       align-items: center;
-      color: #745B3F;
+      // color: #745B3F;
+      color: var(--notificationsColor);
       span{
         margin-left: 5px;
-        color: #000;
+        // color: #000;
+        color: var(--notificationsColor);
         font-size: 18px;
       }
     }
