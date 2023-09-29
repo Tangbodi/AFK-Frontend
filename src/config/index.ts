@@ -43,3 +43,12 @@ export const enum LoveTypes {
   like='like'
 }
 
+export const enum NotificationsTypes {
+  commentOnPost='commentOnPost',
+  likeOnComment='likeOnComment',
+  likeOnPost='likeOnPost',
+  postOnSavedGame='postOnSavedGame',
+  replyOnComment='replyOnComment',
+  saveOnPost='saveOnPost',
+  mentionsOfUsername='mentionsOfUsername'
+}

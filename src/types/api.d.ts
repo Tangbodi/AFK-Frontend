@@ -168,3 +168,8 @@ interface NewsDetail {
   source: string;
   title: string;
 }
+
+interface UpdateUserSettingReq {
+  type: string;
+  status: number
+}

@@ -2,8 +2,10 @@ import './notifications.less'
 import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import Typography from '@mui/material/Typography'
-import { getUserSettingAPI } from '@/request/api'
+import { getUserSettingAPI, updateUserSettingAPI } from '@/request/api'
 import { useEffect, useState } from 'react'
+import { NotificationsTypes } from '@/config'
+import { message } from 'antd'
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 40,
   height: 20,
@@ -67,29 +69,42 @@ const Notifications = () => {
     }
   }
 
-  const switchChange = (type, val) => {
+  const switchChange = (type: string, val: boolean) => {
     switch(type){
-      case 'commentOnPost':
+      case NotificationsTypes.commentOnPost:
         setCommentOnPost(val)
         break;
-      case 'likeOnComment':
+      case NotificationsTypes.likeOnComment:
         setLikeOnComment(val)
         break;
-      case 'likeOnPost':
+      case NotificationsTypes.likeOnPost:
         setLikeOnPost(val)
         break;
-      case 'postOnSavedGame':
+      case NotificationsTypes.postOnSavedGame:
         setPostOnSavedGame(val)
         break;
-      case 'replyOnComment':
+      case NotificationsTypes.replyOnComment:
         setReplyOnComment(val)
         break;
-      case 'saveOnPost':
+      case NotificationsTypes.saveOnPost:
         setSaveOnPost(val)
         break;
+      case NotificationsTypes.mentionsOfUsername:
+        setMentionsOfUsername(val)
+        break;
     }
-    
+    updateUserSetting(type, val)
   }
+
+  const updateUserSetting = async(type: string, val: boolean) => {
+    const updateUserSettingRes = await updateUserSettingAPI({type, status: val ? 1: 0})
+    if(updateUserSettingRes.code === 200) {
+      message.success("update success")
+      return
+    }
+    message.warning(updateUserSettingRes.message)
+  }
+
 
   useEffect(()=>{
     getUserSetting()
@@ -100,31 +115,31 @@ const Notifications = () => {
       <div className='settings-notification-wrap'>
         <div className="settings-notification-item">
             <Typography>Mentions of username</Typography>
-            <AntSwitch checked={mentionsOfUsername} onChange={()=>{switchChange('mentionsOfUsername', !mentionsOfUsername)}} />
+            <AntSwitch checked={mentionsOfUsername} onChange={()=>{switchChange(NotificationsTypes.mentionsOfUsername, !mentionsOfUsername)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>Saved your posts</Typography>
-            <AntSwitch checked={saveOnPost} onChange={()=>{switchChange('saveOnPost', !saveOnPost)}}  />
+            <AntSwitch checked={saveOnPost} onChange={()=>{switchChange(NotificationsTypes.saveOnPost, !saveOnPost)}}  />
         </div>
         <div className="settings-notification-item">
             <Typography>Likes on your posts</Typography>
-            <AntSwitch checked={likeOnPost} onChange={()=>{switchChange('likeOnPost', !likeOnPost)}} />
+            <AntSwitch checked={likeOnPost} onChange={()=>{switchChange(NotificationsTypes.likeOnPost, !likeOnPost)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>Replies on your posts</Typography>
-            <AntSwitch checked={commentOnPost} onChange={()=>{switchChange('commentOnPost', !commentOnPost)}} />
+            <AntSwitch checked={commentOnPost} onChange={()=>{switchChange(NotificationsTypes.commentOnPost, !commentOnPost)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>Likes on your comments</Typography>
-            <AntSwitch checked={likeOnComment} onChange={()=>{switchChange('likeOnComment', !likeOnComment)}}/>
+            <AntSwitch checked={likeOnComment} onChange={()=>{switchChange(NotificationsTypes.likeOnComment, !likeOnComment)}}/>
         </div>
         <div className="settings-notification-item">
             <Typography>Replies on your comments</Typography>
-            <AntSwitch checked={replyOnComment} onChange={()=>{switchChange('replyOnComment', !replyOnComment)}} />
+            <AntSwitch checked={replyOnComment} onChange={()=>{switchChange(NotificationsTypes.replyOnComment, !replyOnComment)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>New posts on your saved games</Typography>
-            <AntSwitch checked={postOnSavedGame} onChange={()=>{switchChange('postOnSavedGame', !postOnSavedGame)}}/>
+            <AntSwitch checked={postOnSavedGame} onChange={()=>{switchChange(NotificationsTypes.postOnSavedGame, !postOnSavedGame)}}/>
         </div>
       </div>
       <div className="settings-notification-title">RECOMMENDATIONS</div>

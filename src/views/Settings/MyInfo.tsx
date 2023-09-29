@@ -1,11 +1,17 @@
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
 import usa from '@/assets/images/usa.png'
+import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
-import { getUserInfoAPI, updateEmailAPI, getMailAddressAPI, updateMailAddressAPI } from '@/request/api'
-import { message, Form, Input } from 'antd'
+import { message, Form, Input, Upload } from 'antd'
 import EditIcon from '@mui/icons-material/Edit'
 import './myInfo.less'
+import { 
+    getUserInfoAPI, 
+    updateEmailAPI, 
+    getMailAddressAPI,
+    updateMailAddressAPI,
+    updataAvatarAPI 
+} from '@/request/api'
 
 const validateMessages = {
   required: '${label} is required!',
@@ -40,6 +46,29 @@ const MyInfo = () => {
     message.warning(updateEmailRes.message)
   }
 
+  const handleBeforeUpload = (file) => {
+    const isJpgPng = file.type === 'image/jpeg' || file.type === 'image/png'
+      if(!isJpgPng) {
+        message.warning("Upload images in JPG/PNG format only!")
+        return
+      }
+      return false
+  }
+
+  const handleChange = async(info) => {
+    if (info.file.status !== 'uploading') {
+      info.file.status = 'done'
+    }
+    const formData = new FormData()
+    formData.append('image', info.fileList[0].originFileObj)
+    const updateRes = await updataAvatarAPI(formData)
+    if(updateRes.code === 200) {
+      message.success('avatar update success!')
+      getUserInfo()
+      return
+    }
+    message.warning(updateRes.message)
+  }
 
   const infoEditHandle = () => {
     setInfoEdit(!infoEdit)
@@ -55,7 +84,7 @@ const MyInfo = () => {
       const data = userInfoRes.data || {}
       setEmail(data.email)
       setUserName(data.username)
-      setAvatarUrl(data.avatar_url)
+      setAvatarUrl(data.avatarUrl)
       form.setFieldsValue({
         username: data.username,
         email: data.email
@@ -103,7 +132,13 @@ const MyInfo = () => {
     <div className="afk-user-content-account">
       <div className="afk-user-avatar">
         <Avatar className="afk-user-avatar-left" alt={userName} src={avatarUrl}/>
-        <Button className="afk-user-avatar-right" variant="contained">Change Avatar</Button>
+        <Upload
+          onChange={handleChange}
+          beforeUpload={handleBeforeUpload}
+        >
+          <Button className="afk-user-avatar-right">Change Avatar</Button>
+        </Upload>
+        
       </div>
       <div className="afk-user-form">
         {

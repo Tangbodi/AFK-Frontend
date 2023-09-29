@@ -265,6 +265,14 @@ export const markAllAPI = (): Promise<APIRes> => request.put('/api/v1/user-info/
 export const getUserSettingAPI = (): Promise<APIRes> => request.get('/api/v1/user/setting')
 
 /**
- * /api/v1/user/setting
+ * /api/v1/user/update-setting
  */
-export const updateUserSettingAPI = (params): Promise<APIRes> => request.put('/api/v1/user/setting', params)
+export const updateUserSettingAPI = (params: UpdateUserSettingReq): Promise<APIRes> => request.put('/api/v1/user/update-setting', params)
+
+/**
+ * update avatar
+ * @url /api/v1/user-info/update-avatar
+ */
+export const updataAvatarAPI = (params: any): Promise<APIRes> => request.put('/api/v1/user-info/update-avatar', params, {
+  headers: {'Content-Type': 'multipart/form-data'}
+})
