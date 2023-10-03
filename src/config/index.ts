@@ -50,5 +50,9 @@ export const enum NotificationsTypes {
   postOnSavedGame='postOnSavedGame',
   replyOnComment='replyOnComment',
   saveOnPost='saveOnPost',
-  mentionsOfUsername='mentionsOfUsername'
+  mentionOfUsername='mentionOfUsername',
+  afkAnnouncement='afkAnnouncement',
+  communityRecommendation='communityRecommendation',
+  featuredContent='featuredContent',
+  trendingPost='trendingPost'
 }

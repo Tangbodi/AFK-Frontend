@@ -9,9 +9,10 @@ export const actionNamesOper = (actions, actionNames): void => {
 }
 
 export const dateUtils = (timeStr: string) => {
-  const temp = timeStr.split('T')[0]
+  const tempStr = timeStr.split('T')
+  const temp = tempStr[0]
   const target = temp.split('-')
-  return `${mothEnmus[target[1]]} ${Number(target[1])}, ${target[0]}`
+  return `${mothEnmus[target[1]]} ${Number(target[2])}, ${target[0]} ${tempStr[1].substring(0, tempStr[1].length-1)}`
 }
 
 export const arrayToObjArray = (arr) => {

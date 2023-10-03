@@ -48,24 +48,34 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }))
 const Notifications = () => {
-  const [mentionsOfUsername, setMentionsOfUsername] = useState(false)
+  const [mentionOfUsername, setMentionOfUsername] = useState(false)
   const [commentOnPost, setCommentOnPost] = useState(false)
   const [likeOnComment, setLikeOnComment] = useState(false)
   const [likeOnPost, setLikeOnPost] = useState(false)
   const [postOnSavedGame, setPostOnSavedGame] = useState(false)
   const [replyOnComment, setReplyOnComment] = useState(false)
   const [saveOnPost, setSaveOnPost] = useState(false)
+  const [afkAnnouncement, setAfkAnnouncement] = useState(false)
+  const [communityRecommendation, setCommunityRecommendation] = useState(false)
+  const [featuredContent, setFeaturedContent] = useState(false)
+  const [trendingPost, setTrendingPost] = useState(false)
   const getUserSetting = async () => {
     const getUserSettingRes = await getUserSettingAPI()
     const getUserSettingResData = getUserSettingRes.data || {}
+    const activity = getUserSettingResData.activity || {}
+    const recommendation = getUserSettingResData.recommendation || {}
     if(getUserSettingRes.code === 200) {
-      setLikeOnPost(!!getUserSettingResData.likeOnPost)
-      setCommentOnPost(!!getUserSettingResData.commentOnPost)
-      setLikeOnComment(!!getUserSettingResData.likeOnComment)
-      setPostOnSavedGame(!!getUserSettingResData.postOnSavedGame)
-      setReplyOnComment(!!getUserSettingResData.replyOnComment)
-      setSaveOnPost(!!getUserSettingResData.saveOnPost)
-      setMentionsOfUsername(!!getUserSettingResData.mentionsOfUsername)
+      setLikeOnPost(!!activity.likeOnPost)
+      setCommentOnPost(!!activity.commentOnPost)
+      setLikeOnComment(!!activity.likeOnComment)
+      setPostOnSavedGame(!!activity.postOnSavedGame)
+      setReplyOnComment(!!activity.replyOnComment)
+      setSaveOnPost(!!activity.saveOnPost)
+      setMentionOfUsername(!!activity.mentionOfUsername)
+      setAfkAnnouncement(!!recommendation.afkAnnouncement)
+      setCommunityRecommendation(!!recommendation.communityRecommendation)
+      setFeaturedContent(!!recommendation.featuredContent)
+      setTrendingPost(!!recommendation.trendingPost)
     }
   }
 
@@ -89,8 +99,20 @@ const Notifications = () => {
       case NotificationsTypes.saveOnPost:
         setSaveOnPost(val)
         break;
-      case NotificationsTypes.mentionsOfUsername:
-        setMentionsOfUsername(val)
+      case NotificationsTypes.mentionOfUsername:
+        setMentionOfUsername(val)
+        break;
+      case NotificationsTypes.afkAnnouncement:
+        setAfkAnnouncement(val)
+        break;
+      case NotificationsTypes.communityRecommendation:
+        setCommunityRecommendation(val)
+        break;
+      case NotificationsTypes.featuredContent:
+        setFeaturedContent(val)
+        break;
+      case NotificationsTypes.trendingPost:
+        setTrendingPost(val)
         break;
     }
     updateUserSetting(type, val)
@@ -115,7 +137,7 @@ const Notifications = () => {
       <div className='settings-notification-wrap'>
         <div className="settings-notification-item">
             <Typography>Mentions of username</Typography>
-            <AntSwitch checked={mentionsOfUsername} onChange={()=>{switchChange(NotificationsTypes.mentionsOfUsername, !mentionsOfUsername)}} />
+            <AntSwitch checked={mentionOfUsername} onChange={()=>{switchChange(NotificationsTypes.mentionOfUsername, !mentionOfUsername)}} />
         </div>
         <div className="settings-notification-item">
             <Typography>Saved your posts</Typography>
@@ -146,19 +168,19 @@ const Notifications = () => {
       <div className='settings-notification-wrap'>
         <div className="settings-notification-item">
             <Typography>Trending posts</Typography>
-            <AntSwitch defaultChecked/>
+            <AntSwitch checked={trendingPost} onChange={()=>{switchChange(NotificationsTypes.trendingPost, !trendingPost)}}/>
         </div>
         <div className="settings-notification-item">
             <Typography>Community recommendations</Typography>
-            <AntSwitch defaultChecked/>
+            <AntSwitch checked={communityRecommendation} onChange={()=>{switchChange(NotificationsTypes.communityRecommendation, !communityRecommendation)}}/>
         </div>
         <div className="settings-notification-item">
             <Typography>Featured content</Typography>
-            <AntSwitch defaultChecked/>
+            <AntSwitch checked={featuredContent} onChange={()=>{switchChange(NotificationsTypes.featuredContent, !featuredContent)}}/>
         </div>
         <div className="settings-notification-item">
             <Typography>AFK announcements</Typography>
-            <AntSwitch defaultChecked/>
+            <AntSwitch checked={afkAnnouncement} onChange={()=>{switchChange(NotificationsTypes.afkAnnouncement, !afkAnnouncement)}}/>
         </div>
       </div>
     </div>

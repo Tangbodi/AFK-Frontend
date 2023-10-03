@@ -42,7 +42,7 @@ const Forum = () => {
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
-  },[]) // savedForums
+  },[savedForums]) // savedForums
 
   const goToNext = (postId: string) => {
     navigateTo(`/topic/${postId}?genre=${searchParams.get('genreId')}&game=${gameId}`)

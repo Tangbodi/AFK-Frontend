@@ -119,13 +119,13 @@ const Topic = () => {
   
   return (
     <InfiniteScroll
-            dataLength={repliesList.length}
-            next={commentsReplies}
-            hasMore={totalPages>=page}
-            loader={false}
-            endMessage={<Divider plain>It is all, nothing more</Divider>}
-            scrollableTarget="scrollableDiv"
-          >
+      dataLength={repliesList.length}
+      next={commentsReplies}
+      hasMore={totalPages>=page}
+      loader={false}
+      endMessage={<Divider plain>It is all, nothing more</Divider>}
+      scrollableTarget="scrollableDiv"
+    >
     <div className="afk-topic" id="scrollableDiv" style={{
       height: 400,
       overflow: 'auto'

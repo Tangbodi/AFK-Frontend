@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './notifications.less'
 import { unreadMessageAPI, markAllAPI } from '@/request/api'
 import { message } from 'antd'
+import Avatar from '@mui/material/Avatar'
 const Notifications = () => {
   const [unreadMessages, setUnreadMessages] = useState([])
   const unreadMessageMethod = async() => {
@@ -38,7 +39,8 @@ const Notifications = () => {
             return (
               <div className='afk-popup-li' key={index}>
                 <div className='afk-popup-li-icon'>
-                  {msg.fromUsername && msg.fromUsername.charAt(0)}
+                  <Avatar alt={msg.fromUsername} src={msg.fromAvatarUrl}  sx={{width:'40px', height:'40px'}}/>
+                  {/* {msg.fromUsername && msg.fromUsername.charAt(0)} */}
                 </div>
                 <div className='afk-popup-li-right'>
                   <div className='afk-popup-li-right-content'>
