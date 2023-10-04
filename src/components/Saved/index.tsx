@@ -3,7 +3,7 @@ import { Grade, GradeOutlined } from '@mui/icons-material'
 import { useRef, useState, useEffect } from 'react'
 import { getForumsAPI } from '@/request/api'
 import { message } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 const Saved = () => {
   const saveListRef = useRef(null)
   const dispatch = useDispatch()
@@ -13,9 +13,14 @@ const Saved = () => {
   const [forums, setForums] = useState([])
   const [showList, setShowList] = useState([])
   const [showMore, setShowMore] = useState(false)
-  useEffect(() => {
+  const { isSavedForumFiber } = useSelector((state: RootState) => ({
+    isSavedForumFiber: state.gobalStatus.isSavedForumFiber
+  }))
+
+  useEffect(()=>{
     getForums()
-  }, [])
+  }, [isSavedForumFiber])
+  
   const mouseOver = () => {
     showList.length && setIsShow('block')
     setVisible(true)

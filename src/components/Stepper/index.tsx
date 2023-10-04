@@ -27,7 +27,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
                 </div>
                 <div className="form-steps-item-top-right">
                   <div className='top-right-name'>{replyItem.fromUsername}</div>
-                  <div className='top-right-date'>{dateUtils(replyItem.createdAt)}</div>
+                  <div className='top-right-date'>{dateUtils(replyItem.createdAt, 'T')}</div>
                 </div>
               </div>
               <div className='form-steps-item-main'>
@@ -38,7 +38,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
                   }
                   { replyItem.content }
                 </div>
-                <Controls pIndex={pIndex} cIndex={index} type={MsgTypes.reply} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
+                <Controls pIndex={pIndex} cIndex={index} type={MsgTypes.reply} toUsername={replyItem.fromUsername} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
               </div>
             </div>
           )

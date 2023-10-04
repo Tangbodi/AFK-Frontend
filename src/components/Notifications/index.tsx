@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './notifications.less'
 import { unreadMessageAPI, markAllAPI } from '@/request/api'
+import { notificationsTypesEnum } from '@/config'
+import { notificationsDateUtils } from '@/utils/utils'
 import { message } from 'antd'
 import Avatar from '@mui/material/Avatar'
 const Notifications = () => {
@@ -44,9 +46,9 @@ const Notifications = () => {
                 </div>
                 <div className='afk-popup-li-right'>
                   <div className='afk-popup-li-right-content'>
-                    <span>{msg.fromUsername}</span> liked your reply: <span>"{msg.content}"</span>
+                    <span>{msg.fromUsername}</span> {notificationsTypesEnum[msg.typeId]}: <span>"{msg.content}"</span>
                   </div>
-                  {/* <div className='afk-popup-li-right-time'>3 hours ago</div> */}
+                  <div className='afk-popup-li-right-time'>{ notificationsDateUtils(msg.createdAt)}</div>
                 </div>
               </div>
             )

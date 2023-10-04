@@ -6,24 +6,24 @@ import BackdropLoading from '@/components/Backdrop'
 import { createRoot } from "react-dom/client";
 
 
-// let requestCount = 0
-// const showLoading = () => {
-//   if (requestCount === 0) {
-//       var dom = document.createElement('div')
-//       dom.setAttribute('id', 'loading')
-//       document.body.appendChild(dom)
-//       // ReactDOM.render(<BackdropLoading/>, dom) react17的写法 18支持 但会告警
-//       const target = createRoot(document.getElementById('loading'))
-//       target.render(<BackdropLoading/>)
-//   }
-//   requestCount++
-// } 
-// const hideLoading = () => {
-//   requestCount--
-//   if (requestCount === 0) {
-//       document.body.removeChild(document.getElementById('loading'))
-//   }
-// }
+let requestCount = 0
+const showLoading = () => {
+  if (requestCount === 0) {
+      var dom = document.createElement('div')
+      dom.setAttribute('id', 'loading')
+      document.body.appendChild(dom)
+      // ReactDOM.render(<BackdropLoading/>, dom) react17的写法 18支持 但会告警
+      const target = createRoot(document.getElementById('loading'))
+      target.render(<BackdropLoading/>)
+  }
+  requestCount++
+} 
+const hideLoading = () => {
+  requestCount--
+  if (requestCount === 0) {
+      document.body.removeChild(document.getElementById('loading'))
+  }
+}
 
 interface AxiosTokenInstance extends AxiosInstance {}
 const instance: AxiosTokenInstance = axios.create({
@@ -84,12 +84,12 @@ instance.interceptors.request.use(config => {
   // config.headers.isLoading !== false && showLoading()
   return config
 }, err => {
-  // err.config.headers.isLoading !== false && hideLoading()
+  err.config.headers.isLoading !== false && hideLoading()
   return Promise.reject(err)
 })
 
 instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
-  // res.config.headers.isLoading !== false && hideLoading()
+  res.config.headers.isLoading !== false && hideLoading()
   if(res.status === 200) {
     return res.data
   } else if(res.status === 400){
@@ -98,7 +98,7 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
     throw new Error(getErrorCode2text(res.status))
   }
 }, (error: any) => {
-  // error.config.headers.isLoading !== false && hideLoading()
+  error.config.headers.isLoading !== false && hideLoading()
   let __emsg: string = error.message || ''
   if (error.message) __emsg = error.message
   if (error.response) __emsg = error.response.data.message ? error.response.data.message : error.response.data.data

@@ -47,7 +47,7 @@ const Topic = () => {
       setUserName(resData.userName)
       setLikeStatus(resData.likeStatus)
       setSaveStatus(resData.saveStatus)
-      setCreatedAt(dateUtils(resData.createdAt))
+      setCreatedAt(dateUtils(resData.createdAt, 'T'))
       setTextRender(resData.textRender)
       setImageURL(resData.imageURL)
       setImagesList(arrayToObjArray(resData.imageURL))
@@ -214,7 +214,7 @@ const Topic = () => {
                             <Avatar alt={replies.comment.username} sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
                           </div>
                           <div className="content-title-right">
-                            {dateUtils(replies.comment.createdAt)}
+                            {dateUtils(replies.comment.createdAt, 'T')}
                           </div>
                         </div>
                         <div className="main-content-detail">
@@ -235,7 +235,6 @@ const Topic = () => {
         </div>
       </div>
     </div>
-    {/* <div style={{color:"#777",position:"fixed", right:'-50px', bottom:'100px', zIndex:99, background:'#000'}}>Topxxx</div> */}
     </InfiniteScroll>
   )
 }

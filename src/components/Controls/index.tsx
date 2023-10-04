@@ -22,11 +22,12 @@ type Props = {
   cIndex?: number, // 子索引
   likeStatus?: number,
   saveStatus?: number,
+  toUsername?: string,
   getLeaveMsgFn?: Function
 }
 const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
   const { TextArea } = Input
-  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex } = props
+  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex, toUsername } = props
   const { postId } = useParams()
   const [content, setContent] = useState('')
   const [searchParams] = useSearchParams()
@@ -66,6 +67,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       params.objectId = postId
       params.status = status
       console.log('params.status', params.status)
+      // dispatch({type: 'isSavedForumFiber', val: true})
     } else {
       if(type === MsgTypes.comment) {
         // 如果type是comment类型 说明是评论自身
@@ -120,6 +122,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       setInputShow(false)
       getLeaveMsgFn({
         pIndex,
+        toUsername,
         likeStatus: 0,
         cIndex: cIndex+1,
         content: params.content,
@@ -128,7 +131,6 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         commentId: editReplyRes.data.commentId,
         createdAt: editReplyRes.data.createdAt,
         fromUid: sessionStorage.getItem('afk-userid'),
-        toUsername: sessionStorage.getItem('afk-username'),
         fromUsername:sessionStorage.getItem('afk-username')
       })
       return
@@ -145,14 +147,16 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       <div className="afk-like-save">
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
           { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
-          </div>
-        { isPost &&  <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
-         {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
-        </div> }
+        </div>
+        { isPost &&  
+          (
+            <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
+            {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
+            </div>
+          )
+        }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
-          {
-            type === MsgTypes.comment ? <><ChatBubbleOutlineOutlined/>Comment</> : <><ChatBubbleOutlineOutlined/>Reply</>
-          }
+          { type === MsgTypes.comment ? <><ChatBubbleOutlineOutlined/>Comment</> : <><ChatBubbleOutlineOutlined/>Reply</> }
         </div>
         {/* <div className="afk-like-save-item transform-1"><SendOutlined/>Share</div> */}
       </div>

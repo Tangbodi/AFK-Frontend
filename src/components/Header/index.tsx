@@ -5,6 +5,7 @@ import iconBell from '@/assets/images/icon_bell.png'
 import iconDark from '@/assets/images/icon_dark-mode.png'
 import iconUser from '@/assets/images/icon_user.png'
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
+import Avatar from '@mui/material/Avatar'
 import { setTheme, getTheme } from '@/utils/theme'
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,6 +22,8 @@ const Header = () => {
   const [currentTheme, setCurrentTheme] = useState(getTheme())
   const [optionVisible, setOptionVisible] = useState(false)
   const [selectedType, setSelectedType] = useState(null)
+  const [avatarUrl, setAvatarUrl] = useState(null)
+  const [username, setUsername] = useState(null)
   const [searchParams] = useSearchParams()
   const navigateTo = useNavigate()
   const location = useLocation()
@@ -29,17 +32,24 @@ const Header = () => {
     afkToken: state.gobalStatus.afkToken,
     isLoginFiber: state.gobalStatus.isLoginFiber
   }))
-  const [visible, setVisible] = useState(false)
   
+  const useInfoInit = () => {
+    const avatarUrlSession = sessionStorage.getItem('afk-avatarurl')
+    const usernameSession = sessionStorage.getItem('afk-username')
+    setAvatarUrl(avatarUrlSession)
+    setUsername(usernameSession)
+  }
+
   useEffect(() => {
+    dispatch({type:'isLoginFiber', val: false})
     // 如果当前路由为search，则执行一次查询api
     if(location.pathname === '/search') searchForums(searchParams.get('type'),searchParams.get('keywords'))
     setTheme(localStorage.getItem('theme'))
   },[])
 
   useMemo(()=>{
-    // setVisible(isLoginFiber)
-  }, [isLoginFiber])
+    useInfoInit()
+  }, [afkToken])
 
   // goto account info
   const handleClick = (isLogin: boolean) => { 
@@ -48,9 +58,7 @@ const Header = () => {
       navigateTo('/settings/myinfo')
       return
     }
-    // setVisible(isLogin)
     dispatch({type:'isLoginFiber', val: isLogin})
-    // AccountRef.current.showModal(isLogin)
   }
   
 
@@ -92,7 +100,6 @@ const Header = () => {
     if(location.pathname === '/search') searchForums(selectedType,e.target.value.trim())
   }
   const closeable = (isClosed: boolean) => {
-    // setVisible(!isClosed)
     dispatch({type:'isLoginFiber', val: !isClosed})
   }
   // theme 切换
@@ -173,8 +180,22 @@ const Header = () => {
             <img src={iconBell} width={24} height={24}/>
           </Popover>
         </div>
-        <div className="right-item" onClick={()=>{handleClick(true)}}>
-          <img src={iconUser} width={22} height={22}/>
+        {
+          !username && (
+            <div className="right-item" onClick={()=>{handleClick(true)}}>
+              <img src={iconUser} width={22} height={22}/>
+            </div>
+          )
+        }
+        <div className='right-item-r' onClick={()=>{handleClick(true)}}>
+          {
+            avatarUrl && (
+              <div className='right-item-r-l'>
+                <Avatar alt={username} src={avatarUrl}  sx={{width:'50px', height:'50px'}}/> 
+              </div>
+            )
+          }
+          <div className='right-item-r-r'>{username}</div>
         </div>
       </div>
     </header>

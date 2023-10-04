@@ -67,8 +67,10 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
       setIsModalOpen(false)
       sessionStorage.setItem('afk-username', loginRes.data.username)
       sessionStorage.setItem('afk-userid', loginRes.data.userId)
+      sessionStorage.setItem('afk-avatarurl', loginRes.data.avatarUrl)
       sessionStorage.setItem('afk-jsessionid', loginRes.data.jsessionid)
       dispatch({type:"afkToken", val: loginRes.data.jsessionid})
+      dispatch({type: 'isSavedForumFiber', val: Math.random()})
       form.resetFields()
       return
     }

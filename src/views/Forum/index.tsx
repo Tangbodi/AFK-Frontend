@@ -3,12 +3,11 @@ import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
 import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
-import { useEffect, useState, useRef, useMemo } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { message } from "antd"
 import { forumsTabs } from '@/config'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 const Forum = () => {
   const navigateTo = useNavigate()
   const { gameId } = useParams()
@@ -35,10 +34,10 @@ const Forum = () => {
   const [pageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true)
-  const [nextDisabled, setNextDisabled] = useState(false)
+  const [nextDisabled, setNextDisabled] = useState(true)
   const [currentNewsPage, setCurrentNewsPage] = useState(1)
   const [prevNewsDisabled, setPrevNewsDisabled] = useState(true)
-  const [nextNewsDisabled, setNextNewsDisabled] = useState(false)
+  const [nextNewsDisabled, setNextNewsDisabled] = useState(true)
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
@@ -92,10 +91,12 @@ const Forum = () => {
       } else {
         setPrevDisabled(true)
       }
-      if(page >= gameBaseInfoRes.data.totalPages) {
-        setNextDisabled(true)
+      if(gameBaseInfoRes.data.totalPages) {
+        if(page >= gameBaseInfoRes.data.totalPages) {
+          setNextDisabled(false)
+        }
       } else {
-        setNextDisabled(false)
+        setNextDisabled(true)
       }
       setPosts(gameBaseInfoRes.data.content || [])
       return
@@ -117,6 +118,8 @@ const Forum = () => {
     const saveGamesRes = await likeSavePostAPI({ typeId: 4, objectId: gameId, status })
     if(saveGamesRes.code === 200) {
       setIsSaved(status === 0)
+      gameInfo(searchParams.get('genreId'), gameId)
+      dispatch({type: 'isSavedForumFiber', val: Math.random()})
       return
     }
     message.warning(saveGamesRes.message)
@@ -205,37 +208,44 @@ const Forum = () => {
           { guidesShow && (
             <>
               <div className="afk-forum-guides-list">
-              <div className='afk-forum-guides-list-th'>
-                <div className="list-th-replies w70">REPLIES</div>
-                <div className="list-th-topic w416">TOPIC</div>
-                <div className="list-th-by w130">CREATED BY</div>
-              </div>
-              {
-                posts && posts.map((post, index) => {
-                  return (
-                    <div className='afk-forum-guides-list-td fc' key={index}>
-                      <div className="list-th-replies w70">{post.view}</div>
-                      <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
-                      <div className="list-th-by w130 fw400">
-                        <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
+                <div className='afk-forum-guides-list-th'>
+                  <div className="list-th-replies w70">REPLIES</div>
+                  <div className="list-th-topic w416">TOPIC</div>
+                  <div className="list-th-by w130">CREATED BY</div>
+                </div>
+                {
+                  posts && posts.map((post, index) => {
+                    return (
+                      <div className='afk-forum-guides-list-td fc' key={index}>
+                        <div className="list-th-replies w70">{post.view}</div>
+                        <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
+                        <div className="list-th-by w130 fw400">
+                          <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
+                        </div>
                       </div>
+                    )
+                  })
+                }
+                {
+                  !posts.length && (
+                    <div className='afk-forum-guides-empty'>
+                      No Data
                     </div>
                   )
-                })
-              }
-            </div>
-            <div className="afk-forum-guides-create">
-              <div className="guides-create-btn">
-                <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
+                }
               </div>
-              <div className="guides-pagination">
-                <div className={prevDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onPrevious}>
-                  <i/>Previous
+              <div className="afk-forum-guides-create">
+                <div className="guides-create-btn">
+                  <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
                 </div>
-                <div className="current">{currentPage}</div>
-                <div className={nextDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNext}>Next<i/></div>
+                <div className="guides-pagination">
+                  <div className={prevDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onPrevious}>
+                    <i/>Previous
+                  </div>
+                  <div className="current">{currentPage}</div>
+                  <div className={nextDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNext}>Next<i/></div>
+                </div>
               </div>
-            </div>
             </>)
           }
           {
@@ -271,6 +281,13 @@ const Forum = () => {
                   <div className="current">{currentNewsPage}</div>
                   <div className={nextNewsDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNewsNext}>Next<i/></div>
                 </div>
+              </div>
+            )
+          }
+          {
+            !newsShow && (
+              <div className='afk-forum-guides-empty'>
+                No Data
               </div>
             )
           }

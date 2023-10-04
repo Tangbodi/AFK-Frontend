@@ -17,6 +17,9 @@ const store = {
     },
     isLoginFiber(newState:{isLoginFiber: boolean}, action: {type: string, val: boolean}) {
       newState.isLoginFiber = action.val
+    },
+    isSavedForumFiber(newState:{isSavedForumFiber: number}, action: {type: string, val: number}) {
+      newState.isSavedForumFiber = action.val
     }
   },
   // redux-thunk异步写法

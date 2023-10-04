@@ -56,3 +56,13 @@ export const enum NotificationsTypes {
   featuredContent='featuredContent',
   trendingPost='trendingPost'
 }
+
+
+export const notificationsTypesEnum = {
+  '0': 'liked your post',
+  '1': 'liked your comment',
+  '2': 'liked your comment',
+  '3': 'saved your post',
+  '5': 'commented your post',
+  '6': 'replied you' 
+}
