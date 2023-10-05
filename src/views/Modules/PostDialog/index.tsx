@@ -45,11 +45,11 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
       message.warning("Please enter post content")
       return
     }
-    console.log('xxx', imageIdList)
+    // console.log('xxx', imageIdList)
     if(imageIdList.length) {
       values.postImageNameList = imageIdList
     }
-    console.log('vv', values)
+    // console.log('vv', values)
     if(!values.postImageNameList) values.postImageNameList = []
     const savePostRes = await savePostAPI(Object.assign({}, values, { textRender, genreId: searchParams.get('genreId'), gameId }))
     if(savePostRes.code === 200) {
@@ -73,7 +73,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
 
   const getFileList = (imageId: string) => {
     imageIdList.push(imageId)
-    console.log('11', imageIdList)
+    // console.log('11', imageIdList)
   }
 
   return (
