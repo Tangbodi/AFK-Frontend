@@ -178,7 +178,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         <div className='afk-like-input'>
           <div className='afk-like-input-area'>
             <TextArea
-              maxLength={500}
+              maxLength={4092}
               style={{ height: 220 }}
               onChange={onChange}
               placeholder="Please enter"
