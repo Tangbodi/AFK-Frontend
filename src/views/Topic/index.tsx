@@ -222,7 +222,7 @@ const Topic = () => {
                             {replies.comment.content}
                           </div>
                           <div className="main-content-controls comment-type">
-                            <Controls pIndex={index} cIndex={0} comment={replies.comment} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
+                            <Controls pIndex={index} cIndex={0} comment={replies.comment} toUsername={replies.comment.username} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
                           </div>
                           <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                         </div>

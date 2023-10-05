@@ -120,19 +120,36 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
     if(editReplyRes.code === 200) {
       message.success('replay successful')
       setInputShow(false)
-      getLeaveMsgFn({
-        pIndex,
-        toUsername,
-        likeStatus: 0,
-        cIndex: cIndex+1,
-        content: params.content,
-        replyId: editReplyRes.data.replyId,
-        toReplyId: editReplyRes.data.replyId,
-        commentId: editReplyRes.data.commentId,
-        createdAt: editReplyRes.data.createdAt,
-        fromUid: sessionStorage.getItem('afk-userid'),
-        fromUsername:sessionStorage.getItem('afk-username')
-      })
+      if(isReply) {
+        getLeaveMsgFn({
+          pIndex,
+          toUsername,
+          likeStatus: 0,
+          cIndex: cIndex+1,
+          content: params.content,
+          replyId: editReplyRes.data.replyId,
+          toReplyId: editReplyRes.data.replyId,
+          commentId: editReplyRes.data.commentId,
+          createdAt: editReplyRes.data.createdAt,
+          fromUid: sessionStorage.getItem('afk-userid'),
+          fromUsername:sessionStorage.getItem('afk-username')
+        })
+      } else {
+        getLeaveMsgFn({
+          pIndex,
+          toUsername,
+          likeStatus: 0,
+          cIndex: cIndex+1,
+          content: params.content,
+          replyId: editReplyRes.data.replyId,
+          // toReplyId: editReplyRes.data.replyId,
+          commentId: editReplyRes.data.commentId,
+          createdAt: editReplyRes.data.createdAt,
+          fromUid: sessionStorage.getItem('afk-userid'),
+          fromUsername:sessionStorage.getItem('afk-username')
+        })
+      }
+      
       return
     }
     message.warning(editReplyRes.message)
@@ -165,7 +182,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         <div className='afk-like-input'>
           <div className='afk-like-input-area'>
             <TextArea
-              maxLength={100}
+              maxLength={500}
               style={{ height: 220 }}
               onChange={onChange}
               placeholder="Please enter"

@@ -17,8 +17,8 @@ const Security = lazy(()=> import("../views/Settings/Security"))
 const News = lazy(()=> import("../views/News"))
 const NewsDetail = lazy(()=> import("../views/News/detail"))
 const Search = lazy(()=> import("../views/Search"))
-const Redirect = lazy(()=> import("../views/Redirect"))
-const ErrorComp = lazy(()=> import("../views/Redirect/error"))
+const Reset = lazy(()=> import("../views/Reset"))
+const ErrorComp = lazy(()=> import("../views/Exception/Error"))
 const SendEmail = lazy(()=> import("../views/Forgot/SendEmail"))
 /**
  * 懒加载组件处理
@@ -98,8 +98,8 @@ const routes = [
         element: withLoadingComponent(<Search/>)
       },
       {
-        path: '/redirect',
-        element: withLoadingComponent(<Redirect/>)
+        path: '/reset',
+        element: withLoadingComponent(<Reset/>)
       },
       {
         path: '/error',

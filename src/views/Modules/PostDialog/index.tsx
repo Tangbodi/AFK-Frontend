@@ -19,14 +19,21 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
   const [form] = Form.useForm()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [searchParams] = useSearchParams()
+  const [editorKey, setEditorKey] = useState(4)
   
   useImperativeHandle(ref, () => ({
     showModal
   }))
+
   const showModal = () => {
     setIsModalOpen(true)
   }
 
+  const clearEditor = () => {
+    const newKey = editorKey * 43
+    setEditorKey(newKey)
+    setTextRender('')
+  }
   const handleOk = async() => {
     const values = await form.validateFields()
 
@@ -50,6 +57,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
         message.success("save success")
         setIsModalOpen(false)
         form.resetFields()
+        clearEditor()
         reload()
       }
       return
@@ -59,6 +67,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
 
   const handleCancel = () => {
     form.resetFields()
+    clearEditor()
     setIsModalOpen(false)
   }
 
@@ -80,6 +89,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
             <div className='afk-editor-title'>Post Content</div>
             <div className='afk-editor-detail'>
               <Editor
+                key={editorKey}
                 apiKey='sn5ytycr1mo04zyd7qmgf69k1xqv3choi63zrsy2bpksdvtv'
                 onInit={(_evt, editor) => editorRef.current = editor}
                 tinymceScriptSrc={'/tinymce/tinymce.min.js'}

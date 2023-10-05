@@ -1,8 +1,10 @@
-import './redirect.less'
+import './reset.less'
 import { Form, Input, Button, message } from 'antd'
 import { enterPasswordAPI } from '@/request/api'
+import { useNavigate } from 'react-router-dom'
 const Redirect = () => {
   const [form] = Form.useForm()
+  const navigateTo = useNavigate()
   const enterPassword = async() => {
     const params = await form.validateFields()
     const regX = /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[\\W_]){1,})(?!.*\\s).{8,}$/
@@ -44,7 +46,7 @@ const Redirect = () => {
               <Button type="primary" className="form-login-btn" onClick={enterPassword}>Reset Password</Button>
             </div>
             <div>
-              <Button className="back-to-login" onClick={enterPassword}>Back to Login</Button>
+              <Button className="back-to-login" onClick={()=>{navigateTo('/')}}>Back to Login</Button>
             </div>
           </div>
         </Form> 
