@@ -1,3 +1,4 @@
+import { getUuid } from './utils'
 export const getTheme = (): string => {
   return localStorage.getItem('theme')
 }
@@ -21,6 +22,9 @@ export const keepTheme = ():void => {
 }
 
 export const autoSetTheme = () => {
+  const userUuid = getUuid()
+  const isManual = sessionStorage.getItem(userUuid)
+  if(isManual && Number(isManual)) return
   const nowTime = new Date()
 	const minutes = nowTime.getHours() * 60 + nowTime.getMinutes() //当前时间转换成分
   const endTime = "18:00"

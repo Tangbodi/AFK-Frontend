@@ -104,8 +104,10 @@ const Header = () => {
   }
   // theme 切换
   const modifyMode = () => {
+    const uuid = sessionStorage.getItem('afk-uuid')
     const currentTheme = localStorage.getItem('theme')
     const theme = currentTheme === 'theme-light' ? 'theme-dark' : 'theme-light'
+    sessionStorage.setItem(uuid, '1')
     setTheme(theme)
     setCurrentTheme(theme)
     dispatch({type:"modifyMode", val: theme})

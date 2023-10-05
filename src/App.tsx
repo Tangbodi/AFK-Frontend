@@ -2,10 +2,12 @@ import { useRoutes } from "react-router-dom"
 import router from './router'
 import { useEffect } from "react"
 import { keepTheme, autoSetTheme } from "./utils/theme"
+import { getUuid } from "./utils/utils"
 import { useDispatch } from 'react-redux'
 
 const App = () => {
   useEffect(() => {
+    getUuid()
     autoSetTheme()
     keepTheme()
     persistSessionId()
