@@ -33,7 +33,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
               <div className='form-steps-item-main'>
                 <div className='form-steps-item-main-content'>
                   {
-                    replyItem.toReplyId && Number(replyItem.toReplyId) && 
+                    replyItem.toReplyId && Number(replyItem.toReplyId) > 0 && 
                     <span className='content-relative'>@{replyItem.toUsername}</span>
                   }
                   { replyItem.content }
