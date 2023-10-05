@@ -66,3 +66,5 @@ export const notificationsTypesEnum = {
   '5': 'commented your post',
   '6': 'replied you' 
 }
+
+export const passwordTips = ['Password has at east 8 characters.', 'Password has special characters.', 'Password has a number.', 'Password has a capital letter.', 'Passwords match.']

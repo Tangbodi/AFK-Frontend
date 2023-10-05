@@ -2,6 +2,8 @@ import './reset.less'
 import { Form, Input, Button, message } from 'antd'
 import { enterPasswordAPI } from '@/request/api'
 import { useNavigate } from 'react-router-dom'
+import { passwordTips } from '@/config'
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 const Redirect = () => {
   const [form] = Form.useForm()
   const navigateTo = useNavigate()
@@ -41,6 +43,17 @@ const Redirect = () => {
           <Form.Item name="confirmPassword" label="Confirm New Password">
             <Input.Password className="login-input" placeholder='Confirm your new password *'/>
           </Form.Item>
+          <div className='form-password-tips'>
+            {
+              passwordTips && passwordTips.map((tip, index) => {
+                return (
+                  <div className='form-password-tips-item' key={index}>
+                    <ClearRoundedIcon/><span>{tip}</span>
+                  </div>
+                )
+              })
+            }
+          </div>
           <div className="form-login">
             <div className=''>
               <Button type="primary" className="form-login-btn" onClick={enterPassword}>Reset Password</Button>

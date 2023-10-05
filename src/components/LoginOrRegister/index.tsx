@@ -1,11 +1,14 @@
-import { useState, useImperativeHandle, forwardRef } from 'react'
-import { Modal, Form, Input, Button, message } from 'antd'
-import { useDispatch } from 'react-redux'
-import { registrationAPI, loginAPI, forgotPasswordAPI } from '@/request/api'
+import './register.less'
 import { getTheme } from '@/utils/theme'
+import { useDispatch } from 'react-redux'
 import logo from '@/assets/images/login-logo.png'
 import logoDark from '@/assets/images/login-logo-dark.png'
-import './register.less'
+import { passwordTips } from '@/config'
+import { Modal, Form, Input, Button, message } from 'antd'
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
+import { useState, useImperativeHandle, forwardRef } from 'react'
+import { registrationAPI, loginAPI, forgotPasswordAPI } from '@/request/api'
+
 type Props = {
   closeable: Function
 }
@@ -130,6 +133,17 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
           <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' }]}>
             <Input.Password className="login-input"  />
           </Form.Item>
+          <div className='form-password-tips'>
+            {
+              passwordTips && passwordTips.map((tip, index) => {
+                return (
+                  <div className='form-password-tips-item' key={index}>
+                    <ClearRoundedIcon/><span>{tip}</span>
+                  </div>
+                )
+              })
+            }
+          </div>
           <div className="form-login">
             <Button type="primary" className="form-login-btn" onClick={onSignUp}>Sign Up</Button>
           </div>

@@ -27,10 +27,13 @@ const LogoutDialog = forwardRef((_props, ref) => {
     if(logoutRes.code === 200) {
       setOpen(false)
       naigateTo('/')
+      const uuid = sessionStorage.getItem('afk-uuid')
       sessionStorage.removeItem('afk-jsessionid')
       sessionStorage.removeItem('afk-userid')
       sessionStorage.removeItem('afk-username')
       sessionStorage.removeItem('afk-avatarurl')
+      sessionStorage.removeItem('afk-uuid')
+      sessionStorage.removeItem(uuid)
       message.success(logoutRes.data)
     } else {
       message.warning(logoutRes.message)
