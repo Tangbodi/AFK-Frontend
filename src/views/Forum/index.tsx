@@ -217,7 +217,7 @@ const Forum = () => {
                   posts && posts.map((post, index) => {
                     return (
                       <div className='afk-forum-guides-list-td fc' key={index}>
-                        <div className="list-th-replies w70">{post.view}</div>
+                        <div className="list-th-replies w70">{post.view + post.like + post.save}</div>
                         <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                         <div className="list-th-by w130 fw400">
                           <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}

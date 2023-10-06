@@ -200,7 +200,7 @@ const Topic = () => {
               </div>
             }
             <div className="main-content-controls">
-              <Controls type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={likeStatus} saveStatus={saveStatus} getLeaveMsgFn={getLeaveMsg} />
+              <Controls type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
             </div>
           </div>
           
