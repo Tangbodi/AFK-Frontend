@@ -13,7 +13,7 @@ export const dateUtils = (timeStr: string, symbol: string, is?: boolean ) => {
   const tempStr = timeStr.split(symbol)
   const temp = tempStr[0]
   const target = temp.split('-')
-  const seconds = is ? tempStr[1].substring(0, tempStr[1].length) : tempStr[1].substring(0, tempStr[1].length-1)
+  const seconds = is ? tempStr[1].substring(0, tempStr[1].length) : tempStr[1].substring(0, tempStr[1].length)
   return `${mothEnmus[target[1]]} ${Number(target[2])}, ${target[0]} ${seconds}`
 }
 

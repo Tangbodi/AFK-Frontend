@@ -4,8 +4,10 @@ import { unreadMessageAPI, markAllAPI } from '@/request/api'
 import { notificationsTypesEnum } from '@/config'
 import { notificationsDateUtils } from '@/utils/utils'
 import { message } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 const Notifications = () => {
+  const navigateTo = useNavigate()
   const [unreadMessages, setUnreadMessages] = useState([])
   const unreadMessageMethod = async() => {
     const unreadMessagesRes = await unreadMessageAPI()
@@ -24,11 +26,12 @@ const Notifications = () => {
     }
     message.warning(readReplyRes.message)
   }
+  
   useEffect(() => {
     unreadMessageMethod()
   }, [])
-  return (
 
+  return (
     <div className='afk-popup'>
       <div className='afk-popup-title'>
         <div className='afk-popup-title-left'>Notifications</div>
@@ -39,10 +42,9 @@ const Notifications = () => {
           unreadMessages && 
           unreadMessages.map((msg, index) => {
             return (
-              <div className='afk-popup-li' key={index}>
+              <div className='afk-popup-li' key={index} onClick={()=>{navigateTo(`/topic/${msg.postId}?genre=${msg.genreId}&game=${msg.gameId}`)}}>
                 <div className='afk-popup-li-icon'>
                   <Avatar alt={msg.fromUsername} src={msg.fromAvatarUrl}  sx={{width:'40px', height:'40px'}}/>
-                  {/* {msg.fromUsername && msg.fromUsername.charAt(0)} */}
                 </div>
                 <div className='afk-popup-li-right'>
                   <div className='afk-popup-li-right-content'>

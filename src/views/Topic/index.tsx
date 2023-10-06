@@ -47,7 +47,7 @@ const Topic = () => {
       setUserName(resData.userName)
       setLikeStatus(resData.likeStatus)
       setSaveStatus(resData.saveStatus)
-      setCreatedAt(dateUtils(resData.createdAt, 'T'))
+      setCreatedAt(dateUtils(resData.createdAt, ' '))
       setTextRender(resData.textRender)
       setImageURL(resData.imageURL)
       setImagesList(arrayToObjArray(resData.imageURL))
@@ -181,7 +181,7 @@ const Topic = () => {
                     <img src={currentImage}/>
                   </div>
                   <div className='unfold-main-smallImg'>
-                    { imagesList && imagesList.length && 
+                    { imagesList && imagesList.length > 0 && 
                       imagesList.map((image, index)=>{
                         return (
                           <div className={image.active?'smallImg-item':'smallImg-item smallImg-item-opcityHalf'} key={index} onClick={()=>{queryImgClick(index)}}>
@@ -204,7 +204,7 @@ const Topic = () => {
             </div>
           </div>
           
-            { repliesList.length && 
+            { repliesList.length>0 && 
               repliesList.map((replies, index) => {
                 if(replies) {
                   return (
@@ -214,7 +214,7 @@ const Topic = () => {
                             <Avatar alt={replies.comment.username} sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
                           </div>
                           <div className="content-title-right">
-                            {dateUtils(replies.comment.createdAt, 'T')}
+                            {dateUtils(replies.comment.createdAt, ' ')}
                           </div>
                         </div>
                         <div className="main-content-detail">
