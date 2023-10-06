@@ -67,7 +67,6 @@ const Topic = () => {
     const commentsRepliesRes = await commentsRepliesAPI(params)
     if(commentsRepliesRes.code === 200) {
       const repliesData = commentsRepliesRes.data || {}
-      // setRepliesList([...repliesData.content])
       setRepliesList(repliesList.concat(repliesData.content))
       setTotalPages(repliesData.totalPages)
       page = page + 1
@@ -107,7 +106,6 @@ const Topic = () => {
       } else{
         childCommentObj.reply.splice(cIndex, 0 , value)
       }
-      // setRepliesList([...repliesList])
       setRepliesList([...repliesList])
     }
   }
@@ -152,58 +150,60 @@ const Topic = () => {
             <div className="main-content-desc" dangerouslySetInnerHTML={{__html: textRender}}/>
             {
               !showBigImage &&
-              <div className='main-content-images'>
-                {
-                  imageURL.length > 0 && 
-                  imageURL.map((image, index)=>{
-                    return (
-                      <div className='main-content-images-item' key={index} onClick={()=>{showImgDetail(index)}}>
-                        <div className='images-item-main'>
-                          <div className='images-item-hoverMask hover-in'></div>
-                          <div className='images-item-slot'>
-                            <img src={image}/>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-            }
-            {
-              showBigImage &&
-              <div className='main-content-unfold'>
-                <div className='content-unfold-top' onClick={unfoldBigImages}>
-                  <span className='content-unfold-top-line'><ArrowUpwardOutlined/></span>Unfold
-                </div>
-                <div className='content-unfold-main'>
-                  <div className='unfold-main-bigImg' onClick={unfoldBigImages}>
-                    <img src={currentImage}/>
-                  </div>
-                  <div className='unfold-main-smallImg'>
-                    { imagesList && imagesList.length > 0 && 
-                      imagesList.map((image, index)=>{
-                        return (
-                          <div className={image.active?'smallImg-item':'smallImg-item smallImg-item-opcityHalf'} key={index} onClick={()=>{queryImgClick(index)}}>
-                            <div className={image.active?'smallImg-item-main item-active':'smallImg-item-main'}>
-                              <div className='item-main-hoverMask hover-in'></div>
-                              <div className='item-main-slot'>
-                                <img src={image.url}/>
-                              </div>
+              (
+                <div className='main-content-images'>
+                  {
+                    imageURL.length > 0 && 
+                    imageURL.map((image, index)=>{
+                      return (
+                        <div className='main-content-images-item' key={index} onClick={()=>{showImgDetail(index)}}>
+                          <div className='images-item-main'>
+                            <div className='images-item-hoverMask hover-in'></div>
+                            <div className='images-item-slot'>
+                              <img src={image}/>
                             </div>
                           </div>
-                        )
-                      })
-                    }
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              )
+            }
+            { showBigImage &&
+              (
+                <div className='main-content-unfold'>
+                  <div className='content-unfold-top' onClick={unfoldBigImages}>
+                    <span className='content-unfold-top-line'><ArrowUpwardOutlined/></span>Unfold
+                  </div>
+                  <div className='content-unfold-main'>
+                    <div className='unfold-main-bigImg' onClick={unfoldBigImages}>
+                      <img src={currentImage}/>
+                    </div>
+                    <div className='unfold-main-smallImg'>
+                      { imagesList && imagesList.length > 0 && 
+                        imagesList.map((image, index)=>{
+                          return (
+                            <div className={image.active?'smallImg-item':'smallImg-item smallImg-item-opcityHalf'} key={index} onClick={()=>{queryImgClick(index)}}>
+                              <div className={image.active?'smallImg-item-main item-active':'smallImg-item-main'}>
+                                <div className='item-main-hoverMask hover-in'></div>
+                                <div className='item-main-slot'>
+                                  <img src={image.url}/>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
                 </div>
-              </div>
+              )
             }
             <div className="main-content-controls">
               <Controls type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
             </div>
           </div>
-          
             { repliesList.length>0 && 
               repliesList.map((replies, index) => {
                 if(replies) {
@@ -229,7 +229,6 @@ const Topic = () => {
                     </div>
                   )
                 }
-              
             })}
             
         </div>

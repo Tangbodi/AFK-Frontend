@@ -113,6 +113,10 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
       const pathname = window.location.pathname
       if(pathname.indexOf('settings') != -1) {
         sessionStorage.removeItem('afk-jsessionid')
+        sessionStorage.removeItem('afk-avatarurl')
+        sessionStorage.removeItem('afk-username')
+        sessionStorage.removeItem('afk-userid')
+        sessionStorage.removeItem('afk-uuid')
         window.location.href = window.location.origin
       }
     }

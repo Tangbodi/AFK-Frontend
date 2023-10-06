@@ -11,6 +11,17 @@ const App = () => {
     autoSetTheme()
     keepTheme()
     persistSessionId()
+    // setInterval(()=>{
+    //   console.log('xxdd')
+    //   const t = localStorage.getItem('theme')
+    //   if(t === 'theme-light') {
+    //     localStorage.setItem('theme', 'theme-dark')
+    //     window.location.reload()
+    //   } else {
+    //     localStorage.setItem('theme', 'theme-light')
+    //     window.location.reload()
+    //   }
+    // }, 5000)
   })
   const dispatch = useDispatch()
   const persistSessionId = () => {

@@ -54,7 +54,8 @@ const Header = () => {
   // goto account info
   const handleClick = (isLogin: boolean) => { 
     dispatch({type:'isLoginFiber', val: false})
-    if(afkToken) {
+    const _afkToken = sessionStorage.getItem('afk-jsessionid')
+    if(_afkToken) {
       navigateTo('/settings/myinfo')
       return
     }
@@ -135,23 +136,16 @@ const Header = () => {
           </div>
           {
             inputShow ?
-            (
-              <div className='search-inputs'>
-                <Input placeholder="Please enter ..." allowClear={{clearIcon:<CloseOutlined className='search-inputs-close'/>}} onPressEnter={(e)=>{onSearch(e)}}/>
-              </div>
-            )
+            (<div className='search-inputs'>
+              <Input placeholder="Please enter ..." allowClear={{clearIcon:<CloseOutlined className='search-inputs-close'/>}} onPressEnter={(e)=>{onSearch(e)}}/>
+            </div>)
             :
-            (
-              <div className="search-input" onClick={optionVisibleHandle}>
-                Search for forum, topic, games...
-              </div>
-            )
+            (<div className="search-input" onClick={optionVisibleHandle}>
+              Search for forum, topic, games...
+            </div>)
           }
-          
-          
         </div>
-        {
-          optionVisible &&
+        { optionVisible &&
           <div className='afk-header-center-options'>
             {
               searchOptions.map(option => {
@@ -182,12 +176,10 @@ const Header = () => {
             <img src={iconBell} width={24} height={24}/>
           </Popover>
         </div>
-        {
-          !username && (
+        {!username && (
             <div className="right-item" onClick={()=>{handleClick(true)}}>
               <img src={iconUser} width={22} height={22}/>
-            </div>
-          )
+            </div>)
         }
         <div className='right-item-r' onClick={()=>{handleClick(true)}}>
           {

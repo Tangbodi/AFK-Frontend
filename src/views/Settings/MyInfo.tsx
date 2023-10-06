@@ -85,6 +85,7 @@ const MyInfo = () => {
       setEmail(data.email)
       setUserName(data.username)
       setAvatarUrl(data.avatarUrl)
+      sessionStorage.setItem('afk-avatarurl', data.avatarUrl)
       form.setFieldsValue({
         username: data.username,
         email: data.email

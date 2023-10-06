@@ -28,6 +28,8 @@ export const autoSetTheme = () => {
   const nowTime = new Date()
 	const minutes = nowTime.getHours() * 60 + nowTime.getMinutes() //当前时间转换成分
   const endTime = "18:00"
-  const endTimeToMinutes = Number(endTime.split(':')[0])*60
-  endTimeToMinutes <= minutes ? setTheme('theme-dark') : setTheme('theme-light')
+  const endTime2 = "6:00"
+  const endTimeToMinutes = Number(endTime.split(':')[0])*60;
+  const endTimeToMinutes2 = Number(endTime2.split(':')[0])*60;
+  (endTimeToMinutes <= minutes) || ( minutes <= endTimeToMinutes2 ) ? setTheme('theme-dark') : setTheme('theme-light')
 }

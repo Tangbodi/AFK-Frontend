@@ -209,7 +209,10 @@ const Forum = () => {
             <>
               <div className="afk-forum-guides-list">
                 <div className='afk-forum-guides-list-th'>
-                  <div className="list-th-replies w70">REPLIES</div>
+                  <div className="list-th-replies w70">LIKE</div>
+                  <div className="list-th-replies w70">SAVE</div>
+                  <div className="list-th-replies w70">REPLY</div>
+                  <div className="list-th-replies w70">VIEW</div>
                   <div className="list-th-topic w416">TOPIC</div>
                   <div className="list-th-by w130">CREATED BY</div>
                 </div>
@@ -217,7 +220,10 @@ const Forum = () => {
                   posts && posts.map((post, index) => {
                     return (
                       <div className='afk-forum-guides-list-td fc' key={index}>
-                        <div className="list-th-replies w70">{post.view + post.like + post.save}</div>
+                        <div className="list-th-replies w70">{post.like}</div>
+                        <div className="list-th-replies w70">{post.save}</div>
+                        <div className="list-th-replies w70">{post.reply}</div>
+                        <div className="list-th-replies w70">{post.view}</div>
                         <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                         <div className="list-th-by w130 fw400">
                           <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
@@ -285,7 +291,7 @@ const Forum = () => {
             )
           }
           {
-            !newsShow && (
+            !newsList && (
               <div className='afk-forum-guides-empty'>
                 No Data
               </div>
