@@ -1,23 +1,17 @@
-import { useEffect, useState } from 'react'
+import { forwardRef } from 'react'
 import './notifications.less'
-import { unreadMessageAPI, markAllAPI } from '@/request/api'
+import { markAllAPI } from '@/request/api'
 import { notificationsTypesEnum } from '@/config'
 import { notificationsDateUtils } from '@/utils/utils'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
-const Notifications = () => {
+type Props = {
+  unreadMessages: any
+}
+const Notifications: React.FC<Props> = forwardRef((props, _ref) => {
   const navigateTo = useNavigate()
-  const [unreadMessages, setUnreadMessages] = useState([])
-  const unreadMessageMethod = async() => {
-    const unreadMessagesRes = await unreadMessageAPI()
-    if(unreadMessagesRes.code === 200) {
-      setUnreadMessages(unreadMessagesRes.data||[])
-      return
-    }
-    message.warning(unreadMessagesRes.message)
-  }
-
+  const { unreadMessages } = props
   const readReply = async() => {
     const readReplyRes = await markAllAPI()
     if(readReplyRes.code === 200) {
@@ -26,10 +20,6 @@ const Notifications = () => {
     }
     message.warning(readReplyRes.message)
   }
-  
-  useEffect(() => {
-    unreadMessageMethod()
-  }, [])
 
   return (
     <div className='afk-popup'>
@@ -63,5 +53,5 @@ const Notifications = () => {
       </div>
     </div>
   )
-}
+})
 export default Notifications

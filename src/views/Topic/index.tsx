@@ -3,11 +3,10 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
-// import BackTop from '@/components/BackTop'
 import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
-import { useSearchParams, useParams } from 'react-router-dom'
+import { useSearchParams, useParams, useLocation } from 'react-router-dom'
 import { message, Divider } from 'antd'
 import { dateUtils, arrayToObjArray } from '@/utils/utils'
 import { MsgTypes } from '@/config'
@@ -31,7 +30,7 @@ const Topic = () => {
   const [saveStatus, setSaveStatus] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   let [page, setPage] = useState(1)
-
+  const location = useLocation()
   const showPostBody = async() => {
     const params = {
       post: postId,
@@ -96,6 +95,8 @@ const Topic = () => {
 
   const getLeaveMsg = (value: any) => {
     if(typeof(value) === 'boolean') {
+      setRepliesList([])
+      console.log('repliesList', repliesList)
       commentsReplies(1)
     } else {
       const { pIndex, cIndex } = value
@@ -113,8 +114,7 @@ const Topic = () => {
   useEffect(()=>{ 
     showPostBody()
     commentsReplies(1)
-  },[])
-  
+  },[location])
   return (
     <InfiniteScroll
       dataLength={repliesList.length}

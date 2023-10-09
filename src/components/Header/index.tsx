@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect, useMemo } from 'react'
 import { searchOptions } from '@/config'
 import { Popover, Input, message } from 'antd'
-import { searchForumsAPI } from '@/request/api'
+import { searchForumsAPI, unreadMessageAPI } from '@/request/api'
 import LoginOrRegister from '../LoginOrRegister'
 import Notifications from '../Notifications'
 import Saved from '../Saved'
@@ -28,6 +28,7 @@ const Header = () => {
   const navigateTo = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
+  const [unreadMessages, setUnreadMessages] = useState([])
   const { afkToken, isLoginFiber } = useSelector((state: RootState) => ({
     afkToken: state.gobalStatus.afkToken,
     isLoginFiber: state.gobalStatus.isLoginFiber
@@ -36,11 +37,14 @@ const Header = () => {
   const useInfoInit = () => {
     const avatarUrlSession = sessionStorage.getItem('afk-avatarurl')
     const usernameSession = sessionStorage.getItem('afk-username')
+    console.log('avatarUrlSession1', avatarUrlSession)
     setAvatarUrl(avatarUrlSession)
     setUsername(usernameSession)
+    console.log('avatarUrlSession2', avatarUrlSession)
   }
 
   useEffect(() => {
+    unreadMessageMethod()
     dispatch({type:'isLoginFiber', val: false})
     // 如果当前路由为search，则执行一次查询api
     if(location.pathname === '/search') searchForums(searchParams.get('type'),searchParams.get('keywords'))
@@ -51,6 +55,10 @@ const Header = () => {
     useInfoInit()
   }, [afkToken])
 
+  useEffect(()=>{
+    console.log('222')
+    useInfoInit()
+  },[location])
   // goto account info
   const handleClick = (isLogin: boolean) => { 
     dispatch({type:'isLoginFiber', val: false})
@@ -88,6 +96,15 @@ const Header = () => {
       return 
     }
     message.warning(searchForumsRes.message)
+  }
+
+  const unreadMessageMethod = async() => {
+    const unreadMessagesRes = await unreadMessageAPI()
+    if(unreadMessagesRes.code === 200) {
+      setUnreadMessages(unreadMessagesRes.data||[])
+      return
+    }
+    message.warning(unreadMessagesRes.message)
   }
 
   // enter 搜索事件
@@ -165,11 +182,12 @@ const Header = () => {
           <img src={iconDark} width={24} height={24}/>
         </div>
         <div className="right-item">
+          { unreadMessages.length > 0 && <i className='right-item-noread'></i>}
           <Popover
            rootClassName="custome-popover"
            trigger="click"
            placement="bottomRight"
-           content={<Notifications/>}
+           content={<Notifications unreadMessages={unreadMessages}/>}
            open={open}
            onOpenChange={handleOpenChange}
           >
@@ -185,7 +203,7 @@ const Header = () => {
           {
             avatarUrl && (
               <div className='right-item-r-l'>
-                <Avatar alt={username} src={avatarUrl}  sx={{width:'50px', height:'50px'}}/> 
+                <Avatar alt={username} src={avatarUrl}  sx={{width:50, height:50}}/> 
               </div>
             )
           }

@@ -116,36 +116,20 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
     if(editReplyRes.code === 200) {
       message.success('replay successful')
       setInputShow(false)
-      if(isReply) {
-        getLeaveMsgFn({
-          pIndex,
-          toUsername,
-          likeStatus: 0,
-          cIndex: cIndex+1,
-          content: params.content,
-          replyId: editReplyRes.data.replyId,
-          toReplyId: editReplyRes.data.replyId,
-          commentId: editReplyRes.data.commentId,
-          createdAt: editReplyRes.data.createdAt,
-          fromUid: sessionStorage.getItem('afk-userid'),
-          fromUsername:sessionStorage.getItem('afk-username')
-        })
-      } else {
-        getLeaveMsgFn({
-          pIndex,
-          toUsername,
-          likeStatus: 0,
-          cIndex: cIndex+1,
-          content: params.content,
-          replyId: editReplyRes.data.replyId,
-          // toReplyId: editReplyRes.data.replyId,
-          commentId: editReplyRes.data.commentId,
-          createdAt: editReplyRes.data.createdAt,
-          fromUid: sessionStorage.getItem('afk-userid'),
-          fromUsername:sessionStorage.getItem('afk-username')
-        })
+      const sendContent: any = {
+        pIndex,
+        toUsername,
+        likeStatus: 0,
+        cIndex: cIndex+1,
+        content: params.content,
+        replyId: editReplyRes.data.replyId,
+        commentId: editReplyRes.data.commentId,
+        createdAt: editReplyRes.data.createdAt,
+        fromUid: sessionStorage.getItem('afk-userid'),
+        fromUsername:sessionStorage.getItem('afk-username')
       }
-      
+      if(isReply) sendContent.toReplyId = editReplyRes.data.replyId
+      getLeaveMsgFn(sendContent)
       return
     }
     message.warning(editReplyRes.message)

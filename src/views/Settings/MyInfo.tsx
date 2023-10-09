@@ -3,6 +3,7 @@ import usa from '@/assets/images/usa.png'
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { message, Form, Input, Upload } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 import './myInfo.less'
 import { 
@@ -22,6 +23,7 @@ const validateMessages = {
 const MyInfo = () => {
   const [form] = Form.useForm()
   const [localtionForm] = Form.useForm()
+  const navigateTo = useNavigate()
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [userName, setUserName] = useState(null)
   const [email, setEmail] = useState('')
@@ -64,7 +66,9 @@ const MyInfo = () => {
     const updateRes = await updataAvatarAPI(formData)
     if(updateRes.code === 200) {
       message.success('avatar update success!')
-      getUserInfo()
+      getUserInfo(()=>{
+        navigateTo(`/settings/myInfo?r=${Math.random()}`)
+      })
       return
     }
     message.warning(updateRes.message)
@@ -78,7 +82,7 @@ const MyInfo = () => {
     setLocationEdit(!locationEdit)
   }
 
-  const getUserInfo = async() => {
+  const getUserInfo = async(callback?:Function) => {
     const userInfoRes = await getUserInfoAPI()
     if(userInfoRes.code === 200) {
       const data = userInfoRes.data || {}
@@ -90,6 +94,7 @@ const MyInfo = () => {
         username: data.username,
         email: data.email
       })
+      callback && callback()
       return
     }
     message.warning(userInfoRes.message)
@@ -214,8 +219,6 @@ const MyInfo = () => {
             </div>
           </Form>
         }
-        
-        
       </div>
     </div>
   )
