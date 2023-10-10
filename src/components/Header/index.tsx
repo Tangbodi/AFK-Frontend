@@ -37,10 +37,8 @@ const Header = () => {
   const useInfoInit = () => {
     const avatarUrlSession = sessionStorage.getItem('afk-avatarurl')
     const usernameSession = sessionStorage.getItem('afk-username')
-    console.log('avatarUrlSession1', avatarUrlSession)
     setAvatarUrl(avatarUrlSession)
     setUsername(usernameSession)
-    console.log('avatarUrlSession2', avatarUrlSession)
   }
 
   useEffect(() => {
@@ -56,7 +54,6 @@ const Header = () => {
   }, [afkToken])
 
   useEffect(()=>{
-    console.log('222')
     useInfoInit()
   },[location])
   // goto account info

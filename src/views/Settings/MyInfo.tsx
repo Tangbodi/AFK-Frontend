@@ -62,7 +62,7 @@ const MyInfo = () => {
       info.file.status = 'done'
     }
     const formData = new FormData()
-    formData.append('image', info.fileList[0].originFileObj)
+    formData.append('image', info.fileList[info.fileList.length-1].originFileObj)
     const updateRes = await updataAvatarAPI(formData)
     if(updateRes.code === 200) {
       message.success('avatar update success!')
