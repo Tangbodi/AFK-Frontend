@@ -1,5 +1,5 @@
 import './topic.less'
-import InfiniteScroll from 'react-infinite-scroll-component'
+// import InfiniteScroll from 'react-infinite-scroll-component'
 import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
@@ -7,7 +7,7 @@ import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
 import { useSearchParams, useParams, useLocation } from 'react-router-dom'
-import { message, Divider } from 'antd'
+import { message } from 'antd'
 import { dateUtils, arrayToObjArray } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 
@@ -28,7 +28,7 @@ const Topic = () => {
   const [repliesList, setRepliesList] = useState([])
   const [likeStatus, setLikeStatus] = useState(1)
   const [saveStatus, setSaveStatus] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
+  const [_totalPages, setTotalPages] = useState(1)
   let [page, setPage] = useState(1)
   const location = useLocation()
   const showPostBody = async() => {
@@ -116,19 +116,20 @@ const Topic = () => {
     commentsReplies(1)
   },[location])
   return (
-    <InfiniteScroll
-      dataLength={repliesList.length}
-      next={commentsReplies}
-      hasMore={totalPages>=page}
-      loader={false}
-      endMessage={<Divider plain>It is all, nothing more</Divider>}
-      scrollableTarget="scrollableDiv"
-    >
-    <div className="afk-topic" id="scrollableDiv" style={{
-      height: 400,
-      overflow: 'auto'
-    }}>
+    // <InfiniteScroll
+    //   dataLength={repliesList.length}
+    //   next={commentsReplies}
+    //   hasMore={totalPages>=page}
+    //   loader={false}
+    //   endMessage={<Divider plain>It is all, nothing more</Divider>}
+    //   scrollableTarget="scrollableDiv"
+    // >
+    // <div className="afk-topic" id="scrollableDiv" style={{
+    //   height: 400,
+    //   overflow: 'auto'
+    // }}>
       
+    <div className="afk-topic" id="scrollableDiv">
       <div className="afk-topic-main">
       <div className="afk-topic-title">Forum - {gameName}</div>
         <div className="afk-topic-main-title">
@@ -230,11 +231,12 @@ const Topic = () => {
                   )
                 }
             })}
-            
         </div>
       </div>
     </div>
-    </InfiniteScroll>
+
+    // </div>
+    // </InfiniteScroll>
   )
 }
 export default Topic

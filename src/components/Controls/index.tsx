@@ -144,16 +144,19 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       <div className="afk-like-save">
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
           { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
+          <p>123</p>
         </div>
         { isPost &&  
           (
             <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
             {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
+            <p>123</p>
             </div>
           )
         }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
           { type === MsgTypes.comment ? <><ChatBubbleOutlineOutlined/>Comment</> : <><ChatBubbleOutlineOutlined/>Reply</> }
+          <p>123</p>
         </div>
         {/* <div className="afk-like-save-item transform-1"><SendOutlined/>Share</div> */}
       </div>

@@ -133,12 +133,13 @@ const MyInfo = () => {
   useEffect(() => {
     getUserInfo()
     getMailAddress()
-  })
+  },[])
   return (
     <div className="afk-user-content-account">
       <div className="afk-user-avatar">
         <Avatar className="afk-user-avatar-left" alt={userName} src={avatarUrl}/>
         <Upload
+          headers={{'Content-Type': 'multipart/form-data'}}
           onChange={handleChange}
           beforeUpload={handleBeforeUpload}
         >

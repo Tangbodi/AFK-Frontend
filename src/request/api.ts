@@ -155,7 +155,7 @@ export const saveGamesAPI = (params: SaveGamesReq): Promise<APIRes> => request.p
  * @url /api/v1/all-games-genres/save-post-image
  * @method post
  */
-export const savePostImageAPI = (params: any): Promise<APIRes> => request.post('/api/v1/all-games-genres/save-post-image', params, {
+export const savePostImageAPI = (data: any): Promise<APIRes> => request.post('/api/v1/all-games-genres/save-post-image', data, {
   headers: {'Content-Type': 'multipart/form-data'}
 })
 
@@ -273,6 +273,6 @@ export const updateUserSettingAPI = (params: UpdateUserSettingReq): Promise<APIR
  * update avatar
  * @url /api/v1/user-info/update-avatar
  */
-export const updataAvatarAPI = (params: any): Promise<APIRes> => request.post('/api/v1/user-info/update-avatar', params, {
+export const updataAvatarAPI = (data: any): Promise<APIRes> => request.post('/api/v1/user-info/update-avatar', data, {
   headers: {'Content-Type': 'multipart/form-data'}
 })
