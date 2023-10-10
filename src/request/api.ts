@@ -273,6 +273,6 @@ export const updateUserSettingAPI = (params: UpdateUserSettingReq): Promise<APIR
  * update avatar
  * @url /api/v1/user-info/update-avatar
  */
-export const updataAvatarAPI = (params: any): Promise<APIRes> => request.put('/api/v1/user-info/update-avatar', params, {
+export const updataAvatarAPI = (params: any): Promise<APIRes> => request.post('/api/v1/user-info/update-avatar', params, {
   headers: {'Content-Type': 'multipart/form-data'}
 })
