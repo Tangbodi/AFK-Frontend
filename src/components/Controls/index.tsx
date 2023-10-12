@@ -18,6 +18,8 @@ type Props = {
   isReply?: boolean, // 是否是回复别人的回复
   comment?: any,
   reply?: any,
+  forumNums?: any,
+  replyNums?: number,
   pIndex?: number, // 父索引
   cIndex?: number, // 子索引
   likeStatus?: number,
@@ -27,7 +29,7 @@ type Props = {
 }
 const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
   const { TextArea } = Input
-  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex, toUsername } = props
+  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex, toUsername, forumNums, replyNums } = props
   const { postId } = useParams()
   const [content, setContent] = useState('')
   const [searchParams] = useSearchParams()
@@ -80,9 +82,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       }
     }
     const likeSavePostRes = await likeSavePostAPI(params)
-    if(likeSavePostRes.code === 200) {
-      return
-    }
+    if(likeSavePostRes.code === 200) return
     message.warning(likeSavePostRes.message)
   }
 
@@ -144,19 +144,20 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
       <div className="afk-like-save">
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
           { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
-          <p>123</p>
+          { isPost && <p>{forumNums.like}</p> }
+          { !isPost && <p>{replyNums}</p> }
         </div>
         { isPost &&  
           (
             <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
             {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
-            <p>123</p>
+            { <p>{forumNums.save}</p> }
             </div>
           )
         }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
           { type === MsgTypes.comment ? <><ChatBubbleOutlineOutlined/>Comment</> : <><ChatBubbleOutlineOutlined/>Reply</> }
-          <p>123</p>
+          {isPost && <p>{forumNums.commentReply}</p>}
         </div>
         {/* <div className="afk-like-save-item transform-1"><SendOutlined/>Share</div> */}
       </div>

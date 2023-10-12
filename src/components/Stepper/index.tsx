@@ -39,7 +39,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
                   }
                   { replyItem.content }
                 </div>
-                <Controls pIndex={pIndex} cIndex={index} type={MsgTypes.reply} toUsername={replyItem.fromUsername} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
+                <Controls replyNums={replyItem.likeNum} pIndex={pIndex} cIndex={index} type={MsgTypes.reply} toUsername={replyItem.fromUsername} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
               </div>
             </div>
           )

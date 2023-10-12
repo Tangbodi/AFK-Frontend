@@ -29,6 +29,8 @@ const Topic = () => {
   const [likeStatus, setLikeStatus] = useState(1)
   const [saveStatus, setSaveStatus] = useState(1)
   const [_totalPages, setTotalPages] = useState(1)
+  const [forumNums, setForumNums] = useState({save:0,like:0,commentReply:0})
+  const [replyNums, setReplyNums] = useState(0)
   let [page, setPage] = useState(1)
   const location = useLocation()
   const showPostBody = async() => {
@@ -40,6 +42,7 @@ const Topic = () => {
     const showPostBodyRes = await showPostBodyAPI(params)
     if(showPostBodyRes.code === 200) {
       const resData = showPostBodyRes.data || {}
+      setForumNums({save: resData.save, like: resData.like, commentReply: resData.commentReply})
       setTitle(resData.title)
       setToUid(resData.userId)
       setGameName(resData.gameName)
@@ -96,7 +99,7 @@ const Topic = () => {
   const getLeaveMsg = (value: any) => {
     if(typeof(value) === 'boolean') {
       setRepliesList([])
-      console.log('repliesList', repliesList)
+      // console.log('repliesList', repliesList)
       commentsReplies(1)
     } else {
       const { pIndex, cIndex } = value
@@ -202,7 +205,7 @@ const Topic = () => {
               )
             }
             <div className="main-content-controls">
-              <Controls type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
+              <Controls forumNums={forumNums} type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
             </div>
           </div>
             { repliesList.length>0 && 
@@ -212,7 +215,7 @@ const Topic = () => {
                     <div className='afk-top-main-content-item' key={index}>
                         <div className="main-content-title">
                           <div className="content-title-left">
-                            <Avatar alt={replies.comment.username} sx={{width:'48px', height:'48px'}}/>{replies.comment.username}
+                            <Avatar alt={replies.comment.username} sx={{width:48, height:48}}/>{replies.comment.username}
                           </div>
                           <div className="content-title-right">
                             {dateUtils(replies.comment.createdAt, ' ')}
@@ -223,7 +226,7 @@ const Topic = () => {
                             {replies.comment.content}
                           </div>
                           <div className="main-content-controls comment-type">
-                            <Controls pIndex={index} cIndex={0} comment={replies.comment} toUsername={replies.comment.username} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
+                            <Controls replyNums={replies.comment.likeNum} pIndex={index} cIndex={0} comment={replies.comment} toUsername={replies.comment.username} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
                           </div>
                           <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                         </div>
