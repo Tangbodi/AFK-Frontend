@@ -76,6 +76,10 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
     // console.log('11', imageIdList)
   }
 
+  const removeImage = (index: number) => {
+    imageIdList.splice(index, 1)
+  }
+
   return (
       <Modal width={860} wrapClassName="afk-post-dialog" title={`Forum: ${title}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[
           <Button key={1} onClick={handleCancel}>Cancel</Button>,
@@ -116,7 +120,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
             </div>
           </div>
           <Form.Item name="postImageNameList" label="Image & Video">
-            <Uploader getFiles={getFileList}/>
+            <Uploader getFiles={getFileList} removeImage={removeImage}/>
           </Form.Item>
         </Form>
       </Modal>

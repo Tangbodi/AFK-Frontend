@@ -1,7 +1,6 @@
 import { message } from 'antd'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import axios from 'axios'
-// import ReactDOM from 'react-dom'
 import BackdropLoading from '@/components/Backdrop'
 import { createRoot } from "react-dom/client";
 
@@ -9,10 +8,9 @@ import { createRoot } from "react-dom/client";
 let requestCount = 0
 const showLoading = () => {
   if (requestCount === 0) {
-      var dom = document.createElement('div')
+      const dom = document.createElement('div')
       dom.setAttribute('id', 'loading')
       document.body.appendChild(dom)
-      // ReactDOM.render(<BackdropLoading/>, dom) react17的写法 18支持 但会告警
       const target = createRoot(document.getElementById('loading'))
       target.render(<BackdropLoading/>)
   }

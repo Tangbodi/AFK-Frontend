@@ -6,13 +6,14 @@ import Stepper from '@/components/Stepper'
 import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
-import { useSearchParams, useParams, useLocation } from 'react-router-dom'
+import { useSearchParams, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 import { dateUtils, arrayToObjArray } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 
 
 const Topic = () => {
+  const navigateTo = useNavigate()
   const { postId } = useParams()
   const [searchParams] = useSearchParams()
   const [title, setTitle] = useState()
@@ -30,8 +31,7 @@ const Topic = () => {
   const [saveStatus, setSaveStatus] = useState(1)
   const [_totalPages, setTotalPages] = useState(1)
   const [forumNums, setForumNums] = useState({save:0,like:0,commentReply:0})
-  const [replyNums, setReplyNums] = useState(0)
-  let [page, setPage] = useState(1)
+  const [page, setPage] = useState(1)
   const location = useLocation()
   const showPostBody = async() => {
     const params = {
@@ -71,8 +71,7 @@ const Topic = () => {
       const repliesData = commentsRepliesRes.data || {}
       setRepliesList(repliesList.concat(repliesData.content))
       setTotalPages(repliesData.totalPages)
-      page = page + 1
-      setPage(page)
+      setPage(page+1)
       return 
     }
     message.warning(commentsRepliesRes.message)
@@ -99,7 +98,6 @@ const Topic = () => {
   const getLeaveMsg = (value: any) => {
     if(typeof(value) === 'boolean') {
       setRepliesList([])
-      // console.log('repliesList', repliesList)
       commentsReplies(1)
     } else {
       const { pIndex, cIndex } = value
@@ -134,7 +132,7 @@ const Topic = () => {
       
     <div className="afk-topic" id="scrollableDiv">
       <div className="afk-topic-main">
-      <div className="afk-topic-title">Forum - {gameName}</div>
+      <div className="afk-topic-title"><span style={{ cursor:'pointer'}} onClick={()=>{navigateTo(`/forum/${searchParams.get('game')}?genreId=${searchParams.get('genre')}`)}}>Forum</span> - {gameName}</div>
         <div className="afk-topic-main-title">
           <span className="main-title-tag">Q&A</span>
           <div className="main-title-text">
@@ -144,7 +142,7 @@ const Topic = () => {
         <div className='afk-top-main-content'>
           <div className="main-content-title">
             <div className="content-title-left">
-              <Avatar alt={userName} sx={{width:'48px', height:'48px'}}/>{userName}
+              <Avatar alt={userName} sx={{width:48, height:48}}/>{userName}
             </div>
             <div className="content-title-right">
               {createdAt}

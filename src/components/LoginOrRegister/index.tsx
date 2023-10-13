@@ -3,11 +3,12 @@ import { getTheme } from '@/utils/theme'
 import { useDispatch } from 'react-redux'
 import logo from '@/assets/images/login-logo.png'
 import logoDark from '@/assets/images/login-logo-dark.png'
-import { passwordTips } from '@/config'
+import { passwordTips, SITE_KEY } from '@/config'
 import { Modal, Form, Input, Button, message } from 'antd'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
-import { useState, useImperativeHandle, forwardRef } from 'react'
+import { useState, useImperativeHandle, forwardRef, createRef } from 'react'
 import { registrationAPI, loginAPI, forgotPasswordAPI } from '@/request/api'
+import ReCAPTCHA from "react-google-recaptcha"
 
 type Props = {
   closeable: Function
@@ -16,6 +17,7 @@ type Props = {
 const Register: React.FC<Props> = forwardRef((props, ref) => {
   const { closeable } = props
   const dispatch = useDispatch()
+  const captchaRef = createRef()
   const [isModalOpen, setIsModalOpen] = useState(true)
   const [isLoginValue, setIsLoginValue] = useState(true)
   const [isForgot, setIsForgot] = useState(false)
@@ -48,6 +50,12 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
   }
 
   const onSignUp = async() => {
+    const _captchaRef: any = captchaRef.current
+    const response = _captchaRef.getValue()
+    if (!response) {
+      alert("Please click reCAPTCHA");
+      return;
+    }
     const values = await form.validateFields()
     if(values.password !== values.confirmPassword) {
       message.warning("The two entered passwords are inconsistent. Please check!")
@@ -63,6 +71,12 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
   }
 
   const onLogin = async() => {
+    const _captchaRef: any = captchaRef.current
+    const response = _captchaRef.getValue()
+    if (!response) {
+      alert("Please click reCAPTCHA")
+      return;
+    }
     const values = await form.validateFields()
     const loginRes = await loginAPI(values)
     if(loginRes.code === 200) {
@@ -145,6 +159,11 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
             }
           </div>
           <div className="form-login">
+            <ReCAPTCHA
+              className="re-chaptcha"
+              sitekey={SITE_KEY}
+              ref={captchaRef}
+            />
             <Button type="primary" className="form-login-btn" onClick={onSignUp}>Sign Up</Button>
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Have an account? Log In</div>
@@ -161,6 +180,11 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
           </Form.Item>
           <div className="forget-password" onClick={hanldeForgot}>Forget password?</div>
           <div className="form-login">
+            <ReCAPTCHA
+              className="re-chaptcha"
+              sitekey={SITE_KEY}
+              ref={captchaRef}
+            />
             <Button type="primary" className="form-login-btn" onClick={onLogin}>Log In</Button>
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Don’t have an account? Sign up</div>

@@ -4,7 +4,7 @@ import { savePostImageAPI } from '@/request/api'
 import './uploader.less'
 const { Dragger } = Upload
 const Uploader = (_props) => {
-  const { getFiles } = _props
+  const { getFiles, removeImage } = _props
   let imgInfo = {}
   const handleSubmit = async(fileList) => {
     const formData = new FormData()
@@ -83,13 +83,15 @@ const Uploader = (_props) => {
     onChange(info) {
       const { status } = info.file
       if (status !== 'uploading') {
-        // handleSubmit(info.fileList.slice(-1))
         info.file.status = 'done'
       }
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files)
     },
+    onRemove({name}) {
+      removeImage(name)
+    }
   }
   return (
     <Dragger {...props} className='dragger-upload'>
