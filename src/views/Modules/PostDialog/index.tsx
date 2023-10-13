@@ -11,8 +11,8 @@ type Props = {
   reload: Function
 }
 const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
+  let imageIdList = []
   const { title, reload } = props
-  const imageIdList = []
   const editorRef = useRef(null)
   const [textRender, setTextRender] = useState('');
   const { gameId } = useParams()
@@ -45,11 +45,13 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
       message.warning("Please enter post content")
       return
     }
-    // console.log('xxx', imageIdList)
     if(imageIdList.length) {
-      values.postImageNameList = imageIdList
+      let postImageNameList = []
+      imageIdList.forEach(image => {
+        postImageNameList.push(image.url)
+      })
+      values.postImageNameList = postImageNameList
     }
-    // console.log('vv', values)
     if(!values.postImageNameList) values.postImageNameList = []
     const savePostRes = await savePostAPI(Object.assign({}, values, { textRender, genreId: searchParams.get('genreId'), gameId }))
     if(savePostRes.code === 200) {
@@ -71,13 +73,12 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
     setIsModalOpen(false)
   }
 
-  const getFileList = (imageId: string) => {
-    imageIdList.push(imageId)
-    // console.log('11', imageIdList)
+  const getFileList = (imageObj: any) => {
+    imageIdList.push(imageObj)
   }
 
-  const removeImage = (index: number) => {
-    imageIdList.splice(index, 1)
+  const removeImage = (uid: string) => {
+    imageIdList = imageIdList.filter(image => image.uid !== uid)
   }
 
   return (

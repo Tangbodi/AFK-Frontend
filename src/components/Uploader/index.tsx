@@ -10,9 +10,10 @@ const Uploader = (_props) => {
     const formData = new FormData()
     // formData.append('images', fileList[0].originFileObj)
     formData.append('images', fileList)
+    console.log('aass', fileList)
     const savePostImageRes = await savePostImageAPI(formData)
     if(savePostImageRes.code === 200) {
-      getFiles(savePostImageRes.data[0])
+      getFiles({uid: fileList.uid, url: savePostImageRes.data[0]})
       return
     }
     message.warning(savePostImageRes.message)
@@ -71,26 +72,34 @@ const Uploader = (_props) => {
       const isJpgPng = file.type === 'image/jpeg' || file.type === 'image/png'
       if(!isJpgPng) {
         message.warning("Upload images in JPG/PNG format only!")
-      } else {
-        imgInfo['lastModified'] = file['lastModified']
-        imgInfo['name'] = file['name']
-        imgInfo['originSize'] = file['size']
-        imgInfo['originType'] = file['type']
-        compressImg(file)
+        return
       }
+      imgInfo['lastModified'] = file['lastModified']
+      imgInfo['name'] = file['name']
+      imgInfo['originSize'] = file['size']
+      imgInfo['originType'] = file['type']
+      compressImg(file)
       return false
     },
     onChange(info) {
-      const { status } = info.file
-      if (status !== 'uploading') {
-        info.file.status = 'done'
-      }
+      // const { status } = info.file
+      // if (status !== 'uploading') {
+      //   info.file.status = 'done'
+      // }
+    },
+    progress: {
+      strokeColor: {
+        '0%': '#108ee9',
+        '100%': '#87d068',
+      },
+      strokeWidth: 3,
+      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files)
     },
-    onRemove({name}) {
-      removeImage(name)
+    onRemove(file) {
+      removeImage(file.uid)
     }
   }
   return (

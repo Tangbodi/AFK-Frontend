@@ -69,5 +69,5 @@ export const notificationsTypesEnum = {
 
 export const passwordTips = ['Password has at east 8 characters.', 'Password has special characters.', 'Password has a number.', 'Password has a capital letter.', 'Passwords match.']
 
-export const SITE_KEY = "6LciAw0nAAAAAH8MY_svpL5oa2oAU2H4DGPdlFwY"
-export const SECRET_KEY = "6LciAw0nAAAAANZs8Mgm98XKA2rw_cpqklr2TraB"
+export const SITE_KEY = "6LeBppsoAAAAALlnEuSuQC6X5a65MfVqL418HqhA"
+export const SECRET_KEY = "6LeBppsoAAAAADQgE_5cQFxkbHiYmDB4WHnqnf6V"

@@ -53,7 +53,7 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
     const _captchaRef: any = captchaRef.current
     const response = _captchaRef.getValue()
     if (!response) {
-      alert("Please click reCAPTCHA");
+      message.warning("Please click reCAPTCHA")
       return;
     }
     const values = await form.validateFields()
@@ -74,8 +74,8 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
     const _captchaRef: any = captchaRef.current
     const response = _captchaRef.getValue()
     if (!response) {
-      alert("Please click reCAPTCHA")
-      return;
+      message.warning("Please click reCAPTCHA")
+      return
     }
     const values = await form.validateFields()
     const loginRes = await loginAPI(values)

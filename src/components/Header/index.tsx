@@ -204,6 +204,13 @@ const Header = () => {
               </div>
             )
           }
+          {
+            username&&!avatarUrl && (
+              <div className="right-item" style={{marginLeft:'0'}}>
+                <img src={iconUser} width={22} height={22}/>
+              </div>
+            )
+          }
           <div className='right-item-r-r'>{username}</div>
         </div>
       </div>
