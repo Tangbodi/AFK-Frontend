@@ -16,6 +16,7 @@ import { searchForumsAPI, unreadMessageAPI } from '@/request/api'
 import LoginOrRegister from '../LoginOrRegister'
 import Notifications from '../Notifications'
 import Saved from '../Saved'
+import { Height } from '@mui/icons-material'
 const Header = () => {
   const [open, setOpen] = useState(false)
   const [inputShow, setInputShow] = useState(false)
@@ -42,8 +43,8 @@ const Header = () => {
   }
 
   useEffect(() => {
-    unreadMessageMethod()
     dispatch({type:'isLoginFiber', val: false})
+    unreadMessageMethod()
     // 如果当前路由为search，则执行一次查询api
     if(location.pathname === '/search') searchForums(searchParams.get('type'),searchParams.get('keywords'))
     setTheme(localStorage.getItem('theme'))
@@ -82,7 +83,9 @@ const Header = () => {
 
   // popup open
   const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen)
+    unreadMessageMethod(()=>{
+      setOpen(newOpen)
+    })
   }
   
   // 请求搜索api
@@ -95,10 +98,11 @@ const Header = () => {
     message.warning(searchForumsRes.message)
   }
 
-  const unreadMessageMethod = async() => {
+  const unreadMessageMethod = async(callback?: Function) => {
     const unreadMessagesRes = await unreadMessageAPI()
     if(unreadMessagesRes.code === 200) {
       setUnreadMessages(unreadMessagesRes.data||[])
+      callback && callback()
       return
     }
     message.warning(unreadMessagesRes.message)
@@ -188,7 +192,9 @@ const Header = () => {
            open={open}
            onOpenChange={handleOpenChange}
           >
-            <img src={iconBell} width={24} height={24}/>
+            <div style={{width:40, height:40, textAlign:'center'}}>
+              <img src={iconBell} width={24} height={24}/>
+            </div>
           </Popover>
         </div>
         {!username && (

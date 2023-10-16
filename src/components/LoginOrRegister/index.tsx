@@ -3,9 +3,10 @@ import { getTheme } from '@/utils/theme'
 import { useDispatch } from 'react-redux'
 import logo from '@/assets/images/login-logo.png'
 import logoDark from '@/assets/images/login-logo-dark.png'
-import { passwordTips, SITE_KEY } from '@/config'
+import { SITE_KEY } from '@/config'
 import { Modal, Form, Input, Button, message } from 'antd'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { useState, useImperativeHandle, forwardRef, createRef } from 'react'
 import { registrationAPI, loginAPI, forgotPasswordAPI } from '@/request/api'
 import ReCAPTCHA from "react-google-recaptcha"
@@ -21,6 +22,10 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(true)
   const [isLoginValue, setIsLoginValue] = useState(true)
   const [isForgot, setIsForgot] = useState(false)
+  const [atLeast8, setAtLeast8] = useState(false)
+  const [special, setSpecial] = useState(false)
+  const [aNumber, setANumber] = useState(false)
+  const [capital, setCapital] = useState(false)
   const [form] = Form.useForm()
   useImperativeHandle(ref, () => ({
     showModal
@@ -50,13 +55,18 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
   }
 
   const onSignUp = async() => {
+    const regX = /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[\\W_]){1,})(?!.*\\s).{8,}$/
     const _captchaRef: any = captchaRef.current
     const response = _captchaRef.getValue()
     if (!response) {
       message.warning("Please click reCAPTCHA")
-      return;
+      return
     }
     const values = await form.validateFields()
+    if(regX.test(values.password)) {
+      message.warning('Invalid Password')
+      return
+    }
     if(values.password !== values.confirmPassword) {
       message.warning("The two entered passwords are inconsistent. Please check!")
       return
@@ -73,10 +83,10 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
   const onLogin = async() => {
     const _captchaRef: any = captchaRef.current
     const response = _captchaRef.getValue()
-    if (!response) {
-      message.warning("Please click reCAPTCHA")
-      return
-    }
+    // if (!response) {
+    //   message.warning("Please click reCAPTCHA")
+    //   return
+    // }
     const values = await form.validateFields()
     const loginRes = await loginAPI(values)
     if(loginRes.code === 200) {
@@ -141,22 +151,38 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
           <Form.Item name="email" label="Email" rules={[{type: 'email',message: 'The input is not valid E-mail!'},{required: true,message: 'Please enter your E-mail!'}]}>
             <Input className="login-input"  />
           </Form.Item>
-          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please enter your password!' }]}>
+          <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please enter your password!' }, () => ({
+            validator(_, value) {
+              const specialCharaterRex = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/
+              const oneNumberRex = /\d+/
+              const capitalRex = /[A-Z]+/
+              value.length >= 8 ? setAtLeast8(true) : setAtLeast8(false)
+              specialCharaterRex.test(value) ? setSpecial(true) : setSpecial(false)
+              oneNumberRex.test(value) ? setANumber(true) : setANumber(false)
+              capitalRex.test(value) ? setCapital(true) : setCapital(false)
+            },
+          })]}>
             <Input.Password className="login-input"  />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' }]}>
             <Input.Password className="login-input"  />
           </Form.Item>
           <div className='form-password-tips'>
-            {
-              passwordTips && passwordTips.map((tip, index) => {
-                return (
-                  <div className='form-password-tips-item' key={index}>
-                    <ClearRoundedIcon/><span>{tip}</span>
-                  </div>
-                )
-              })
-            }
+            <div className='form-password-tips-item'>
+              {atLeast8 ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Password has at east 8 characters.</span>
+            </div>
+            <div className='form-password-tips-item'>
+              {special ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Password has special characters.</span>
+            </div>
+            <div className='form-password-tips-item'>
+              {aNumber ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Password has a number.</span>
+            </div>
+            <div className='form-password-tips-item'>
+              {capital ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Password has a capital letter.</span>
+            </div>
+            <div className='form-password-tips-item'>
+              {atLeast8 && special && aNumber && capital ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Passwords match.</span>
+            </div>
           </div>
           <div className="form-login">
             <ReCAPTCHA

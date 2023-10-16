@@ -2,21 +2,22 @@
   width: 450px;
   font-family: DM Sans;
   margin: -12px;
-  // background: var(--notificationsPopupBgColor);
+  background: var(--notificationsPopupBgColor);
   .afk-popup-title{
     display: flex;
     align-items: center;
     padding: 15px 30px;
-    border-bottom: 1px solid #EEDFC9;
+    border-bottom: 1px solid var(--forumGuidesThColor);
     .afk-popup-title-left{
       font-size: 20px;
       font-weight: 700;
+      color: var(--notificationsTitleColor);
     }
     .afk-popup-title-right{
       font-size: 14px;
       font-weight: 500;
       margin-left: auto;
-      color: #947954;
+      color: var(--notificationsMarkColor);
       cursor: pointer;
     }
   }
@@ -34,7 +35,7 @@
       align-items: center;
       padding: 12px 0;
       cursor: pointer;
-      border-bottom: 1px solid #EEDFC9;
+      border-bottom: 1px solid var(--forumGuidesThColor);
       .afk-popup-li-icon{
         display: flex;
         align-items: center;
@@ -51,17 +52,28 @@
         margin-left: 10px;
         .afk-popup-li-right-content{
           font-size: 14px;
-          color: #828282;
+          color: var(--notificationsCenterColor);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
           span{
             font-weight: 700;
-            color: #745B3F;
+            color: var(--notificationsUserColor);
           }
+        }
+        .afk-popup-li-right-time{
+          color: var(--notificationsCenterColor);
+          font-size: 13px;
         }
         
       }
+    }
+  }
+}
+.custome-popover{
+  .ant-popover-arrow{
+    &::before{
+      background: var(--notificationsPopupBgColor);
     }
   }
 }
