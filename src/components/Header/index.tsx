@@ -16,7 +16,6 @@ import { searchForumsAPI, unreadMessageAPI } from '@/request/api'
 import LoginOrRegister from '../LoginOrRegister'
 import Notifications from '../Notifications'
 import Saved from '../Saved'
-import { Height } from '@mui/icons-material'
 const Header = () => {
   const [open, setOpen] = useState(false)
   const [inputShow, setInputShow] = useState(false)
@@ -136,11 +135,7 @@ const Header = () => {
     <header className="afk-header">
       <div className="afk-header-left">
         <span onClick={()=>{navigateTo('/')}}>
-        { currentTheme === 'theme-light' ?
-          <img src={logo} width="120" height="90"/>
-          :
-          <img src={logoDark} width="120" height="90"/>
-        }
+        { currentTheme === 'theme-light' ? <img src={logo} width="120" height="90"/> : <img src={logoDark} width="120" height="90"/> }
         </span>
         <div className="menu">
           <span onClick={()=>{navigateTo('/')}}>Home</span>
@@ -152,12 +147,10 @@ const Header = () => {
           <div className="search-icon">
             <SearchOutlined />
           </div>
-          {
-            inputShow ?
+          { inputShow ?
             (<div className='search-inputs'>
               <Input placeholder="Please enter ..." allowClear={{clearIcon:<CloseOutlined className='search-inputs-close'/>}} onPressEnter={(e)=>{onSearch(e)}}/>
-            </div>)
-            :
+            </div>) :
             (<div className="search-input" onClick={optionVisibleHandle}>
               Search for forum, topic, games...
             </div>)
@@ -176,7 +169,6 @@ const Header = () => {
             }
           </div>
         }
-        
       </div>
       <div className='afk-header-right'>
         <div className="right-item" onClick={modifyMode}>

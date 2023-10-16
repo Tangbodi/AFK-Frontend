@@ -81,7 +81,7 @@ const Uploader = (_props) => {
       compressImg(file)
       return false
     },
-    onChange(info) {
+    onChange(_info) {
       // const { status } = info.file
       // if (status !== 'uploading') {
       //   info.file.status = 'done'
