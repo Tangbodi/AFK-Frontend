@@ -26,6 +26,7 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
   const [special, setSpecial] = useState(false)
   const [aNumber, setANumber] = useState(false)
   const [capital, setCapital] = useState(false)
+  const [pmatch, setPmatch] = useState(false)
   const [form] = Form.useForm()
   useImperativeHandle(ref, () => ({
     showModal
@@ -164,7 +165,17 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
           })]}>
             <Input.Password className="login-input"  />
           </Form.Item>
-          <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' }]}>
+          <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if(!value || getFieldValue('password') === value) {
+                setPmatch(true)
+              } else {
+                setPmatch(false)
+                return Promise.reject(new Error('The new password that you entered do not match!'))
+              }
+            },
+          })]}>
             <Input.Password className="login-input"  />
           </Form.Item>
           <div className='form-password-tips'>
@@ -181,7 +192,7 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
               {capital ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Password has a capital letter.</span>
             </div>
             <div className='form-password-tips-item'>
-              {atLeast8 && special && aNumber && capital ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Passwords match.</span>
+              {atLeast8 && special && aNumber && capital && pmatch ? <CheckRoundedIcon style={{color: 'green'}}/> : <ClearRoundedIcon/>}<span>Passwords match.</span>
             </div>
           </div>
           <div className="form-login">

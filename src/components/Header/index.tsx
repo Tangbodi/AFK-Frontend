@@ -6,7 +6,7 @@ import iconDark from '@/assets/images/icon_dark-mode.png'
 import iconUser from '@/assets/images/icon_user.png'
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import Avatar from '@mui/material/Avatar'
-import { setTheme, getTheme } from '@/utils/theme'
+import { setTheme, getTheme, autoSetTheme } from '@/utils/theme'
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect, useMemo } from 'react'
@@ -135,7 +135,7 @@ const Header = () => {
     <header className="afk-header">
       <div className="afk-header-left">
         <span onClick={()=>{navigateTo('/')}}>
-        { currentTheme === 'theme-light' ? <img src={logo} width="120" height="90"/> : <img src={logoDark} width="120" height="90"/> }
+        { (currentTheme === 'theme-light') ? <img src={logo} width="120" height="90"/> : <img src={logoDark} width="120" height="90"/> }
         </span>
         <div className="menu">
           <span onClick={()=>{navigateTo('/')}}>Home</span>

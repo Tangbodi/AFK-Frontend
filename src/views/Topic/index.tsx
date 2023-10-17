@@ -132,7 +132,7 @@ const Topic = () => {
       
     <div className="afk-topic" id="scrollableDiv">
       <div className="afk-topic-main">
-      <div className="afk-topic-title"><span style={{ cursor:'pointer'}} onClick={()=>{navigateTo(`/forum/${searchParams.get('game')}?genreId=${searchParams.get('genre')}`)}}>Forum</span> - {gameName}</div>
+      <div className="afk-topic-title" onClick={()=>{navigateTo(`/forum/${searchParams.get('game')}?genreId=${searchParams.get('genre')}`)}}><span>Forum</span> - {gameName}</div>
         <div className="afk-topic-main-title">
           <span className="main-title-tag">Q&A</span>
           <div className="main-title-text">

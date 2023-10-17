@@ -32,4 +32,5 @@ export const autoSetTheme = () => {
   const endTimeToMinutes = Number(endTime.split(':')[0])*60;
   const endTimeToMinutes2 = Number(endTime2.split(':')[0])*60;
   (endTimeToMinutes <= minutes) || ( minutes <= endTimeToMinutes2 ) ? setTheme('theme-dark') : setTheme('theme-light')
+  return (endTimeToMinutes <= minutes) || (minutes <= endTimeToMinutes2)
 }
