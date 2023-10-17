@@ -1,13 +1,16 @@
 import './news.less'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { getNewsAPI, likeSavePostAPI } from '@/request/api'
+import VerticalAlignTopRoundedIcon from '@mui/icons-material/VerticalAlignTopRounded';
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { message, Divider } from "antd"
+import { getScrollTop } from '@/utils/utils'
 import { PeopleOutline, GradeOutlined, Grade } from '@mui/icons-material'
 const NewsQuery = () => {
   const navigateTo = useNavigate()
   let [page, setPage] = useState(1) 
+  const [backBtnShow, setBackBtnShow] = useState(false)
   const [newsList, setNewsList] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const getNews = async(haspage?:number) => {
@@ -36,7 +39,23 @@ const NewsQuery = () => {
     message.warning(saveGamesRes.message)
   }
 
+  const handleScroll = () => {
+    getScrollTop() > 100 ? setBackBtnShow(true): setBackBtnShow(false)
+  }
+
+  const backTop = () => {
+    let timer: any = 0
+    clearInterval(timer);
+    timer = setInterval(function () {
+      if (window.pageYOffset !== 0) {
+        window.scroll(0, Math.max(window.pageYOffset - 50, 0));
+      } else {
+        clearInterval(timer);
+      }
+    }, 10)
+  }
   useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
     getNews(1)
   },[])
   return (
@@ -88,6 +107,9 @@ const NewsQuery = () => {
             )
           })
         }
+        { backBtnShow && <div className='news-back-top' onClick={backTop}>
+            <VerticalAlignTopRoundedIcon/>
+          </div>}
       </div>
       </InfiniteScroll>
     </div>

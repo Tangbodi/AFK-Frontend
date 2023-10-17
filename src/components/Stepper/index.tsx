@@ -1,7 +1,7 @@
 import './stepper.less'
 import Avatar from '@mui/material/Avatar'
 import Controls from '@/components/Controls'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { dateUtils } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 type Props = {
@@ -11,23 +11,38 @@ type Props = {
 }
 const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
   const { reply, getLeaveMsgFn, pIndex } = props
+  const [more, setMore] = useState(false)
+  const [showReply, setShowReply] = useState(reply)
+  
+
+  useEffect(()=>{
+    if(reply && reply.length>3) {
+      setMore(true)
+      setShowReply(reply.slice(0,3))
+    }
+  }, [])
+
+  const lookMore = () => {
+    setMore(false)
+    setShowReply(reply)
+  }
+
   const getLeaveMidMsg = (val: any) => {
     getLeaveMsgFn(val)
   }
   return (
     <div className="forum-steps">
       {
-        reply && reply.length>0 &&
-        reply.map((replyItem, index)=>{
+        showReply && showReply.length>0 &&
+        showReply.map((replyItem, index)=>{
           return (
             <div className='form-steps-item' key={index}>
               <div className="form-steps-item-top">
                 <div className='form-steps-item-top-left'>
-                  <Avatar alt={replyItem.fromUsername}  sx={{width:'48px', height:'48px'}}/>
+                  <Avatar alt={replyItem.fromUsername}  sx={{width:48, height:48}}/>
                 </div>
                 <div className="form-steps-item-top-right">
                   <div className='top-right-name'>{replyItem.fromUsername}</div>
-                  {/* <div className='top-right-date'>{dateUtils(replyItem.createdAt, ' ')}</div> */}
                   <div className='top-right-date'>{dateUtils(replyItem.createdAt, ' ')}</div>
                 </div>
               </div>
@@ -45,9 +60,12 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
           )
         })
       }
-      {/* <div className='form-steps-more'>
-        &gt;&gt; More Replies
-      </div> */}
+      { more && 
+        <div className='form-steps-more' onClick={lookMore}>
+          &gt;&gt; More Replies
+        </div>
+      }
+      
     </div>
   )
 })
