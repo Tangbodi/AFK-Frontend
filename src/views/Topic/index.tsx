@@ -1,8 +1,8 @@
 import './topic.less'
-// import InfiniteScroll from 'react-infinite-scroll-component'
 import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
+import Pagination from '@mui/material/Pagination';
 import { ArrowUpwardOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
@@ -29,9 +29,8 @@ const Topic = () => {
   const [repliesList, setRepliesList] = useState([])
   const [likeStatus, setLikeStatus] = useState(1)
   const [saveStatus, setSaveStatus] = useState(1)
-  const [_totalPages, setTotalPages] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const [forumNums, setForumNums] = useState({save:0,like:0,commentReply:0})
-  const [page, setPage] = useState(1)
   const location = useLocation()
   const showPostBody = async() => {
     const params = {
@@ -58,20 +57,19 @@ const Topic = () => {
     message.warning(showPostBodyRes.message)
   }
 
-  const commentsReplies = async(hasPage?: number) => {
+  const commentsReplies = async(page?: number) => {
     const params: any = {
-      size: 4,
+      size: 1,
       post: postId,
       game: searchParams.get('game'),
       genre: searchParams.get('genre')
     }
-    params.page = hasPage ? hasPage : page
+    params.page = page
     const commentsRepliesRes = await commentsRepliesAPI(params)
     if(commentsRepliesRes.code === 200) {
       const repliesData = commentsRepliesRes.data || {}
-      setRepliesList(repliesList.concat(repliesData.content))
+      setRepliesList(repliesData.content||[])
       setTotalPages(repliesData.totalPages)
-      setPage(page+1)
       return 
     }
     message.warning(commentsRepliesRes.message)
@@ -93,6 +91,10 @@ const Topic = () => {
 
   const unfoldBigImages = () => {
     setShowBigImage(false)
+  }
+
+  const onChange = (_e, page) => {
+    commentsReplies(page)
   }
 
   const getLeaveMsg = (value: any) => {
@@ -117,19 +119,6 @@ const Topic = () => {
     commentsReplies(1)
   },[location])
   return (
-    // <InfiniteScroll
-    //   dataLength={repliesList.length}
-    //   next={commentsReplies}
-    //   hasMore={totalPages>=page}
-    //   loader={false}
-    //   endMessage={<Divider plain>It is all, nothing more</Divider>}
-    //   scrollableTarget="scrollableDiv"
-    // >
-    // <div className="afk-topic" id="scrollableDiv" style={{
-    //   height: 400,
-    //   overflow: 'auto'
-    // }}>
-      
     <div className="afk-topic" id="scrollableDiv">
       <div className="afk-topic-main">
       <div className="afk-topic-title" onClick={()=>{navigateTo(`/forum/${searchParams.get('game')}?genreId=${searchParams.get('genre')}`)}}><span>Forum</span> - {gameName}</div>
@@ -232,12 +221,12 @@ const Topic = () => {
                   )
                 }
             })}
+            <div className='afk-top-main-content-paginaion'>
+              <Pagination count={totalPages} showFirstButton showLastButton onChange={onChange} />
+            </div>
         </div>
       </div>
     </div>
-
-    // </div>
-    // </InfiniteScroll>
   )
 }
 export default Topic

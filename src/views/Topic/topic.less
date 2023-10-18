@@ -245,6 +245,49 @@
           }
         }
       }
+      .afk-top-main-content-paginaion{
+        display: flex;
+        padding: 10px 0;
+        justify-content: right;
+        .MuiPagination-root{
+          border: var(--paginationBorderColor) 1px solid;
+          background: var(--paginationBgColor);
+          border-radius: 10px;
+          .MuiPagination-ul{
+            li{
+              width: 45px;
+              height: 40px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-right: var(--paginationBorderColor) 1px solid;
+              border-left: var(--paginationBorderColor) 1px solid;
+              &:first-child{
+                border-left:0;
+              }
+              &:last-child{
+                border-right: 0;
+              }
+              .MuiPaginationItem-root{
+                width: 45px;
+                height: 40px;
+                padding: 0!important;
+                margin: 0!important;
+                border-radius: 0;
+                color: var(--paginationColor);
+              }
+              .Mui-selected{
+                border-radius: 0;
+                color: var(--paginationActiveColor);
+                background: var(--paginationActiveBgColor);
+              }
+              .css-1v2lvtn-MuiPaginationItem-root{
+                line-height: 32px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
