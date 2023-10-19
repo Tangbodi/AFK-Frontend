@@ -21,7 +21,7 @@ const Recommend: React.FC<Props> = forwardRef((props, _) => {
   const { newsData } = props
   useEffect(()=>{
     newsData && handleChange(null, currentTabValue) // 默认加载第一个tab
-    newsData && bannerRef.current.getData(newsData.content)
+    newsData && bannerRef.current.getData(newsData.content, '400px')
   },[newsData])
   // tab切换change触发
   const handleChange = (_: SyntheticEvent, type = currentTabValue) => {
@@ -45,7 +45,7 @@ const Recommend: React.FC<Props> = forwardRef((props, _) => {
   return (
     <div className="afk-recommend">
       <div className="afk-recommend-left">
-        <Banner ref={bannerRef}/>
+        <Banner ref={bannerRef} width='400px'/>
       </div>
       <div className="afk-recommend-right">
         <Box sx={{ width: '100%'}}>

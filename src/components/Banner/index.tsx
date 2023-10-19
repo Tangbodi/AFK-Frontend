@@ -10,10 +10,12 @@ class Banner extends Component<any,any> {
     this.prev = this.prev.bind(this);
     this.slider = undefined
     this.state = {
-      data: []
+      data: [],
+      width: '100%'
     }
   }
-  getData(data) {
+  getData(data, width) {
+    this.setState({width})
     this.setState({ data })
   }
   next() {
@@ -30,7 +32,7 @@ class Banner extends Component<any,any> {
             this.state.data.map((item, index) => {
               return (
                 <div className="afk-banner-item" key={index}>
-                  <img src={item.imageUrl || item.mediaContentUrl} height={300} />
+                  <img src={item.imageUrl || item.mediaContentUrl} height={300} width={this.state.width} />
                   {/* <div className="banner-desc">
                     <h3 className="banner-desc-title">Why does Nintendo keep patching dupe methods?</h3>
                     <p className="banner-desc-sub"><span>HOT:</span>Tears of the Kingdom1</p>
