@@ -226,7 +226,7 @@ const Forum = () => {
                         <div className="list-th-replies w70">{post.view}</div>
                         <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                         <div className="list-th-by w130 fw400">
-                          <Avatar alt={post.username}  sx={{width:'32px', height:'32px'}} />{post.username}
+                          <Avatar alt={post.username} src={post.avatarUrl}  sx={{width:'32px', height:'32px'}} />{post.username}
                         </div>
                       </div>
                     )

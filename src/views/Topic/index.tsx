@@ -3,7 +3,7 @@ import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
 import Pagination from '@mui/material/Pagination';
-import { ArrowUpwardOutlined } from '@mui/icons-material'
+import { ArrowUpwardOutlined, ArrowForwardIosRounded, ArrowBackIosNewRounded } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
 import { useSearchParams, useParams, useLocation, useNavigate } from 'react-router-dom'
@@ -25,6 +25,7 @@ const Topic = () => {
   const [imageURL, setImageURL] = useState([])
   const [imagesList, setImagesList] = useState([])
   const [currentImage, setCurrentImage] = useState('')
+  const [currenShowIndex, setCurrentShowIndex] = useState(0)
   const [showBigImage, setShowBigImage] = useState(false)
   const [repliesList, setRepliesList] = useState([])
   const [likeStatus, setLikeStatus] = useState(1)
@@ -75,7 +76,22 @@ const Topic = () => {
     message.warning(commentsRepliesRes.message)
   }
 
+  const prevOrNextImage = (type: number) => {
+    const currentImageIndex = imagesList.findIndex(image => currentImage === image.url)
+    const index = type === 1 ? currentImageIndex - 1 : currentImageIndex + 1
+    setCurrentShowIndex(index)
+    if(index < 0) return
+    if(index > imagesList.length-1) return
+    setCurrentImage(imagesList[index].url)
+    const newImagesList = imagesList.map((item, _index)=>{
+      imagesList[_index]['active'] = index === _index
+      return item
+    })
+    setImagesList(newImagesList)
+  }
+
   const queryImgClick = (index) => {
+    setCurrentShowIndex(index)
     setCurrentImage(imageURL[index])
     const newImagesList = imagesList.map((item, _index)=>{
       imagesList[_index]['active'] = index === _index
@@ -168,8 +184,14 @@ const Topic = () => {
                     <span className='content-unfold-top-line'><ArrowUpwardOutlined/></span>Unfold
                   </div>
                   <div className='content-unfold-main'>
-                    <div className='unfold-main-bigImg' onClick={unfoldBigImages}>
-                      <img src={currentImage}/>
+                    <div className='unfold-main-bigImg'>
+                      <div className='unfold-main-bigImg-img' onClick={unfoldBigImages}><img src={currentImage}/></div>
+                      { currenShowIndex && <div className="unfold-main-bigImg-left" onClick={()=>{prevOrNextImage(1)}}>
+                        <ArrowBackIosNewRounded style={{fontSize: 50, color:'#fff'}}/>
+                      </div>}
+                      { currenShowIndex !== imagesList.length -1 && <div className="unfold-main-bigImg-right" onClick={()=>{prevOrNextImage(2)}}>
+                        <ArrowForwardIosRounded style={{fontSize: 50, color:'#fff'}}/>
+                      </div>}
                     </div>
                     <div className='unfold-main-smallImg'>
                       { imagesList && imagesList.length > 0 && 
