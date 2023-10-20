@@ -4,6 +4,7 @@ import {
   GradeOutlined,  
   FavoriteRounded, 
   FavoriteBorderRounded, 
+  ChatBubbleOutlined,
   ChatBubbleOutlineOutlined
 } from '@mui/icons-material'
 import { Input, Button, message } from 'antd'
@@ -64,25 +65,28 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
     if(comment) params.typeId = 1 // 如果comment不为空
     if(!comment && !reply) params.typeId = 0 // 如果comment && reply 不为空
     if(isPost && isSave) {
-      setChildSaveStatus(childSaveStatus ? 0 : 1)
       params.typeId = 3
       params.objectId = postId
       params.status = status
     } else {
-      if(type === MsgTypes.comment) {
-        // 如果type是comment类型 说明是评论自身
+      if(type === MsgTypes.comment) { // 如果type是comment类型 说明是评论自身
         params.objectId = postId
-        setChildLikeStatus(childLikeStatus?0:1)
         params.status = status
       } else {
-        setChildLikeStatus(childLikeStatus?0:1)
         params.status = status
         if(reply) params.objectId = reply.replyId
         if(comment) params.objectId = comment.commentId
       }
     }
     const likeSavePostRes = await likeSavePostAPI(params)
-    if(likeSavePostRes.code === 200) return
+    if(likeSavePostRes.code === 200) {
+      if(isPost && isSave) {
+        setChildSaveStatus(childSaveStatus ? 0 : 1)
+      } else {
+        type === MsgTypes.comment ? setChildLikeStatus(childLikeStatus?0:1) : setChildLikeStatus(childLikeStatus?0:1)
+      }
+      return
+    }
     message.warning(likeSavePostRes.message)
   }
 
@@ -143,20 +147,20 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
-          { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }Like
+          { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }
           { isPost && <p>{forumNums.like}</p> }
           { !isPost && <p>{replyNums}</p> }
         </div>
         { isPost &&  
           (
             <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
-            {childSaveStatus ? <Grade/>:<GradeOutlined/>}Save
+            {childSaveStatus ? <Grade/>:<GradeOutlined/>}
             { <p>{forumNums.save}</p> }
             </div>
           )
         }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
-          { type === MsgTypes.comment ? <><ChatBubbleOutlineOutlined/>Comment</> : <><ChatBubbleOutlineOutlined/>Reply</> }
+          { !inputShow ? <ChatBubbleOutlineOutlined/> : <ChatBubbleOutlined/>}
           {isPost && <p>{forumNums.commentReply}</p>}
         </div>
         {/* <div className="afk-like-save-item transform-1"><SendOutlined/>Share</div> */}

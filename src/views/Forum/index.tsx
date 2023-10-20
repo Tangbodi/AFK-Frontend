@@ -1,6 +1,7 @@
 import './forum.less'
 import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
+import Pagination from '@mui/material/Pagination'
 import { Grade, GradeOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
@@ -14,7 +15,8 @@ const Forum = () => {
   const PostDialogRef = useRef(null)
   const [posts, setPosts] = useState([])
   const [newsList, setNewsList] = useState([])
-  const [_totalPage, setTotalPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const [forumTotalPage, setForumTotalPage] = useState(1)
   const [guidesShow, setGuidesShow] = useState(false)
   const [newsShow, setNewsShow] = useState(false)
   const [searchParams] = useSearchParams()
@@ -31,13 +33,7 @@ const Forum = () => {
     savedForums: state.gobalStatus.savedForums,
   }))
   const [isSaved, setIsSaved] = useState(false)
-  const [pageSize] = useState(10)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [prevDisabled, setPrevDisabled] = useState(true)
-  const [nextDisabled, setNextDisabled] = useState(true)
-  const [currentNewsPage, setCurrentNewsPage] = useState(1)
-  const [prevNewsDisabled, setPrevNewsDisabled] = useState(true)
-  const [nextNewsDisabled, setNextNewsDisabled] = useState(true)
+  const [pageSize] = useState(30)
 
   useEffect(()=>{ 
     savedForums && gameInfo(searchParams.get('genreId'), gameId)
@@ -47,28 +43,12 @@ const Forum = () => {
     navigateTo(`/topic/${postId}?genre=${searchParams.get('genreId')}&game=${gameId}`)
   }
 
-  const onPrevious = () => {
-    let _currentPage = currentPage
-    _currentPage--
-    getAllPostOneGame(searchParams.get('genreId'), gameId, _currentPage, pageSize)
+  const onChange = (_e, page) => {
+    getAllPostOneGame(searchParams.get('genreId'), gameId, page, pageSize)
   }
 
-  const onNext = () => {
-    let _currentPage = currentPage
-    _currentPage++
-    getAllPostOneGame(searchParams.get('genreId'), gameId, _currentPage, pageSize)
-  }
-
-  const onNewsPrevious = () => {
-    let _currentPage = currentNewsPage
-    _currentPage--
-    getOneGameNews(_currentPage)
-  }
-
-  const onNewsNext = () => {
-    let _currentPage = currentNewsPage
-    _currentPage++
-    getOneGameNews(_currentPage)
+  const onNewsChange = (_e, page) => {
+    getOneGameNews(page)
   }
 
   const gameInfo = async(genre: string, game: string) => {
@@ -85,19 +65,7 @@ const Forum = () => {
   const getAllPostOneGame = async(genre: string, game: string, page: number, size: number  ) => {
     const gameBaseInfoRes = await getAllPostOneGameAPI({ genre, game, page, size })
     if(gameBaseInfoRes.code === 200) {
-      setCurrentPage(page)
-      if(page !== 1) {
-        setPrevDisabled(false)
-      } else {
-        setPrevDisabled(true)
-      }
-      if(gameBaseInfoRes.data.totalPages) {
-        if(page >= gameBaseInfoRes.data.totalPages) {
-          setNextDisabled(false)
-        }
-      } else {
-        setNextDisabled(true)
-      }
+      setForumTotalPage(gameBaseInfoRes.data.totalPages)
       setPosts(gameBaseInfoRes.data.content || [])
       return
     }
@@ -130,17 +98,6 @@ const Forum = () => {
     const getOneGameNewsRes = await getOneGameNewsAPI(params)
     if(getOneGameNewsRes.code === 200) {
       const newsResData = getOneGameNewsRes.data || {}
-      setCurrentNewsPage(page)
-      if(page !== 1) {
-        setPrevNewsDisabled(false)
-      } else {
-        setPrevNewsDisabled(true)
-      }
-      if(page >= newsResData.totalPages) {
-        setNextNewsDisabled(true)
-      } else {
-        setNextNewsDisabled(false)
-      }
       setNewsList(newsResData.content)
       setTotalPage(newsResData.totalPages)
       return
@@ -167,7 +124,12 @@ const Forum = () => {
   },[])
   return (
     <div className="afk-forum">
-      <div className="afk-forum-title">Forum</div>
+      <div className="afk-forum-title">
+        <div className='afk-forum-title-l'>Forum</div>
+        <div className="guides-create-btn">
+          <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
+        </div>
+      </div>
       <div className="afk-forum-main">
         <div className="afk-forum-main-title">
           { gameData.gameName }
@@ -180,10 +142,7 @@ const Forum = () => {
             <div className="game-detail-title">
               <div className='game-detail-title-l'>{ gameData.gameName }</div>
               <div className='game-detail-title-r' onClick={saveGames}>
-                {
-                  isSaved ? <Grade style={{fontSize:'14px'}}/>
-                  : <GradeOutlined style={{fontSize:'14px'}}/>
-                }Save
+                { isSaved ? <Grade style={{fontSize:'14px'}}/> : <GradeOutlined style={{fontSize:'14px'}}/> }Save
                 </div>
               </div>
             <div className="game-detail-desc">
@@ -197,14 +156,25 @@ const Forum = () => {
         </div>
         <div className="afk-forum-guides">
           <div className="afk-forum-guides-tabs">
-            {
-              forumsTabs && forumsTabs.map((tab, index)=>{
-                return (
-                  <Button key={index} className={currentTabIndex === index ? 'guides-btn active' : 'guides-btn'} variant="contained" onClick={()=>{tabClick(index)}}>{tab}</Button>
-                )
-              })
+            <div>
+              { forumsTabs && forumsTabs.map((tab, index)=>{
+                  return (
+                    <Button key={index} className={currentTabIndex === index ? 'guides-btn active' : 'guides-btn'} variant="contained" onClick={()=>{tabClick(index)}}>{tab}</Button>
+                  )
+                })
+              }
+            </div>
+            { guidesShow && <div className='afk-top-main-content-paginaion'>
+                <Pagination count={forumTotalPage} showFirstButton showLastButton onChange={onChange}/>
+              </div>
+            }
+            { newsShow && <div className='afk-top-main-content-paginaion'>
+                <Pagination count={totalPage} showFirstButton showLastButton onChange={onNewsChange}/>
+              </div>
             }
           </div>
+
+          
           { guidesShow && (
             <>
               <div className="afk-forum-guides-list">
@@ -226,7 +196,7 @@ const Forum = () => {
                         <div className="list-th-replies w70">{post.view}</div>
                         <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
                         <div className="list-th-by w130 fw400">
-                          <Avatar alt={post.username} src={post.avatarUrl}  sx={{width:'32px', height:'32px'}} />{post.username}
+                          <Avatar alt={post.username} src={post.avatarUrl}  sx={{width:32, height:32}} />{post.username}
                         </div>
                       </div>
                     )
@@ -239,18 +209,6 @@ const Forum = () => {
                     </div>
                   )
                 }
-              </div>
-              <div className="afk-forum-guides-create">
-                <div className="guides-create-btn">
-                  <Button className="default-btn w240" variant="contained" onClick={createNewPost}>Create New Post</Button>
-                </div>
-                <div className="guides-pagination">
-                  <div className={prevDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onPrevious}>
-                    <i/>Previous
-                  </div>
-                  <div className="current">{currentPage}</div>
-                  <div className={nextDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNext}>Next<i/></div>
-                </div>
               </div>
             </>)
           }
@@ -279,13 +237,6 @@ const Forum = () => {
                         )
                       })
                     }
-                </div>
-                <div className="guides-pagination mb20">
-                  <div className={prevNewsDisabled?'page-btn prev-btn disabled':'page-btn prev-btn'} onClick={onNewsPrevious}>
-                    <i/>Previous
-                  </div>
-                  <div className="current">{currentNewsPage}</div>
-                  <div className={nextNewsDisabled?'page-btn next-btn disabled':'page-btn next-btn'} onClick={onNewsNext}>Next<i/></div>
                 </div>
               </div>
             )

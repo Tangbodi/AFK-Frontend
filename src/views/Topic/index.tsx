@@ -60,7 +60,7 @@ const Topic = () => {
 
   const commentsReplies = async(page?: number) => {
     const params: any = {
-      size: 1,
+      size: 20,
       post: postId,
       game: searchParams.get('game'),
       genre: searchParams.get('genre')
@@ -137,7 +137,9 @@ const Topic = () => {
   return (
     <div className="afk-topic" id="scrollableDiv">
       <div className="afk-topic-main">
-      <div className="afk-topic-title" onClick={()=>{navigateTo(`/forum/${searchParams.get('game')}?genreId=${searchParams.get('genre')}`)}}><span>Forum</span> - {gameName}</div>
+      <div className="afk-topic-title" onClick={()=>{navigateTo(`/forum/${searchParams.get('game')}?genreId=${searchParams.get('genre')}`)}}>
+        <span>Forum</span> - {gameName}
+      </div>
         <div className="afk-topic-main-title">
           <span className="main-title-tag">Q&A</span>
           <div className="main-title-text">
@@ -217,6 +219,9 @@ const Topic = () => {
               <Controls forumNums={forumNums} type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
             </div>
           </div>
+          <div className='afk-top-main-content-paginaion'>
+            <Pagination count={totalPages} showFirstButton showLastButton onChange={onChange} />
+          </div>
             { repliesList.length>0 && 
               repliesList.map((replies, index) => {
                 if(replies) {
@@ -243,9 +248,6 @@ const Topic = () => {
                   )
                 }
             })}
-            <div className='afk-top-main-content-paginaion'>
-              <Pagination count={totalPages} showFirstButton showLastButton onChange={onChange} />
-            </div>
         </div>
       </div>
     </div>

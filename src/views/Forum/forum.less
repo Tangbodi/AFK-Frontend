@@ -5,7 +5,21 @@
   margin: 40px auto 0 auto;
   padding-top: 70px;
   .afk-forum-title{
-    color: var(--forumTitleColor);
+    display: flex;
+    .afk-forum-title-l{
+      color: var(--forumTitleColor);
+    }
+    .guides-create-btn{
+      margin-top: -10px;
+      margin-left: auto;
+      .default-btn{
+        padding: 0!important;
+        width: 182px!important;
+        height: 57px;
+        line-height: 57px;
+        font-size: 16px!important;
+      }
+    }
   }
   .afk-forum-main{
     .afk-forum-main-title{
@@ -159,6 +173,9 @@
       }
       
       .afk-forum-guides-tabs{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .guides-btn{
           width: 104px;
           height: 40px;

@@ -16,11 +16,14 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
   
 
   useEffect(()=>{
-    if(reply && reply.length>3) {
+    setShowReply(reply)
+    if(reply && reply.length>1) {
       setMore(true)
-      setShowReply(reply.slice(0,3))
+      setShowReply(reply.slice(0,1))
+    } else {
+      setMore(false)
     }
-  }, [])
+  }, [reply])
 
   const lookMore = () => {
     setMore(false)

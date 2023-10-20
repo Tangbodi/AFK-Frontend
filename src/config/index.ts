@@ -13,7 +13,7 @@ export const homeTabsList = [
 ]
 
 export const searchOptions = [
-  { label: "Search in Store", value: 'store'},
+  // { label: "Search in Store", value: 'store'},
   { label: "Search in Forums", value: 'forum'}
 ]
 
