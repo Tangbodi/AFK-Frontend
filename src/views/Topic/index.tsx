@@ -3,7 +3,7 @@ import { Avatar } from '@mui/material'
 import Controls from '@/components/Controls'
 import Stepper from '@/components/Stepper'
 import Pagination from '@mui/material/Pagination';
-import { ArrowUpwardOutlined, ArrowForwardIosRounded, ArrowBackIosNewRounded } from '@mui/icons-material'
+import { ArrowUpwardOutlined, ArrowForwardIosRounded, ArrowBackIosNewRounded, ForumOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
 import { useSearchParams, useParams, useLocation, useNavigate } from 'react-router-dom'
@@ -157,8 +157,7 @@ const Topic = () => {
           </div>
           <div className="main-content-detail">
             <div className="main-content-desc" dangerouslySetInnerHTML={{__html: textRender}}/>
-            {
-              !showBigImage &&
+            {!showBigImage &&
               (
                 <div className='main-content-images'>
                   {
@@ -179,9 +178,7 @@ const Topic = () => {
                 </div>
               )
             }
-            { showBigImage &&
-              (
-                <div className='main-content-unfold'>
+            { showBigImage &&<div className='main-content-unfold'>
                   <div className='content-unfold-top' onClick={unfoldBigImages}>
                     <span className='content-unfold-top-line'><ArrowUpwardOutlined/></span>Unfold
                   </div>
@@ -213,11 +210,16 @@ const Topic = () => {
                     </div>
                   </div>
                 </div>
-              )
             }
             <div className="main-content-controls">
               <Controls forumNums={forumNums} type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
             </div>
+            { !repliesList.length && <div className='main-content-none'>
+              <div className='main-content-none-w'>
+                <ForumOutlined/><br/>
+                Be the first to comment
+              </div>
+            </div>}
           </div>
           <div className='afk-top-main-content-paginaion'>
             <Pagination count={totalPages} showFirstButton showLastButton onChange={onChange} />
