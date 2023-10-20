@@ -188,7 +188,7 @@ const Topic = () => {
                   <div className='content-unfold-main'>
                     <div className='unfold-main-bigImg'>
                       <div className='unfold-main-bigImg-img' onClick={unfoldBigImages}><img src={currentImage}/></div>
-                      { currenShowIndex && <div className="unfold-main-bigImg-left" onClick={()=>{prevOrNextImage(1)}}>
+                      { currenShowIndex > 0 && <div className="unfold-main-bigImg-left" onClick={()=>{prevOrNextImage(1)}}>
                         <ArrowBackIosNewRounded style={{fontSize: 50, color:'#fff'}}/>
                       </div>}
                       { currenShowIndex !== imagesList.length -1 && <div className="unfold-main-bigImg-right" onClick={()=>{prevOrNextImage(2)}}>
