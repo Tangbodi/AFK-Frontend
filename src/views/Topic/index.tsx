@@ -221,9 +221,10 @@ const Topic = () => {
               </div>
             </div>}
           </div>
-          <div className='afk-top-main-content-paginaion'>
-            <Pagination count={totalPages} showFirstButton showLastButton onChange={onChange} />
-          </div>
+            { repliesList.length > 0 && <div className='afk-top-main-content-paginaion'>
+                <Pagination count={totalPages} showFirstButton showLastButton onChange={onChange} />
+              </div>
+            }
             { repliesList.length>0 && 
               repliesList.map((replies, index) => {
                 if(replies) {

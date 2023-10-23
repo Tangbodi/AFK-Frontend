@@ -164,11 +164,11 @@ const Forum = () => {
                 })
               }
             </div>
-            { guidesShow && <div className='afk-top-main-content-paginaion'>
+            { guidesShow && posts.length > 0 && <div className='afk-top-main-content-paginaion'>
                 <Pagination count={forumTotalPage} showFirstButton showLastButton onChange={onChange}/>
               </div>
             }
-            { newsShow && <div className='afk-top-main-content-paginaion'>
+            { newsShow && newsList.length > 0 && <div className='afk-top-main-content-paginaion'>
                 <Pagination count={totalPage} showFirstButton showLastButton onChange={onNewsChange}/>
               </div>
             }

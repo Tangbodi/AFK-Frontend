@@ -7,11 +7,13 @@ import DialogContentText from '@mui/material/DialogContentText'
 import { logoutAPI } from '@/request/api'
 import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
+import { useDispatch } from 'react-redux'
 
 const LogoutDialog = forwardRef((_props, ref) => {
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const naigateTo = useNavigate()
+  const dispatch = useDispatch()
   useImperativeHandle(ref, () => ({
     handleClickOpen
   }))
@@ -34,6 +36,7 @@ const LogoutDialog = forwardRef((_props, ref) => {
       sessionStorage.removeItem('afk-avatarurl')
       sessionStorage.removeItem('afk-uuid')
       sessionStorage.removeItem(uuid)
+      dispatch({type:"afkToken", val: null})
       message.success(logoutRes.data)
     } else {
       message.warning(logoutRes.message)
