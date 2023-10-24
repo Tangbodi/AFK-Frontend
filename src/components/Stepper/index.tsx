@@ -42,7 +42,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
             <div className='form-steps-item' key={index}>
               <div className="form-steps-item-top">
                 <div className='form-steps-item-top-left'>
-                  <Avatar alt={replyItem.fromUsername}  sx={{width:48, height:48}}/>
+                  <Avatar src={replyItem.fromAvatarURL} alt={replyItem.fromUsername}  sx={{width:48, height:48}}/>
                 </div>
                 <div className="form-steps-item-top-right">
                   <div className='top-right-name'>{replyItem.fromUsername}</div>

@@ -24,7 +24,6 @@ const Saved = () => {
   }, [isSavedForumFiber])
 
   useMemo(()=>{
-    console.log('1233xx', afkToken)
     afkToken ? setIsLogin(true) : setIsLogin(false)
   }, [afkToken])
   

@@ -50,11 +50,10 @@ const MyInfo = () => {
 
   const handleBeforeUpload = (file) => {
     const isJpgPng = file.type === 'image/jpeg' || file.type === 'image/png'
-      if(!isJpgPng) {
-        message.warning("Upload images in JPG/PNG format only!")
-        return
-      }
-      return false
+    if(!isJpgPng) {
+      message.warning("Upload images in JPG/PNG format only!")
+    }
+    return isJpgPng || Upload.LIST_IGNORE
   }
 
   const handleChange = async(info) => {

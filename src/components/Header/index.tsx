@@ -34,11 +34,22 @@ const Header = () => {
     isLoginFiber: state.gobalStatus.isLoginFiber
   }))
   
+  const unreadMessageMethod = async(callback?: Function) => {
+    const unreadMessagesRes = await unreadMessageAPI()
+    if(unreadMessagesRes.code === 200) {
+      setUnreadMessages(unreadMessagesRes.data||[])
+      callback && callback()
+      return
+    }
+    message.warning(unreadMessagesRes.message)
+  }
+
   const useInfoInit = () => {
     const avatarUrlSession = sessionStorage.getItem('afk-avatarurl')
     const usernameSession = sessionStorage.getItem('afk-username')
     setAvatarUrl(avatarUrlSession)
     setUsername(usernameSession)
+    usernameSession && unreadMessageMethod()
   }
 
   useEffect(() => {
@@ -95,16 +106,6 @@ const Header = () => {
       return 
     }
     message.warning(searchForumsRes.message)
-  }
-
-  const unreadMessageMethod = async(callback?: Function) => {
-    const unreadMessagesRes = await unreadMessageAPI()
-    if(unreadMessagesRes.code === 200) {
-      setUnreadMessages(unreadMessagesRes.data||[])
-      callback && callback()
-      return
-    }
-    message.warning(unreadMessagesRes.message)
   }
 
   // enter 搜索事件

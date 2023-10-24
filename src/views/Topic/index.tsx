@@ -18,6 +18,7 @@ const Topic = () => {
   const [searchParams] = useSearchParams()
   const [title, setTitle] = useState()
   const [toUid, setToUid] = useState('')
+  const [avatarURL, setAvatarURL] = useState('')
   const [userName, setUserName] =  useState()
   const [gameName, setGameName] = useState()
   const [createdAt, setCreatedAt] = useState('')
@@ -47,6 +48,7 @@ const Topic = () => {
       setToUid(resData.userId)
       setGameName(resData.gameName)
       setUserName(resData.userName)
+      setAvatarURL(resData.avatarURL)
       setLikeStatus(resData.likeStatus)
       setSaveStatus(resData.saveStatus)
       setCreatedAt(dateUtils(resData.createdAt, ' '))
@@ -149,7 +151,7 @@ const Topic = () => {
         <div className='afk-top-main-content'>
           <div className="main-content-title">
             <div className="content-title-left">
-              <Avatar alt={userName} sx={{width:48, height:48}}/>{userName}
+              <Avatar src={avatarURL} alt={userName} sx={{width:48, height:48}}/>{userName}
             </div>
             <div className="content-title-right">
               {createdAt}
@@ -232,7 +234,7 @@ const Topic = () => {
                     <div className='afk-top-main-content-item' key={index}>
                         <div className="main-content-title">
                           <div className="content-title-left">
-                            <Avatar alt={replies.comment.username} sx={{width:48, height:48}}/>{replies.comment.username}
+                            <Avatar src={replies.comment.fromAvatarURL} alt={replies.comment.username} sx={{width:48, height:48}}/>{replies.comment.username}
                           </div>
                           <div className="content-title-right">
                             {dateUtils(replies.comment.createdAt, ' ')}

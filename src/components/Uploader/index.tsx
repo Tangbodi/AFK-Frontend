@@ -8,9 +8,7 @@ const Uploader = (_props) => {
   let imgInfo = {}
   const handleSubmit = async(fileList) => {
     const formData = new FormData()
-    // formData.append('images', fileList[0].originFileObj)
     formData.append('images', fileList)
-    console.log('aass', fileList)
     const savePostImageRes = await savePostImageAPI(formData)
     if(savePostImageRes.code === 200) {
       getFiles({uid: fileList.uid, url: savePostImageRes.data[0]})
