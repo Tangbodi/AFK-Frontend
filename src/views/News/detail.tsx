@@ -39,7 +39,7 @@ const NewsQuery = () => {
   }
   return (
     <div className="afk-news-query">
-      <div className="news-crumbs">News</div>
+      <div className="news-crumbs" onClick={()=>{navigateTo(`/news`)}}>News</div>
       {
         newsData && 
         <div className="news-list">

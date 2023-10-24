@@ -3,9 +3,11 @@ import { Grade, GradeOutlined } from '@mui/icons-material'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { getForumsAPI } from '@/request/api'
 import { message } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 const Saved = () => {
   const saveListRef = useRef(null)
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [dHeight, setDHeight] = useState(106)
   const [visible, setVisible] = useState(false)
@@ -74,7 +76,7 @@ const Saved = () => {
         <div className="afk-saved-list" ref={saveListRef} style={{display:isShow}}>
           { showList.map((forum, index)=>{
               return (
-                <div className='afk-saved-list-item' key={index}>
+                <div className='afk-saved-list-item' key={index} onClick={()=>{navigate(`/forum/${forum.gameId}?genreId=${forum.genreId}`)}}>
                   <div className='afk-saved-list-item-left'>
                     <img src={forum.iconUrl} width={40} height={40}/>
                   </div>

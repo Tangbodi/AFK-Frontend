@@ -30,7 +30,7 @@ const View = () => {
   const getHomeGameImages = async() => {
     const getHomeGameImagesRes = await getHomeGameImagesAPI()
     if(getHomeGameImagesRes.code === 200) {
-      bannerRef.current.getData(getHomeGameImagesRes.data||[])
+      bannerRef.current.getData(getHomeGameImagesRes.data||[], null, true)
       return
     }
     message.warning(getHomeGameImagesRes.message)

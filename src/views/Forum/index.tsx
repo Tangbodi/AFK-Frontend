@@ -2,7 +2,7 @@ import './forum.less'
 import PostDialog from '../Modules/PostDialog'
 import { Button, Avatar } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
-import { Grade, GradeOutlined } from '@mui/icons-material'
+import { Grade, GradeOutlined, ForumOutlined } from '@mui/icons-material'
 import { getAllPostOneGameAPI, gameInfoAPI, likeSavePostAPI, getOneGameNewsAPI } from '@/request/api'
 import { useEffect, useState, useRef } from 'react'
 import { message } from "antd"
@@ -177,7 +177,7 @@ const Forum = () => {
           
           { guidesShow && (
             <>
-              <div className="afk-forum-guides-list">
+              {posts.length > 0 &&<div className="afk-forum-guides-list">
                 <div className='afk-forum-guides-list-th'>
                   <div className="list-th-replies w70">LIKE</div>
                   <div className="list-th-replies w70">SAVE</div>
@@ -209,7 +209,15 @@ const Forum = () => {
                     </div>
                   )
                 }
+              </div> }
+              
+              {!posts.length && <div className='main-content-none'>
+                <div className='main-content-none-w'>
+                  <ForumOutlined/><br/>
+                  Be the first to comment
+                </div>
               </div>
+              }
             </>)
           }
           {

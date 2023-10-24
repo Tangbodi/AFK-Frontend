@@ -101,7 +101,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
                 initialValue={''}
                 onEditorChange={(newValue) => setTextRender(newValue)}
                 init={{
-                  height: 300,
+                  height: 200,
                   width: '100%',
                   menubar: false,
                   plugins: [
