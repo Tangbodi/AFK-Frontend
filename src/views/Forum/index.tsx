@@ -140,7 +140,7 @@ const Forum = () => {
           </div>
           <div className="game-detail">
             <div className="game-detail-title">
-              <div className='game-detail-title-l'>{ gameData.gameName }</div>
+              {/* <div className='game-detail-title-l'>{ gameData.gameName }</div> */}
               <div className='game-detail-title-r' onClick={saveGames}>
                 { isSaved ? <Grade style={{fontSize:'14px'}}/> : <GradeOutlined style={{fontSize:'14px'}}/> }Save
                 </div>
@@ -214,7 +214,7 @@ const Forum = () => {
               {!posts.length && <div className='main-content-none'>
                 <div className='main-content-none-w'>
                   <ForumOutlined/><br/>
-                  Be the first to comment
+                  Be the first to post
                 </div>
               </div>
               }

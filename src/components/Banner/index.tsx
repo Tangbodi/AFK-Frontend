@@ -12,7 +12,9 @@ class Banner extends Component<any,any> {
     this.state = {
       data: [],
       width: '100%',
-      autoplay: false
+      autoplay: false,
+      autoplaySpeed: 6000,
+
     }
   }
   getData(data, width, autoplay) {
@@ -29,7 +31,7 @@ class Banner extends Component<any,any> {
   render() {
     return (
       <div className="afk-banner">
-        <Carousel ref={el => (this.slider = el)} autoplay={this.state.autoplay}>
+        <Carousel ref={el => (this.slider = el)} autoplay={this.state.autoplay} autoplaySpeed={this.state.autoplaySpeed}>
           {
             this.state.data.map((item, index) => {
               return (

@@ -143,7 +143,7 @@ const Topic = () => {
         <span>Forum</span> - {gameName}
       </div>
         <div className="afk-topic-main-title">
-          <span className="main-title-tag">Q&A</span>
+          {/* <span className="main-title-tag">Q&A</span> */}
           <div className="main-title-text">
             { title }
           </div>

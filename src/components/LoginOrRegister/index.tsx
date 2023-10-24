@@ -83,11 +83,11 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
 
   const onLogin = async() => {
     const _captchaRef: any = captchaRef.current
-    const response = _captchaRef.getValue()
-    if (!response) {
-      message.warning("Please click reCAPTCHA")
-      return
-    }
+    // const response = _captchaRef.getValue()
+    // if (!response) {
+    //   message.warning("Please click reCAPTCHA")
+    //   return
+    // }
     const values = await form.validateFields()
     const loginRes = await loginAPI(values)
     if(loginRes.code === 200) {
@@ -196,11 +196,11 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
             </div>
           </div>
           <div className="form-login">
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               className="re-chaptcha"
               sitekey={SITE_KEY}
               ref={captchaRef}
-            />
+            /> */}
             <Button type="primary" className="form-login-btn" onClick={onSignUp}>Sign Up</Button>
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Have an account? Log In</div>
@@ -217,11 +217,11 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
           </Form.Item>
           <div className="forget-password" onClick={hanldeForgot}>Forget password?</div>
           <div className="form-login">
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               className="re-chaptcha"
               sitekey={SITE_KEY}
               ref={captchaRef}
-            />
+            /> */}
             <Button type="primary" className="form-login-btn" onClick={onLogin}>Log In</Button>
           </div>
           <div className="sign-up" onClick={gotoLoginOrSinup}>Don’t have an account? Sign up</div>
