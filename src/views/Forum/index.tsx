@@ -35,10 +35,6 @@ const Forum = () => {
   const [isSaved, setIsSaved] = useState(false)
   const [pageSize] = useState(30)
 
-  useEffect(()=>{ 
-    savedForums && gameInfo(searchParams.get('genreId'), gameId)
-  },[savedForums]) // savedForums
-
   const goToNext = (postId: string) => {
     navigateTo(`/topic/${postId}?genre=${searchParams.get('genreId')}&game=${gameId}`)
   }
@@ -118,9 +114,15 @@ const Forum = () => {
      }
     
   }
+
+  useEffect(()=>{ 
+    savedForums && gameInfo(searchParams.get('genreId'), gameId)
+    getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
+  },[savedForums])
+
   useEffect(()=>{
     tabClick(currentTabIndex)
-    getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
+    // getAllPostOneGame(searchParams.get('genreId'), gameId, 1, pageSize)
   },[])
   return (
     <div className="afk-forum">

@@ -13,8 +13,7 @@ class Banner extends Component<any,any> {
       data: [],
       width: '100%',
       autoplay: false,
-      autoplaySpeed: 6000,
-
+      autoplaySpeed: 6000
     }
   }
   getData(data, width, autoplay) {

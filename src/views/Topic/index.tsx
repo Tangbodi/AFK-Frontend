@@ -9,7 +9,7 @@ import { showPostBodyAPI, commentsRepliesAPI } from '@/request/api'
 import { useSearchParams, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 import { dateUtils, arrayToObjArray } from '@/utils/utils'
-import { MsgTypes } from '@/config'
+import { MsgTypes, LoveTypes } from '@/config'
 
 
 const Topic = () => {
@@ -116,6 +116,7 @@ const Topic = () => {
   }
 
   const getLeaveMsg = (value: any) => {
+    console.log("ggg", value)
     if(typeof(value) === 'boolean') {
       setRepliesList([])
       commentsReplies(1)
@@ -131,7 +132,21 @@ const Topic = () => {
       setRepliesList([...repliesList])
     }
   }
-
+  const saveFn = ({status, loveType}) => {
+    let like = 0
+    let save = 0
+    if(loveType === LoveTypes.like) {
+      like = status ? forumNums.like + 1 : forumNums.like - 1
+      setForumNums({save: forumNums.save, like, commentReply: forumNums.commentReply})
+    } else {
+      save = status ? forumNums.save + 1: forumNums.save - 1
+      setForumNums({save, like: forumNums.like, commentReply: forumNums.commentReply})
+    }
+  }
+  const notPostFn = (val, index)=> {
+    repliesList[index].comment.likeNum  = val ? Number(repliesList[index].comment.likeNum) + 1 : Number(repliesList[index].comment.likeNum) -1
+    setRepliesList([...repliesList])
+  }
   useEffect(()=>{ 
     showPostBody()
     commentsReplies(1)
@@ -214,7 +229,7 @@ const Topic = () => {
                 </div>
             }
             <div className="main-content-controls">
-              <Controls forumNums={forumNums} type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
+              <Controls saveFn={saveFn} forumNums={forumNums} type={MsgTypes.comment} toUid={toUid} isPost={true} likeStatus={Number(likeStatus)} saveStatus={Number(saveStatus)} getLeaveMsgFn={getLeaveMsg} />
             </div>
             { !repliesList.length && <div className='main-content-none'>
               <div className='main-content-none-w'>
@@ -245,7 +260,7 @@ const Topic = () => {
                             {replies.comment.content}
                           </div>
                           <div className="main-content-controls comment-type">
-                            <Controls replyNums={replies.comment.likeNum} pIndex={index} cIndex={0} comment={replies.comment} toUsername={replies.comment.username} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
+                            <Controls notPostFn={(val)=> {notPostFn(val, index)}} replyNums={replies.comment.likeNum} pIndex={index} cIndex={0} comment={replies.comment} toUsername={replies.comment.username} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
                           </div>
                           <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                         </div>

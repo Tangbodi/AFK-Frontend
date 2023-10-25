@@ -9,7 +9,7 @@ import {
 } from '@mui/icons-material'
 import { Input, Button, message } from 'antd'
 import { useState, forwardRef, useEffect } from 'react'
-import { MsgTypes } from '@/config'
+import { MsgTypes, LoveTypes } from '@/config'
 import { likeSavePostAPI, editCommentAPI, editReplyAPI } from '@/request/api'
 import { useSearchParams, useParams } from 'react-router-dom'
 type Props = {
@@ -26,11 +26,13 @@ type Props = {
   likeStatus?: number,
   saveStatus?: number,
   toUsername?: string,
-  getLeaveMsgFn?: Function
+  getLeaveMsgFn?: Function,
+  saveFn?: Function
+  notPostFn?: Function
 }
 const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
   const { TextArea } = Input
-  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex, toUsername, forumNums, replyNums } = props
+  const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex, toUsername, forumNums, replyNums, saveFn, notPostFn } = props
   const { postId } = useParams()
   const [content, setContent] = useState('')
   const [searchParams] = useSearchParams()
@@ -59,7 +61,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
   }
-  const likeSavePost = async(status?:any, isSave?: boolean) => {
+  const likeSavePost = async( loveType: string, status?:any, isSave?: boolean) => {
     const params: any = {}
     if(reply) params.typeId = 2 // 如果reply不为空
     if(comment) params.typeId = 1 // 如果comment不为空
@@ -84,7 +86,10 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         setChildSaveStatus(childSaveStatus ? 0 : 1)
       } else {
         type === MsgTypes.comment ? setChildLikeStatus(childLikeStatus?0:1) : setChildLikeStatus(childLikeStatus?0:1)
+        console.log('is222', isPost , isSave)
       }
+      isPost && saveFn({status, loveType})
+      !isPost && !isSave && notPostFn(status)
       return
     }
     message.warning(likeSavePostRes.message)
@@ -146,14 +151,14 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
   return (
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
-        <div className="afk-like-save-item" onClick={()=>{likeSavePost(childLikeStatus?0:1)}}>
+        <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, childLikeStatus?0:1)}}>
           { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }
           { isPost && <span>{forumNums.like}</span> }
           { !isPost && <span>{replyNums}</span> }
         </div>
         { isPost &&  
           (
-            <div className="afk-like-save-item" onClick={()=>{likeSavePost(childSaveStatus?0:1, true)}}>
+            <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, childSaveStatus?0:1, true)}}>
             {childSaveStatus ? <Grade/>:<GradeOutlined/>}
             { <span>{forumNums.save}</span> }
             </div>
