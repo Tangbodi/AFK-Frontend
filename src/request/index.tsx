@@ -79,7 +79,7 @@ const getErrorCode2text = (response: any): string => {
 }
 
 instance.interceptors.request.use(config => {
-  // config.headers.isLoading !== false && showLoading()
+  config.headers.isLoading !== false && showLoading()
   return config
 }, err => {
   err.config.headers.isLoading !== false && hideLoading()

@@ -83,11 +83,11 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
 
   const onLogin = async() => {
     const _captchaRef: any = captchaRef.current
-    // const response = _captchaRef.getValue()
-    // if (!response) {
-    //   message.warning("Please click reCAPTCHA")
-    //   return
-    // }
+    const response = _captchaRef.getValue()
+    if (!response) {
+      message.warning("Please click reCAPTCHA")
+      return
+    }
     const values = await form.validateFields()
     const loginRes = await loginAPI(values)
     if(loginRes.code === 200) {

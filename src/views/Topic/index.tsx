@@ -116,7 +116,6 @@ const Topic = () => {
   }
 
   const getLeaveMsg = (value: any) => {
-    console.log("ggg", value)
     if(typeof(value) === 'boolean') {
       setRepliesList([])
       commentsReplies(1)
@@ -136,7 +135,7 @@ const Topic = () => {
     let like = 0
     let save = 0
     if(loveType === LoveTypes.like) {
-      like = status ? forumNums.like + 1 : forumNums.like - 1
+      like = status ? Number(forumNums.like) + 1 : Number(forumNums.like) - 1
       setForumNums({save: forumNums.save, like, commentReply: forumNums.commentReply})
     } else {
       save = status ? forumNums.save + 1: forumNums.save - 1
@@ -145,6 +144,12 @@ const Topic = () => {
   }
   const notPostFn = (val, index)=> {
     repliesList[index].comment.likeNum  = val ? Number(repliesList[index].comment.likeNum) + 1 : Number(repliesList[index].comment.likeNum) -1
+    setRepliesList([...repliesList])
+  }
+  const postFn = ({ status, cIndex }, pIndex: number) => {
+    // status => +1/-1 状态， cIndex=> replies子数组索引， pIndex=> 父数组索引
+    let repliesItem = repliesList[pIndex].reply[cIndex]
+    repliesItem.likeNum = status ? Number(repliesItem.likeNum) + 1 : Number(repliesItem.likeNum) - 1 
     setRepliesList([...repliesList])
   }
   useEffect(()=>{ 
@@ -262,7 +267,7 @@ const Topic = () => {
                           <div className="main-content-controls comment-type">
                             <Controls notPostFn={(val)=> {notPostFn(val, index)}} replyNums={replies.comment.likeNum} pIndex={index} cIndex={0} comment={replies.comment} toUsername={replies.comment.username} type={MsgTypes.reply} toUid={toUid} isReply={false} getLeaveMsgFn={getLeaveMsg}/>
                           </div>
-                          <Stepper pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
+                          <Stepper postFn={(val)=>{postFn(val, index)}} pIndex={index} reply={replies.reply} getLeaveMsgFn={getLeaveMsg}/>
                         </div>
                     </div>
                   )

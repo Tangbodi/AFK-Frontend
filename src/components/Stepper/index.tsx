@@ -7,10 +7,11 @@ import { MsgTypes } from '@/config'
 type Props = {
   reply?: any
   pIndex?: number
+  postFn?: Function,
   getLeaveMsgFn?: Function
 }
 const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
-  const { reply, getLeaveMsgFn, pIndex } = props
+  const { reply, getLeaveMsgFn, pIndex, postFn } = props
   const [more, setMore] = useState(false)
   const [showReply, setShowReply] = useState(reply)
   
@@ -32,6 +33,10 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
 
   const getLeaveMidMsg = (val: any) => {
     getLeaveMsgFn(val)
+  }
+
+  const noPostFnMiddle = (status: number, cIndex: number) => {
+    postFn({status, cIndex})
   }
   return (
     <div className="forum-steps">
@@ -57,7 +62,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
                   }
                   { replyItem.content }
                 </div>
-                <Controls replyNums={replyItem.likeNum} pIndex={pIndex} cIndex={index} type={MsgTypes.reply} toUsername={replyItem.fromUsername} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
+                <Controls notPostFn={(status)=>{noPostFnMiddle(status, index)}} replyNums={replyItem.likeNum} pIndex={pIndex} cIndex={index} type={MsgTypes.reply} toUsername={replyItem.fromUsername} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
               </div>
             </div>
           )
