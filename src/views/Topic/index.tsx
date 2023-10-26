@@ -138,7 +138,7 @@ const Topic = () => {
       like = status ? Number(forumNums.like) + 1 : Number(forumNums.like) - 1
       setForumNums({save: forumNums.save, like, commentReply: forumNums.commentReply})
     } else {
-      save = status ? forumNums.save + 1: forumNums.save - 1
+      save = status ? Number(forumNums.save) + 1: Number(forumNums.save) - 1
       setForumNums({save, like: forumNums.like, commentReply: forumNums.commentReply})
     }
   }

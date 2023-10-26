@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 import { useDispatch } from 'react-redux'
 
-const LogoutDialog = forwardRef((_props, ref) => {
+const LogoutDialog = forwardRef((_, ref) => {
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const naigateTo = useNavigate()

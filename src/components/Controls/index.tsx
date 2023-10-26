@@ -30,7 +30,7 @@ type Props = {
   saveFn?: Function
   notPostFn?: Function
 }
-const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
+const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   const { TextArea } = Input
   const { type, isPost, toUid, isReply, comment, reply, likeStatus, saveStatus, getLeaveMsgFn, cIndex, pIndex, toUsername, forumNums, replyNums, saveFn, notPostFn } = props
   const { postId } = useParams()

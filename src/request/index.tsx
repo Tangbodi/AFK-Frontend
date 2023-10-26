@@ -3,6 +3,7 @@ import type { AxiosInstance, AxiosResponse } from 'axios'
 import axios from 'axios'
 import BackdropLoading from '@/components/Backdrop'
 import { createRoot } from "react-dom/client";
+import { removeSessionStorage } from '@/utils/utils'
 
 
 let requestCount = 0
@@ -110,13 +111,9 @@ instance.interceptors.response.use((res: AxiosResponse): AxiosResponse => {
       message.error(__emsg)
       const pathname = window.location.pathname
       if(pathname.indexOf('settings') != -1) {
-        sessionStorage.removeItem('afk-jsessionid')
-        sessionStorage.removeItem('afk-avatarurl')
-        sessionStorage.removeItem('afk-username')
-        sessionStorage.removeItem('afk-userid')
-        sessionStorage.removeItem('afk-uuid')
         window.location.href = window.location.origin
       }
+      removeSessionStorage()
     }
   }
   return Promise.reject(new Error(__emsg))

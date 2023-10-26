@@ -4,7 +4,7 @@ import { useEffect, useState, forwardRef } from "react"
 type Props = {
   newsData: any
 }
-const News: React.FC<Props> = forwardRef((props, _ref) => {
+const News: React.FC<Props> = forwardRef((props, _) => {
   const navigateTo = useNavigate()
   const { newsData } = props
   const [showList, setShowList] = useState([])

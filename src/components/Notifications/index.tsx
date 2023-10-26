@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar'
 type Props = {
   unreadMessages: any
 }
-const Notifications: React.FC<Props> = forwardRef((props, _ref) => {
+const Notifications: React.FC<Props> = forwardRef((props, _) => {
   const navigateTo = useNavigate()
   const { unreadMessages } = props
   const readReply = async() => {

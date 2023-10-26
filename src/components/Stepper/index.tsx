@@ -10,7 +10,7 @@ type Props = {
   postFn?: Function,
   getLeaveMsgFn?: Function
 }
-const VerticalLinearStepper: React.FC<Props> = forwardRef((props)=>{
+const VerticalLinearStepper: React.FC<Props> = forwardRef((props, _)=>{
   const { reply, getLeaveMsgFn, pIndex, postFn } = props
   const [more, setMore] = useState(false)
   const [showReply, setShowReply] = useState(reply)

@@ -114,3 +114,11 @@ export const getScrollTop = () => {
   scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop
   return scrollTop
 }
+
+export const removeSessionStorage = () => {
+  sessionStorage.removeItem('afk-jsessionid')
+  sessionStorage.removeItem('afk-avatarurl')
+  sessionStorage.removeItem('afk-username')
+  sessionStorage.removeItem('afk-userid')
+  sessionStorage.removeItem('afk-uuid')
+}
