@@ -86,7 +86,6 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _ref) => {
         setChildSaveStatus(childSaveStatus ? 0 : 1)
       } else {
         type === MsgTypes.comment ? setChildLikeStatus(childLikeStatus?0:1) : setChildLikeStatus(childLikeStatus?0:1)
-        console.log('is222', isPost , isSave)
       }
       isPost && saveFn({status, loveType})
       !isPost && !isSave && notPostFn(status)
