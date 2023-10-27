@@ -168,11 +168,6 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
           <span>{replyNums}</span>
           </div>
         }
-        {/* <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, childLikeStatus?0:1)}}>
-          { Number(commentLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> } 
-          { Number(replyLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> } 
-          { !isPost && <span>{replyNums}</span> }
-        </div> */}
         { isPost && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, Number(forumSaveStatus)?0:1, true)}}>
             { Number(forumSaveStatus) ? <Grade/>:<GradeOutlined/> }
             { <span>{forumNums.save}</span> }
