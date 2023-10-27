@@ -86,7 +86,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
     const likeSavePostRes = await likeSavePostAPI(params)
     if(likeSavePostRes.code === 200) {
       if(isPost) { // forum post info 部分
-        isSave ? setForumSaveStatus(Number(forumSaveStatus) ? 0 : 1) : setForumLikeStatus(reversalUtil(forumLikeStatus))
+        isSave ? setForumSaveStatus(reversalUtil(forumSaveStatus)) : setForumLikeStatus(reversalUtil(forumLikeStatus))
         saveFn({status, loveType}) 
       } else { // 回复部分
         isReply ? setReplyLikeStatus(reversalUtil(replyLikeStatus)) : setCommentLikeStatus(reversalUtil(commentLikeStatus))
