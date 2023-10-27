@@ -43,7 +43,13 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   const [childSaveStatus, setChildSaveStatus] = useState(saveStatus)
 
   useEffect(()=>{
-    reply&&setChildLikeStatus(reply.likeStatus)
+    // console.log('r', reply)
+    // reply && setChildLikeStatus(reply.likeStatus)
+    if(reply) {
+      setChildLikeStatus(reply.likeStatus)
+      // console.log('c', childLikeStatus)
+    }
+
   },[reply])
 
   useEffect(()=>{
@@ -151,7 +157,8 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, childLikeStatus?0:1)}}>
-          { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }
+          {/* b{ typeof(childLikeStatus) }a */}
+          { Number(childLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> } 
           { isPost && <span>{forumNums.like}</span> }
           { !isPost && <span>{replyNums}</span> }
         </div>
