@@ -39,16 +39,16 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   const gameId =  searchParams.get('game')
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
-  const [childLikeStatus, setChildLikeStatus] = useState(likeStatus ||(comment&&comment.likeStatus)||(reply&&reply.likeStatus))
+  const [childLikeStatus, setChildLikeStatus] = useState(likeStatus)
   const [childSaveStatus, setChildSaveStatus] = useState(saveStatus)
 
   useEffect(()=>{
-    reply&&reply.likeStatus&&setChildLikeStatus(reply.likeStatus)
-  },[reply&&reply.likeStatus])
+    reply&&setChildLikeStatus(reply.likeStatus)
+  },[reply])
 
   useEffect(()=>{
-    comment&&comment.likeStatus&&setChildLikeStatus(comment.likeStatus)
-  },[comment&&comment.likeStatus])
+    comment&&setChildLikeStatus(comment.likeStatus)
+  },[comment])
 
   useEffect(()=>{
     setChildLikeStatus(likeStatus)
@@ -151,7 +151,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
         <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, childLikeStatus?0:1)}}>
-          { Number(childLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }
+          { childLikeStatus ?  <FavoriteRounded/> : <FavoriteBorderRounded/> }
           { isPost && <span>{forumNums.like}</span> }
           { !isPost && <span>{replyNums}</span> }
         </div>

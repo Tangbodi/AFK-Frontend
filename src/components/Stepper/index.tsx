@@ -47,7 +47,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, _)=>{
             <div className='form-steps-item' key={index}>
               <div className="form-steps-item-top">
                 <div className='form-steps-item-top-left'>
-                  <Avatar src={replyItem.fromAvatarURL} alt={replyItem.fromUsername}  sx={{width:48, height:48}}/>
+                  <Avatar src={replyItem.fromAvatarURL || sessionStorage.getItem('afk-avatarurl')} alt={replyItem.fromUsername}  sx={{width:48, height:48}}/>
                 </div>
                 <div className="form-steps-item-top-right">
                   <div className='top-right-name'>{replyItem.fromUsername}</div>
@@ -56,10 +56,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, _)=>{
               </div>
               <div className='form-steps-item-main'>
                 <div className='form-steps-item-main-content'>
-                  {
-                    replyItem.toReplyId && Number(replyItem.toReplyId) > 0 && 
-                    <span className='content-relative'>@{replyItem.toUsername}</span>
-                  }
+                  { replyItem.toReplyId && Number(replyItem.toReplyId) > 0 && <span className='content-relative'>@{replyItem.toUsername}</span> }
                   { replyItem.content }
                 </div>
                 <Controls notPostFn={(status)=>{noPostFnMiddle(status, index)}} replyNums={replyItem.likeNum} pIndex={pIndex} cIndex={index} type={MsgTypes.reply} toUsername={replyItem.fromUsername} reply={replyItem} isReply={true} getLeaveMsgFn={getLeaveMidMsg}/>
