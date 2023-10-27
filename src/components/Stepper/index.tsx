@@ -2,7 +2,7 @@ import './stepper.less'
 import Avatar from '@mui/material/Avatar'
 import Controls from '@/components/Controls'
 import { forwardRef, useEffect, useState } from 'react'
-import { dateUtils, deepClone } from '@/utils/utils'
+import { dateUtils } from '@/utils/utils'
 import { MsgTypes } from '@/config'
 type Props = {
   reply?: any
@@ -14,7 +14,6 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, _)=>{
   const { reply, getLeaveMsgFn, pIndex, postFn } = props
   const [more, setMore] = useState(false)
   const [showReply, setShowReply] = useState(reply)
-  const defaultRely = deepClone(reply)
 
   useEffect(()=>{
     setShowReply(reply)
@@ -28,8 +27,7 @@ const VerticalLinearStepper: React.FC<Props> = forwardRef((props, _)=>{
 
   const lookMore = () => {
     setMore(false)
-    console.log('defaultRely', defaultRely)
-    setShowReply([...defaultRely])
+    setShowReply([...reply])
   }
 
   const getLeaveMidMsg = (val: any) => {

@@ -10,6 +10,7 @@ import {
 import { Input, Button, message } from 'antd'
 import { useState, forwardRef, useEffect } from 'react'
 import { MsgTypes, LoveTypes } from '@/config'
+import { reversalUtil } from '@/utils/utils'
 import { likeSavePostAPI, editCommentAPI, editReplyAPI } from '@/request/api'
 import { useSearchParams, useParams } from 'react-router-dom'
 type Props = {
@@ -39,30 +40,26 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   const gameId =  searchParams.get('game')
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
-  const [childLikeStatus, setChildLikeStatus] = useState(likeStatus)
-  const [childSaveStatus, setChildSaveStatus] = useState(saveStatus)
+  const [forumLikeStatus, setForumLikeStatus] = useState(likeStatus)
+  const [forumSaveStatus, setForumSaveStatus] = useState(saveStatus)
+  const [commentLikeStatus, setCommentLikeStatus] = useState(0)
+  const [replyLikeStatus, setReplyLikeStatus] = useState(0)
 
   useEffect(()=>{
-    // console.log('r', reply)
-    // reply && setChildLikeStatus(reply.likeStatus)
-    if(reply) {
-      setChildLikeStatus(reply.likeStatus)
-      // console.log('c', childLikeStatus)
-    }
-
+    reply && setReplyLikeStatus(reply.likeStatus)
   },[reply])
 
   useEffect(()=>{
-    comment&&setChildLikeStatus(comment.likeStatus)
+    comment&&setCommentLikeStatus(comment.likeStatus)
   },[comment])
 
   useEffect(()=>{
-    setChildLikeStatus(likeStatus)
+    setForumLikeStatus(likeStatus)
   },[likeStatus])
 
-  useEffect(()=>{
-    setChildSaveStatus(saveStatus)
-  },[saveStatus])
+  // useEffect(()=>{
+  //   setChildSaveStatus(saveStatus)
+  // },[saveStatus])
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
@@ -88,13 +85,13 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
     }
     const likeSavePostRes = await likeSavePostAPI(params)
     if(likeSavePostRes.code === 200) {
-      if(isPost && isSave) {
-        setChildSaveStatus(childSaveStatus ? 0 : 1)
-      } else {
-        type === MsgTypes.comment ? setChildLikeStatus(childLikeStatus?0:1) : setChildLikeStatus(childLikeStatus?0:1)
-      }
-      isPost && saveFn({status, loveType})
-      !isPost && !isSave && notPostFn(status)
+      if(isPost) { // forum post info 部分
+        isSave ? setForumSaveStatus(Number(forumSaveStatus) ? 0 : 1) : setForumLikeStatus(reversalUtil(forumLikeStatus))
+        saveFn({status, loveType}) 
+      } else { // 回复部分
+        isReply ? setReplyLikeStatus(reversalUtil(replyLikeStatus)) : setCommentLikeStatus(reversalUtil(commentLikeStatus))
+        notPostFn(status)
+      } 
       return
     }
     message.warning(likeSavePostRes.message)
@@ -156,25 +153,35 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   return (
     <div className='afk-like-wrap'>
       <div className="afk-like-save">
-        <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, childLikeStatus?0:1)}}>
-          {/* b{ typeof(childLikeStatus) }a */}
-          { Number(childLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> } 
+        { type === MsgTypes.comment && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like,reversalUtil(forumLikeStatus))}}>
+          { Number(forumLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/>}
           { isPost && <span>{forumNums.like}</span> }
+          </div>
+        }
+        { type === MsgTypes.reply && !isReply && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, reversalUtil(commentLikeStatus))}}>
+          { Number(commentLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/>}
+          <span>{replyNums}</span>
+          </div>
+        }
+        { type === MsgTypes.reply && isReply && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, reversalUtil(replyLikeStatus))}}>
+          { Number(replyLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/>}
+          <span>{replyNums}</span>
+          </div>
+        }
+        {/* <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.like, childLikeStatus?0:1)}}>
+          { Number(commentLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> } 
+          { Number(replyLikeStatus) ?  <FavoriteRounded/> : <FavoriteBorderRounded/> } 
           { !isPost && <span>{replyNums}</span> }
-        </div>
-        { isPost &&  
-          (
-            <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, childSaveStatus?0:1, true)}}>
-            {Number(childSaveStatus) ? <Grade/>:<GradeOutlined/>}
+        </div> */}
+        { isPost && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, Number(forumSaveStatus)?0:1, true)}}>
+            { Number(forumSaveStatus) ? <Grade/>:<GradeOutlined/> }
             { <span>{forumNums.save}</span> }
-            </div>
-          )
+          </div>
         }
         <div className="afk-like-save-item" onClick={()=>{setInputShow(!inputShow)}}>
           { !inputShow ? <ChatBubbleOutlineOutlined/> : <ChatBubbleOutlined/>}
           {isPost && <span>{forumNums.commentReply}</span>}
         </div>
-        {/* <div className="afk-like-save-item transform-1"><SendOutlined/>Share</div> */}
       </div>
       {
         inputShow &&
