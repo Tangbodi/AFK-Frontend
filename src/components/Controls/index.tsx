@@ -41,7 +41,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
   const [forumLikeStatus, setForumLikeStatus] = useState(likeStatus)
-  const [forumSaveStatus, setForumSaveStatus] = useState(saveStatus)
+  const [forumSaveStatus, setForumSaveStatus] = useState(Number(saveStatus))
   const [commentLikeStatus, setCommentLikeStatus] = useState(0)
   const [replyLikeStatus, setReplyLikeStatus] = useState(0)
 
@@ -169,7 +169,7 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
           </div>
         }
         { isPost && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, Number(forumSaveStatus)?0:1, true)}}>
-            { Number(forumSaveStatus) ? <Grade/>:<GradeOutlined/> }
+            y{forumSaveStatus}x{ Number(forumSaveStatus) ? <Grade/>:<GradeOutlined/> }
             { <span>{forumNums.save}</span> }
           </div>
         }
