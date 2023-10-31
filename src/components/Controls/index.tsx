@@ -40,8 +40,8 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
   const gameId =  searchParams.get('game')
   const genreId = searchParams.get('genre')
   const [inputShow, setInputShow] = useState(false)
-  const [forumLikeStatus, setForumLikeStatus] = useState(likeStatus)
-  const [forumSaveStatus, setForumSaveStatus] = useState(Number(saveStatus))
+  const [forumLikeStatus, setForumLikeStatus] = useState(0)
+  const [forumSaveStatus, setForumSaveStatus] = useState(0)
   const [commentLikeStatus, setCommentLikeStatus] = useState(0)
   const [replyLikeStatus, setReplyLikeStatus] = useState(0)
 
@@ -57,9 +57,9 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
     setForumLikeStatus(likeStatus)
   },[likeStatus])
 
-  // useEffect(()=>{
-  //   setChildSaveStatus(saveStatus)
-  // },[saveStatus])
+  useEffect(()=>{
+    setForumSaveStatus(Number(saveStatus))
+  },[saveStatus])
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
@@ -168,8 +168,8 @@ const ControlsComp: React.FC<Props> = forwardRef((props, _) => {
           <span>{replyNums}</span>
           </div>
         }
-        { isPost && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, Number(forumSaveStatus)?0:1, true)}}>
-            y{forumSaveStatus}x{ Number(forumSaveStatus) ? <Grade/>:<GradeOutlined/> }
+        { isPost && <div className="afk-like-save-item" onClick={()=>{likeSavePost(LoveTypes.save, reversalUtil(forumSaveStatus), true)}}>
+            { Number(forumSaveStatus) ? <Grade/>:<GradeOutlined/> }
             { <span>{forumNums.save}</span> }
           </div>
         }
