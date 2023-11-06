@@ -97,7 +97,7 @@ const NewsQuery = () => {
                   </div>
                   <div className="news-list-item-content-r">
                     <div className="news-list-item-content-r-title" onClick={()=>{navigateTo(`/news/${news.newsId}?gameId=${news.gameId}&genreId=${news.genreId}`)}}>{news.title}</div>
-                    <div className="news-list-item-content-r-date">{news.pubDate} by <span>Blizzard Entertainment</span></div>
+                    <div className="news-list-item-content-r-date">{news.pubDate} by <span>{news.source}</span></div>
                     <div className="news-list-item-content-r-main">
                       {news.description}
                     </div>
