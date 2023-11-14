@@ -20,7 +20,6 @@ const Search = lazy(()=> import("../views/Search"))
 const Reset = lazy(()=> import("../views/Reset"))
 const ErrorComp = lazy(()=> import("../views/Exception/Error"))
 const SendEmail = lazy(()=> import("../views/Forgot/SendEmail"))
-const DummyNode = lazy(()=> import("../views/Dummy"))
 
 /**
  * 懒加载组件处理
@@ -36,10 +35,6 @@ const routes = [
   {
     path: '/',
     element: <Home/>
-  },
-  {
-    path: '/dummy',
-    element: <DummyNode/>
   },
   {
     path: '/',
