@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="afk-footer">
       <div className="afk-footer-copyright">
-        Copyright © 2023 ARK | All Rights Reserved 
+        Copyright © 2024 AFK | All Rights Reserved 
       </div>
       <div className="afk-footer-link">
         <div className="afk-footer-link-menu">
