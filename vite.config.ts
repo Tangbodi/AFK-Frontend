@@ -12,8 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/v1/': {
-        target: 'http://31.220.21.110:8180',
-        // target: 'http://44.217.134.78:8180',
+        target: 'http://192.168.1.6:8080',
         changeOrigin: true, // 允许跨域
         // rewrite: path => path.replace('/v1/', '/'),
       },

@@ -182,7 +182,7 @@ const Forum = () => {
               {posts.length > 0 &&<div className="afk-forum-guides-list">
                 <div className='afk-forum-guides-list-th'>
                   <div className="list-th-replies w70">LIKE</div>
-                  <div className="list-th-replies w70">SAVE</div>
+                  {/* <div className="list-th-replies w70">SAVE</div> */}
                   <div className="list-th-replies w70">REPLY</div>
                   <div className="list-th-replies w70">VIEW</div>
                   <div className="list-th-topic w416">TOPIC</div>
@@ -193,7 +193,7 @@ const Forum = () => {
                     return (
                       <div className='afk-forum-guides-list-td fc' key={index}>
                         <div className="list-th-replies w70">{post.like}</div>
-                        <div className="list-th-replies w70">{post.save}</div>
+                        {/* <div className="list-th-replies w70">{post.save}</div> */}
                         <div className="list-th-replies w70">{post.reply}</div>
                         <div className="list-th-replies w70">{post.view}</div>
                         <div className="list-th-topic w416" onClick={()=>{goToNext(post.postId)}}>{post.title}</div>
