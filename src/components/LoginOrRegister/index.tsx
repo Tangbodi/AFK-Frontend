@@ -161,18 +161,27 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
               specialCharaterRex.test(value) ? setSpecial(true) : setSpecial(false)
               oneNumberRex.test(value) ? setANumber(true) : setANumber(false)
               capitalRex.test(value) ? setCapital(true) : setCapital(false)
+
+              // Ensure password meets all requirements
+              if (value.length >= 8 && specialCharaterRex.test(value) && oneNumberRex.test(value) && capitalRex.test(value)) {
+                return Promise.resolve();
+              } else {
+                return Promise.reject(new Error('Password does not meet the requirements'));
+              }
+
             },
           })]}>
             <Input.Password className="login-input"  />
           </Form.Item>
           <Form.Item name="confirmPassword" label="Re-enter Password" rules={[{ required: true, message: 'Please re-enter your password!' },
           ({ getFieldValue }) => ({
-            validator(_, value) {
-              if(!value || getFieldValue('password') === value) {
-                setPmatch(true)
+             validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                setPmatch(true);
+                return Promise.resolve();
               } else {
-                setPmatch(false)
-                return Promise.reject(new Error('The new password that you entered do not match!'))
+                setPmatch(false);
+                return Promise.reject(new Error('The new password that you entered does not match!'));
               }
             },
           })]}>
