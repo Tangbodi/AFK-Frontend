@@ -57,12 +57,12 @@ const Register: React.FC<Props> = forwardRef((props, ref) => {
 
   const onSignUp = async() => {
     const regX = /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[\\W_]){1,})(?!.*\\s).{8,}$/
-    const _captchaRef: any = captchaRef.current
-    const response = _captchaRef.getValue()
-    if (!response) {
-      message.warning("Please click reCAPTCHA")
-      return
-    }
+    // const _captchaRef: any = captchaRef.current
+    // const response = _captchaRef.getValue()
+    // if (!response) {
+    //   message.warning("Please click reCAPTCHA")
+    //   return
+    // }
     const values = await form.validateFields()
     if(regX.test(values.password)) {
       message.warning('Invalid Password')
