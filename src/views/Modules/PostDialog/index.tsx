@@ -1,7 +1,7 @@
 import { useState, useImperativeHandle, forwardRef, useRef } from 'react'
 import { Button, Modal, Form, Input, message } from 'antd'
 import { useSearchParams, useParams } from 'react-router-dom'
-import { Editor } from '@tinymce/tinymce-react'
+import { Editor } from '@tinymce/tinymce-react';
 import Uploader from '@/components/Uploader'
 import { savePostAPI } from '@/request/api'
 import './postDialog.less'
@@ -95,7 +95,7 @@ const PostDialog: React.FC<Props> = forwardRef((props, ref) => {
             <div className='afk-editor-detail'>
               <Editor
                 key={editorKey}
-                apiKey='sn5ytycr1mo04zyd7qmgf69k1xqv3choi63zrsy2bpksdvtv'
+                apiKey='5s5jy6jzw835im4m8dwrze68ncm5pjr8j6ywqzo5s6mghth5'
                 onInit={(_evt, editor) => editorRef.current = editor}
                 tinymceScriptSrc={'/tinymce/tinymce.min.js'}
                 initialValue={''}
